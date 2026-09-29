@@ -48,6 +48,14 @@
             <a href="{{ route('admin.reports.rentals') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {{ request()->routeIs('admin.reports.*') ? 'bg-rose-600 text-white font-bold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                 Laporan & Export
             </a>
+
+            @php $unreadMessagesCount = \App\Models\Message::where('is_read', false)->count(); @endphp
+            <a href="{{ route('admin.messages.index') }}" class="flex items-center justify-between gap-2 px-4 py-3 rounded-xl transition {{ request()->routeIs('admin.messages.*') ? 'bg-rose-600 text-white font-bold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                <span>Pesan Masuk</span>
+                @if($unreadMessagesCount > 0)
+                    <span class="bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-tight">{{ $unreadMessagesCount }}</span>
+                @endif
+            </a>
         </nav>
 
         <!-- Back to Storefront & Logout -->
