@@ -202,7 +202,7 @@
             <div>
                 <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Chérie Atelier</h4>
                 <p class="text-xs text-gray-600 mb-1">Jl. Flower Ribbon No. 12, Jakarta Selatan</p>
-                <p class="text-xs text-gray-600 mb-1">Concierge: +62 812-3456-7890</p>
+                <p class="text-xs text-gray-600 mb-1">Concierge: +62 895-4016-43905</p>
                 <p class="text-xs text-gray-600">Hours: 09:00 &ndash; 18:00 WIB</p>
             </div>
         </div>

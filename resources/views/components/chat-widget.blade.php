@@ -99,10 +99,10 @@
                 <h4 class="font-serif-editorial font-bold text-gray-900 text-base">Konsultasi WhatsApp Direct</h4>
                 <p class="text-xs text-gray-500 mt-1">Hubungi Personal Stylist Chérie Atelier secara langsung untuk konsultasi fitting, custom booking, &amp; pengiriman ekspres.</p>
             </div>
-            <a href="https://wa.me/6281234567890?text=Halo%20Ch%C3%A9rie%20Atelier%2C%20saya%20ingin%20konsultasi%20fitting%20gaun%20persewaan." 
+            <a href="https://wa.me/62895401643905?text=Halo%20Ch%C3%A9rie%20Atelier%2C%20saya%20ingin%20konsultasi%20fitting%20gaun%20persewaan." 
                target="_blank" 
                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
-                <span>Hubungi via WhatsApp (+62 812-3456-7890)</span>
+                <span>Hubungi via WhatsApp (+62 895-4016-43905)</span>
             </a>
         </div>
 

@@ -803,4 +803,120 @@
         }
     </script>
 
+    {{-- ═══════════════════════════════════════ --}}
+    {{-- CONTACT / HUBUNGI KAMI SECTION --}}
+    {{-- ═══════════════════════════════════════ --}}
+    <section class="py-20 px-4 sm:px-6 lg:px-8 igari-bg-gradient border-t border-rose-200/60" id="contact">
+        <div class="max-w-3xl mx-auto">
+
+            {{-- Section Header --}}
+            <div class="text-center mb-10">
+                <span class="inline-block bg-rose-100 text-rose-600 text-xs font-bold px-4 py-1.5 rounded-full border border-rose-200 uppercase tracking-widest mb-3">💌 Hubungi Kami</span>
+                <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-rose-900 mb-3">Kirim Pesan ke Atelier</h2>
+                <p class="text-sm text-rose-700/70 max-w-md mx-auto">Ada pertanyaan soal gaun, ukuran, atau ketersediaan? Tim Concierge kami siap membantu via email <strong>rentcherie@gmail.com</strong></p>
+            </div>
+
+            {{-- Flash Messages --}}
+            @if(session('success'))
+                <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium px-5 py-4 rounded-2xl flex items-start gap-3">
+                    <span class="text-xl leading-none">✅</span>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="mb-6 bg-rose-50 border border-rose-200 text-rose-800 text-sm font-medium px-5 py-4 rounded-2xl">
+                    <ul class="list-disc list-inside space-y-1">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- Contact Form --}}
+            <form action="{{ route('contact.send') }}" method="POST"
+                class="bg-white/80 backdrop-blur-sm border border-rose-200/60 rounded-3xl p-8 shadow-lg shadow-rose-100/50 space-y-5">
+                @csrf
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">Nama Lengkap <span class="text-rose-500">*</span></label>
+                        <input type="text" name="name" value="{{ old('name') }}" required
+                            placeholder="e.g. Sophia Cherie"
+                            class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 placeholder-gray-400 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">Email <span class="text-rose-500">*</span></label>
+                        <input type="email" name="email" value="{{ old('email') }}" required
+                            placeholder="your@email.com"
+                            class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 placeholder-gray-400 transition">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">No. WhatsApp <span class="text-gray-400 font-normal normal-case">(opsional)</span></label>
+                        <input type="text" name="phone" value="{{ old('phone') }}"
+                            placeholder="0895-xxxx-xxxx"
+                            class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 placeholder-gray-400 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">Subjek <span class="text-rose-500">*</span></label>
+                        <select name="subject" required
+                            class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 transition">
+                            <option value="">-- Pilih Subjek --</option>
+                            <option value="Pertanyaan Ketersediaan Gaun" {{ old('subject') === 'Pertanyaan Ketersediaan Gaun' ? 'selected' : '' }}>Pertanyaan Ketersediaan Gaun</option>
+                            <option value="Konsultasi Ukuran & Fitting" {{ old('subject') === 'Konsultasi Ukuran & Fitting' ? 'selected' : '' }}>Konsultasi Ukuran & Fitting</option>
+                            <option value="Promo & Paket Khusus" {{ old('subject') === 'Promo & Paket Khusus' ? 'selected' : '' }}>Promo & Paket Khusus</option>
+                            <option value="Keluhan & Feedback" {{ old('subject') === 'Keluhan & Feedback' ? 'selected' : '' }}>Keluhan & Feedback</option>
+                            <option value="Lainnya" {{ old('subject') === 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">Pesan <span class="text-rose-500">*</span></label>
+                    <textarea name="message" rows="5" required
+                        placeholder="Ceritakan keperluan Anda... ✨"
+                        class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 placeholder-gray-400 transition resize-none">{{ old('message') }}</textarea>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
+                    <p class="text-xs text-rose-600/70">
+                        🔒 Pesan Anda akan langsung masuk ke <strong>rentcherie@gmail.com</strong><br>
+                        Balasan otomatis akan dikirim ke email Anda.
+                    </p>
+                    <button type="submit"
+                        class="igari-btn text-sm font-bold px-8 py-3.5 rounded-2xl shadow-lg shadow-rose-300/40 hover:shadow-rose-400/50 transition-all hover:-translate-y-0.5 flex items-center gap-2 whitespace-nowrap">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                        </svg>
+                        Kirim Pesan
+                    </button>
+                </div>
+            </form>
+
+            {{-- Contact Info --}}
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                <div class="bg-white/60 border border-rose-200/50 rounded-2xl p-4">
+                    <div class="text-xl mb-1">📧</div>
+                    <p class="text-xs font-bold text-rose-800 mb-0.5">Email</p>
+                    <a href="mailto:rentcherie@gmail.com" class="text-xs text-rose-600 hover:text-rose-800 font-medium transition">rentcherie@gmail.com</a>
+                </div>
+                <div class="bg-white/60 border border-rose-200/50 rounded-2xl p-4">
+                    <div class="text-xl mb-1">💬</div>
+                    <p class="text-xs font-bold text-rose-800 mb-0.5">WhatsApp</p>
+                    <a href="https://wa.me/6289540164390" target="_blank" class="text-xs text-rose-600 hover:text-rose-800 font-medium transition">0895-4016-43905</a>
+                </div>
+                <div class="bg-white/60 border border-rose-200/50 rounded-2xl p-4">
+                    <div class="text-xl mb-1">⏰</div>
+                    <p class="text-xs font-bold text-rose-800 mb-0.5">Jam Operasional</p>
+                    <p class="text-xs text-rose-600 font-medium">Senin–Sabtu, 09.00–20.00</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
 @endsection
