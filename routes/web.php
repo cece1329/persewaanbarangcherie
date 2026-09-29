@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/quiz-recommendation', [HomeController::class, 'quizRecommendation'])->name('quiz.recommendation');
+Route::post('/contact', [HomeController::class, 'sendContact'])->name('contact.send');
 
 // Catalog Routes
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
@@ -69,4 +70,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Reports & Export (PDF / Excel / CSV)
     Route::get('/reports/rentals', [AdminController::class, 'rentalReport'])->name('reports.rentals');
     Route::get('/reports/rentals/export', [AdminController::class, 'exportRentalsCsv'])->name('reports.rentals.export');
+
+    // Messages / Inbox
+    Route::get('/messages', [AdminController::class, 'messages'])->name('messages.index');
+    Route::post('/messages/{id}/reply', [AdminController::class, 'replyMessage'])->name('messages.reply');
+    Route::post('/messages/{id}/read', [AdminController::class, 'markMessageRead'])->name('messages.read');
 });

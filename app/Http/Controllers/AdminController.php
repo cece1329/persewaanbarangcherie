@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminReplyToContact;
 use App\Models\Category;
 use App\Models\Dress;
+use App\Models\Message;
 use App\Models\Rental;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
@@ -311,7 +314,7 @@ class AdminController extends Controller
 
         $rentals = $query->latest()->get();
 
-        $filename = 'Laporan_Persewaan_CherieRent_' . date('Y-m-d_H-i-s') . '.csv';
+        $filename = 'Laporan_Persewaan_CherieRent_'.date('Y-m-d_H-i-s').'.csv';
 
         $headers = [
             'Content-Type' => 'text/csv; charset=UTF-8',
@@ -323,7 +326,7 @@ class AdminController extends Controller
 
         $callback = function () use ($rentals) {
             $file = fopen('php://output', 'w');
-            fputs($file, "\xEF\xBB\xBF");
+            fwrite($file, "\xEF\xBB\xBF");
 
             fputcsv($file, [
                 'Kode Transaksi',
@@ -340,7 +343,7 @@ class AdminController extends Controller
                 'Total Bayar (Rp)',
                 'Metode Pembayaran',
                 'Metode Pengiriman',
-                'Status'
+                'Status',
             ]);
 
             foreach ($rentals as $r) {
@@ -359,7 +362,7 @@ class AdminController extends Controller
                     $r->total_price,
                     strtoupper($r->payment_method),
                     ucfirst($r->shipping_method),
-                    $r->status_label
+                    $r->status_label,
                 ]);
             }
 
@@ -367,5 +370,58 @@ class AdminController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    public function messages(Request $request)
+    {
+        $query = Message::latest();
+
+        if ($request->filled('status')) {
+            if ($request->status === 'unread') {
+                $query->where('is_read', false);
+            } elseif ($request->status === 'replied') {
+                $query->whereNotNull('admin_reply');
+            } elseif ($request->status === 'unreplied') {
+                $query->whereNull('admin_reply');
+            }
+        }
+
+        $messages = $query->paginate(15)->withQueryString();
+        $unreadCount = Message::where('is_read', false)->count();
+
+        return view('admin.messages.index', compact('messages', 'unreadCount'));
+    }
+
+    public function replyMessage(Request $request, $id)
+    {
+        $message = Message::findOrFail($id);
+
+        $request->validate([
+            'admin_reply' => ['required', 'string', 'max:3000'],
+        ]);
+
+        $message->admin_reply = $request->admin_reply;
+        $message->replied_at = now();
+        $message->is_read = true;
+        $message->save();
+
+        // Kirim email balasan ke pelanggan
+        try {
+            Mail::to($message->email)->send(new AdminReplyToContact($message));
+            $successMsg = "Balasan berhasil dikirim ke {$message->email} via email. ✅";
+        } catch (\Exception $e) {
+            $successMsg = 'Balasan tersimpan, tapi email gagal terkirim. Cek konfigurasi SMTP di .env.';
+        }
+
+        return back()->with('success', $successMsg);
+    }
+
+    public function markMessageRead($id)
+    {
+        $message = Message::findOrFail($id);
+        $message->is_read = true;
+        $message->save();
+
+        return back()->with('success', 'Pesan ditandai sebagai sudah dibaca.');
     }
 }
