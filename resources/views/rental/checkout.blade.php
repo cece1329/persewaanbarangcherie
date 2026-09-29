@@ -142,8 +142,11 @@
                     </div>
                 </div>
 
-                <div class="p-3.5 bg-rose-50 rounded-2xl text-[11px] text-rose-900 leading-relaxed border border-rose-200">
-                    <strong>Deposit Note:</strong> The security deposit of Rp {{ number_format($depositFee, 0, ',', '.') }} is reimbursed 100% upon return inspection.
+                <div class="p-3.5 bg-rose-50 rounded-2xl text-[11px] text-rose-900 leading-relaxed border border-rose-200" x-data>
+                    <strong>Deposit Note:</strong> Uang deposit sebesar Rp {{ number_format($depositFee, 0, ',', '.') }} akan dikembalikan 100% setelah gaun diinspeksi. 
+                    <button type="button" @click="$dispatch('open-fitting-guide')" class="font-bold underline text-rose-700 hover:text-rose-900 block mt-1">
+                        📏 Lihat Panduan Fitting &amp; Syarat Ketentuan Lengkap &rarr;
+                    </button>
                 </div>
 
                 <button type="submit" class="w-full btn-igari-primary py-4 rounded-full font-bold text-xs uppercase tracking-wider shadow-md text-center">

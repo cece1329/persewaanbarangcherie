@@ -48,7 +48,12 @@
             
             <div>
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1 rounded-full border border-rose-200">Size {{ $dress->size }}</span>
+                    <div class="flex items-center gap-2" x-data>
+                        <span class="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1 rounded-full border border-rose-200">Size {{ $dress->size }}</span>
+                        <button type="button" @click="$dispatch('open-fitting-guide')" class="text-[11px] font-bold text-rose-700 hover:text-rose-900 underline">
+                            📏 Fitting Chart &amp; Policy
+                        </button>
+                    </div>
                     <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST">
                         @csrf
                         <button type="submit" class="flex items-center gap-1 text-xs text-rose-700 font-semibold bg-rose-50 px-3.5 py-1.5 rounded-full border border-rose-200 hover:bg-rose-100 transition">

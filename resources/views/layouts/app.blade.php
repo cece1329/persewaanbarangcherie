@@ -190,11 +190,11 @@
             <!-- Atelier Services -->
             <div>
                 <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Atelier Services</h4>
-                <ul class="space-y-2 text-xs">
+                <ul class="space-y-2 text-xs" x-data>
                     <li><a href="{{ route('home') }}#how-it-works" class="hover:text-rose-600 transition">Reservation Process</a></li>
-                    <li><a href="#" class="hover:text-rose-600 transition">Security Deposit Policy</a></li>
-                    <li><a href="#" class="hover:text-rose-600 transition">Size Guide & Alterations</a></li>
-                    <li><a href="#" class="hover:text-rose-600 transition">Garment Care & Dry Cleaning</a></li>
+                    <li><button @click="$dispatch('open-fitting-guide')" class="hover:text-rose-600 transition text-left">Security Deposit Policy</button></li>
+                    <li><button @click="$dispatch('open-fitting-guide')" class="hover:text-rose-600 transition text-left">Size Guide & Fitting Chart</button></li>
+                    <li><button @click="$dispatch('open-fitting-guide')" class="hover:text-rose-600 transition text-left">Garment Care & Dry Cleaning</button></li>
                 </ul>
             </div>
 
@@ -211,6 +211,10 @@
             &copy; {{ date('Y') }} ChérieRent Atelier. All rights reserved.
         </div>
     </footer>
+
+    <!-- Interactive Widgets & Modals -->
+    <x-chat-widget />
+    <x-fitting-guide-modal />
 
 </body>
 </html>
