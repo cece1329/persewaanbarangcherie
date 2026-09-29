@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Dress;
+use App\Models\Message;
 use App\Models\Rental;
 use App\Models\Review;
 use App\Models\User;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@cherierent.com',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'phone' => '+62 812-3456-7890',
+            'phone' => '+62 895-4016-43905',
             'address' => 'Chérie Atelier, Jl. Flower Ribbon No. 12, Jakarta Selatan',
             'avatar' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=AdminCherie',
         ]);
@@ -266,6 +267,28 @@ class DatabaseSeeder extends Seeder
             'dress_id' => $dressModels[0]->id,
             'rating' => 5,
             'comment' => 'High quality satin fabric and immaculate lace craftsmanship. The delivery packaging was very professional.',
+        ]);
+
+        Message::create([
+            'name' => 'Nadia Syahira',
+            'email' => 'nadia.syahira@gmail.com',
+            'phone' => '+62 813-9988-7766',
+            'subject' => 'Tanya Fitting Custom Gaun Victorian',
+            'message' => 'Halo Chérie Atelier, apakah gaun Victorian bisa di-fitting langsung di studio Jakarta Selatan minggu ini? Terima kasih.',
+            'auto_reply_sent' => true,
+            'is_read' => false,
+        ]);
+
+        Message::create([
+            'name' => 'Siti Rahma',
+            'email' => 'sitirahma@yahoo.com',
+            'phone' => '+62 856-4433-2211',
+            'subject' => 'Konfirmasi Pengiriman Ekspres Yearbook',
+            'message' => 'Halo min, mau tanya estimasi pengiriman gaun ke Bandung untuk foto yearbook kira-kira berapa hari ya?',
+            'auto_reply_sent' => true,
+            'is_read' => true,
+            'admin_reply' => 'Halo Sis Siti! Pengiriman ke Bandung menggunakan ekspres H+1 sampai. Jangan ragu konsultasi ya!',
+            'replied_at' => now(),
         ]);
     }
 }
