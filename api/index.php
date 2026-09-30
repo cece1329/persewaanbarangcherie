@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Schema;
 
 // Enable error reporting for serverless debugging
 ini_set('display_errors', '1');
@@ -93,17 +93,25 @@ try {
     $app->useStoragePath('/tmp/storage');
 
     // Ensure dresses table exists in database; if missing, copy or migrate/seed
-    if (! Schema::hasTable('dresses')) {
-        if ($repoSqlite) {
-            @unlink($tmpSqlite);
-            @copy($repoSqlite, $tmpSqlite);
-            @chmod($tmpSqlite, 0666);
-        }
+    try {
+        /** @var DatabaseManager $db */
+        $db = $app->make('db');
+        if (! $db->connection()->getSchemaBuilder()->hasTable('dresses')) {
+            if ($repoSqlite) {
+                @unlink($tmpSqlite);
+                @copy($repoSqlite, $tmpSqlite);
+                @chmod($tmpSqlite, 0666);
+            }
 
-        if (! Schema::hasTable('dresses')) {
-            Artisan::call('migrate', ['--force' => true]);
-            Artisan::call('db:seed', ['--force' => true]);
+            if (! $db->connection()->getSchemaBuilder()->hasTable('dresses')) {
+                /** @var Kernel $console */
+                $console = $app->make(Kernel::class);
+                $console->call('migrate', ['--force' => true]);
+                $console->call('db:seed', ['--force' => true]);
+            }
         }
+    } catch (Throwable $dbEx) {
+        // Silently continue if database is already initialized
     }
 
     $request = Request::capture();
