@@ -51,12 +51,27 @@ foreach ($writableDirectories as $dir) {
     }
 }
 
-// Auto-copy pre-seeded SQLite database to /tmp if using SQLite on Vercel
-$repoSqlite = __DIR__.'/../database/database.sqlite';
+// Prepare /tmp/database.sqlite BEFORE booting Laravel & PDO connections
+$possibleRepoPaths = [
+    __DIR__.'/../database/database.sqlite',
+    dirname(__DIR__).'/database/database.sqlite',
+    '/var/task/user/database/database.sqlite',
+];
+
+$repoSqlite = null;
+foreach ($possibleRepoPaths as $path) {
+    if (file_exists($path) && filesize($path) > 1000) {
+        $repoSqlite = $path;
+        break;
+    }
+}
+
 $tmpSqlite = '/tmp/database.sqlite';
 
-if (file_exists($repoSqlite) && filesize($repoSqlite) > 1000) {
+if ($repoSqlite) {
+    // Unlink old/corrupted tmp database and copy fresh seeded database before PDO opens
     if (! file_exists($tmpSqlite) || filesize($tmpSqlite) < 1000) {
+        @unlink($tmpSqlite);
         @copy($repoSqlite, $tmpSqlite);
         @chmod($tmpSqlite, 0666);
     }
@@ -77,19 +92,18 @@ try {
     // Explicitly redirect storage path to /tmp/storage
     $app->useStoragePath('/tmp/storage');
 
-    // Ensure dresses table exists in database
-    try {
-        if (! Schema::hasTable('dresses')) {
-            if (file_exists($repoSqlite) && filesize($repoSqlite) > 1000) {
-                @copy($repoSqlite, $tmpSqlite);
-            }
-            if (! Schema::hasTable('dresses')) {
-                Artisan::call('migrate', ['--force' => true]);
-                Artisan::call('db:seed', ['--force' => true]);
-            }
+    // Ensure dresses table exists in database; if missing, copy or migrate/seed
+    if (! Schema::hasTable('dresses')) {
+        if ($repoSqlite) {
+            @unlink($tmpSqlite);
+            @copy($repoSqlite, $tmpSqlite);
+            @chmod($tmpSqlite, 0666);
         }
-    } catch (Throwable $dbEx) {
-        // Silently continue if already initialized or migration error
+
+        if (! Schema::hasTable('dresses')) {
+            Artisan::call('migrate', ['--force' => true]);
+            Artisan::call('db:seed', ['--force' => true]);
+        }
     }
 
     $request = Request::capture();
