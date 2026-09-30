@@ -1,6 +1,13 @@
 *.log
 .DS_Store
 .env
+/vendor
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+vercel.json
+.vercelignore
+api/index.php
 .env.backup
 .env.production
 .phpactor.json
