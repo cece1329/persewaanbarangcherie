@@ -55,13 +55,15 @@ foreach ($writableDirectories as $dir) {
 $repoSqlite = __DIR__.'/../database/database.sqlite';
 $tmpSqlite = '/tmp/database.sqlite';
 
-if (file_exists($repoSqlite)) {
-    if (! file_exists($tmpSqlite) || filesize($tmpSqlite) === 0) {
+if (file_exists($repoSqlite) && filesize($repoSqlite) > 1000) {
+    if (! file_exists($tmpSqlite) || filesize($tmpSqlite) < 1000) {
         @copy($repoSqlite, $tmpSqlite);
+        @chmod($tmpSqlite, 0666);
     }
 } else {
     if (! file_exists($tmpSqlite)) {
         @touch($tmpSqlite);
+        @chmod($tmpSqlite, 0666);
     }
 }
 
@@ -75,11 +77,16 @@ try {
     // Explicitly redirect storage path to /tmp/storage
     $app->useStoragePath('/tmp/storage');
 
-    // Auto-migrate and seed if SQLite database is empty / tables missing
+    // Ensure dresses table exists in database
     try {
         if (! Schema::hasTable('dresses')) {
-            Artisan::call('migrate', ['--force' => true]);
-            Artisan::call('db:seed', ['--force' => true]);
+            if (file_exists($repoSqlite) && filesize($repoSqlite) > 1000) {
+                @copy($repoSqlite, $tmpSqlite);
+            }
+            if (! Schema::hasTable('dresses')) {
+                Artisan::call('migrate', ['--force' => true]);
+                Artisan::call('db:seed', ['--force' => true]);
+            }
         }
     } catch (Throwable $dbEx) {
         // Silently continue if already initialized or migration error
