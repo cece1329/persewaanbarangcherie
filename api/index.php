@@ -10,31 +10,29 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-// Ensure essential Laravel environment variables fall back cleanly on Vercel
-$envDefaults = [
+// Essential environment variable overrides for Vercel Serverless (Force SQLite & /tmp cache)
+$envOverrides = [
     'APP_NAME' => 'ChérieRent',
     'APP_ENV' => 'production',
     'APP_DEBUG' => 'true',
     'APP_KEY' => 'base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww=',
+    'DB_CONNECTION' => 'sqlite',
+    'DB_DATABASE' => '/tmp/database.sqlite',
     'APP_SERVICES_CACHE' => '/tmp/bootstrap/cache/services.php',
     'APP_PACKAGES_CACHE' => '/tmp/bootstrap/cache/packages.php',
     'APP_CONFIG_CACHE' => '/tmp/bootstrap/cache/config.php',
     'APP_ROUTES_CACHE' => '/tmp/bootstrap/cache/routes-v7.php',
     'APP_EVENTS_CACHE' => '/tmp/bootstrap/cache/events.php',
     'VIEW_COMPILED_PATH' => '/tmp/storage/framework/views',
-    'DB_CONNECTION' => 'sqlite',
-    'DB_DATABASE' => '/tmp/database.sqlite',
     'CACHE_STORE' => 'array',
     'SESSION_DRIVER' => 'cookie',
     'LOG_CHANNEL' => 'stderr',
 ];
 
-foreach ($envDefaults as $key => $val) {
-    if (empty(getenv($key)) && empty($_ENV[$key]) && empty($_SERVER[$key])) {
-        putenv("{$key}={$val}");
-        $_ENV[$key] = $val;
-        $_SERVER[$key] = $val;
-    }
+foreach ($envOverrides as $key => $val) {
+    putenv("{$key}={$val}");
+    $_ENV[$key] = $val;
+    $_SERVER[$key] = $val;
 }
 
 // Auto-create writable storage & cache directories in /tmp for Vercel Serverless environment

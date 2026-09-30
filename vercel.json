@@ -34,6 +34,8 @@
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_KEY": "base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww=",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "/tmp/database.sqlite",
         "APP_SERVICES_CACHE": "/tmp/bootstrap/cache/services.php",
         "APP_PACKAGES_CACHE": "/tmp/bootstrap/cache/packages.php",
         "APP_CONFIG_CACHE": "/tmp/bootstrap/cache/config.php",
