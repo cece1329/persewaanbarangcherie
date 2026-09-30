@@ -1,0 +1,17 @@
+[variables]
+APP_ENV = "production"
+APP_KEY = "base64:dGVzdGtleWZvcmJ1aWxkc3RlcGR1bW15MTIzNDU2Nzg="
+
+[phases.install]
+cmds = [
+    "composer install --no-dev --optimize-autoloader --no-interaction",
+    "npm ci || npm install"
+]
+
+[phases.build]
+cmds = [
+    "npm run build"
+]
+
+[start]
+cmd = "php artisan migrate --force && php artisan db:seed --force 2>/dev/null || true && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=$PORT"
