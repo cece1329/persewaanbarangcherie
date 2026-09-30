@@ -23,9 +23,7 @@
             
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                <div class="w-9 h-9 rounded-full bg-pink-100 border border-pink-300 flex items-center justify-center text-rose-700 font-serif-editorial text-xl font-bold group-hover:scale-105 transition">
-                    C
-                </div>
+                <img src="{{ asset('images/web/logo.png') }}" alt="ChérieRent Logo" class="h-14 sm:h-16 w-auto object-contain group-hover:scale-105 transition">
                 <div>
                     <span class="font-serif-editorial text-2xl font-bold tracking-tight text-gray-900">ChérieRent</span>
                     <span class="block text-[9px] tracking-widest text-rose-600 font-semibold uppercase -mt-1">Couture & Rental Atelier</span>
@@ -163,9 +161,7 @@
             <!-- Brand Info -->
             <div class="space-y-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-7 h-7 rounded-full bg-rose-600 text-white flex items-center justify-center font-serif-editorial text-sm font-bold">
-                        C
-                    </div>
+                    <img src="{{ asset('images/web/logo.png') }}" alt="ChérieRent Logo" class="h-12 w-auto object-contain">
                     <span class="font-serif-editorial text-2xl font-bold text-gray-900 tracking-tight">ChérieRent</span>
                 </div>
                 <p class="text-xs text-gray-600 leading-relaxed">
@@ -201,9 +197,21 @@
             <!-- Contact & Store -->
             <div>
                 <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Chérie Atelier</h4>
-                <p class="text-xs text-gray-600 mb-1">Jl. Flower Ribbon No. 12, Jakarta Selatan</p>
-                <p class="text-xs text-gray-600 mb-1">Concierge: +62 895-4016-43905</p>
-                <p class="text-xs text-gray-600">Hours: 09:00 &ndash; 18:00 WIB</p>
+                <ul class="space-y-2 text-xs text-gray-600">
+                    <li>Jl. Flower Ribbon No. 12, Jakarta Selatan</li>
+                    <li>
+                        <span class="font-medium text-gray-800">Email:</span> 
+                        <a href="mailto:rentcherie@gmail.com" class="hover:text-rose-600 transition">rentcherie@gmail.com</a>
+                    </li>
+                    <li>
+                        <span class="font-medium text-gray-800">WhatsApp:</span> 
+                        <a href="https://wa.me/62895401643905" target="_blank" class="hover:text-rose-600 transition">+62 895-4016-43905</a>
+                    </li>
+                    <li>
+                        <span class="font-medium text-gray-800">Jam Operasional:</span><br>
+                        <span>Senin &ndash; Sabtu: 09:00 &ndash; 20:00 WIB</span>
+                    </li>
+                </ul>
             </div>
         </div>
 

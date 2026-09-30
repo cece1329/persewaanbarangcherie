@@ -14,9 +14,7 @@
     <aside class="w-64 bg-slate-900 text-white flex flex-col min-h-screen shrink-0 shadow-xl">
         <!-- Logo Header -->
         <div class="p-6 border-b border-slate-800 flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-rose-600 flex items-center justify-center font-serif-editorial text-white text-lg font-bold">
-                C
-            </div>
+            <img src="{{ asset('images/web/logo.png') }}" alt="ChérieRent Logo" class="h-11 w-auto object-contain">
             <div>
                 <h1 class="font-serif-editorial font-bold text-lg text-rose-200">ChérieRent</h1>
                 <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Atelier Management</span>

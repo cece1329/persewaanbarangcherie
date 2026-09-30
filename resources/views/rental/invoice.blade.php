@@ -17,9 +17,7 @@
         
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-rose-100 pb-6">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center font-serif-editorial text-lg font-bold">
-                    C
-                </div>
+                <img src="{{ asset('images/web/logo.png') }}" alt="ChérieRent Logo" class="h-14 w-auto object-contain">
                 <div>
                     <h1 class="font-serif-editorial text-2xl font-bold text-gray-900">ChérieRent Atelier</h1>
                     <p class="text-[9px] text-gray-500 uppercase tracking-widest font-semibold">Official Reservation Voucher</p>
