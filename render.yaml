@@ -1,0 +1,48 @@
+services:
+  - type: web
+    name: cherie-rent
+    env: php
+    buildCommand: composer install --no-dev --optimize-autoloader --no-interaction && npm ci && npm run build
+    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: LOG_CHANNEL
+        value: errorlog
+      - key: CACHE_DRIVER
+        value: redis
+      - key: SESSION_DRIVER
+        value: redis
+      - key: QUEUE_CONNECTION
+        value: redis
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: cherie-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: cherie-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: cherie-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: cherie-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: cherie-db
+          property: password
+
+databases:
+  - name: cherie-db
+    databaseName: cherie_rent
+    user: cherie_user
