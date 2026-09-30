@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 
 // Enable error reporting for serverless debugging
 ini_set('display_errors', '1');
@@ -55,8 +57,14 @@ foreach ($writableDirectories as $dir) {
 $repoSqlite = __DIR__.'/../database/database.sqlite';
 $tmpSqlite = '/tmp/database.sqlite';
 
-if (file_exists($repoSqlite) && (! file_exists($tmpSqlite) || filesize($tmpSqlite) === 0)) {
-    @copy($repoSqlite, $tmpSqlite);
+if (file_exists($repoSqlite)) {
+    if (! file_exists($tmpSqlite) || filesize($tmpSqlite) === 0) {
+        @copy($repoSqlite, $tmpSqlite);
+    }
+} else {
+    if (! file_exists($tmpSqlite)) {
+        @touch($tmpSqlite);
+    }
 }
 
 // Forward Vercel incoming requests to Laravel front controller
@@ -68,6 +76,16 @@ try {
 
     // Explicitly redirect storage path to /tmp/storage
     $app->useStoragePath('/tmp/storage');
+
+    // Auto-migrate and seed if SQLite database is empty / tables missing
+    try {
+        if (! Schema::hasTable('dresses')) {
+            Artisan::call('migrate', ['--force' => true]);
+            Artisan::call('db:seed', ['--force' => true]);
+        }
+    } catch (Throwable $dbEx) {
+        // Silently continue if already initialized or migration error
+    }
 
     $request = Request::capture();
     $app->handleRequest($request);
