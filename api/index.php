@@ -1,10 +1,15 @@
 <?php
 
+// Enable error reporting for serverless debugging
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 // Ensure essential Laravel environment variables fall back cleanly on Vercel
 $envDefaults = [
     'APP_NAME' => 'ChérieRent',
     'APP_ENV' => 'production',
-    'APP_DEBUG' => 'false',
+    'APP_DEBUG' => 'true',
     'APP_KEY' => 'base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww=',
     'VIEW_COMPILED_PATH' => '/tmp/storage/framework/views',
     'DB_CONNECTION' => 'sqlite',
@@ -44,5 +49,12 @@ if (file_exists($repoSqlite) && (!file_exists($tmpSqlite) || filesize($tmpSqlite
     @copy($repoSqlite, $tmpSqlite);
 }
 
-// Forward Vercel incoming requests to Laravel's front controller
-require __DIR__ . '/../public/index.php';
+// Forward Vercel incoming requests to Laravel's front controller with exception handler
+try {
+    require __DIR__ . '/../public/index.php';
+} catch (\Throwable $e) {
+    echo '<h2>Serverless Application Error</h2>';
+    echo '<p><strong>Message:</strong> ' . htmlspecialchars($e->getMessage()) . '</p>';
+    echo '<p><strong>File:</strong> ' . htmlspecialchars($e->getFile()) . ' on line ' . $e->getLine() . '</p>';
+    echo '<pre>' . htmlspecialchars($e->getTraceAsString()) . '</pre>';
+}
