@@ -811,14 +811,19 @@
 
             {{-- Section Header --}}
             <div class="text-center mb-10">
-                <span class="inline-block bg-rose-100 text-rose-700 text-xs font-semibold px-3.5 py-1 rounded-full border border-rose-200 uppercase tracking-wider mb-2.5">Hubungi Kami</span>
-                <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Kirim Pesan ke Atelier</h2>
-                <p class="text-sm text-gray-600 max-w-md mx-auto">Ada pertanyaan soal gaun, ukuran, atau ketersediaan? Silakan kirimkan pesan Anda melalui formulir di bawah ini.</p>
+                <span
+                    class="inline-block bg-rose-100 text-rose-700 text-xs font-semibold px-3.5 py-1 rounded-full border border-rose-200 uppercase tracking-wider mb-2.5">Hubungi
+                    Kami</span>
+                <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Kirim Pesan ke Atelier
+                </h2>
+                <p class="text-sm text-gray-600 max-w-md mx-auto">Ada pertanyaan soal gaun, ukuran, atau ketersediaan?
+                    Silakan kirimkan pesan Anda melalui formulir di bawah ini.</p>
             </div>
 
             {{-- Flash Messages --}}
             @if(session('success'))
-                <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium px-4 py-3.5 rounded-xl">
+                <div
+                    class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium px-4 py-3.5 rounded-xl">
                     {{ session('success') }}
                 </div>
             @endif
@@ -844,8 +849,7 @@
                         <label class="block text-xs font-bold text-gray-700 mb-2 uppercase tracking-wider">
                             Nama Lengkap <span class="text-rose-500">*</span>
                         </label>
-                        <input type="text" name="name" value="{{ old('name') }}" required
-                            placeholder="e.g. Sophia Cherie"
+                        <input type="text" name="name" value="{{ old('name') }}" required placeholder="e.g. Sophia Cherie"
                             class="w-full h-11 text-sm border border-gray-200 rounded-xl px-4 bg-white focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none text-gray-800 placeholder-gray-400 transition shadow-2xs">
                     </div>
 
@@ -854,8 +858,7 @@
                         <label class="block text-xs font-bold text-gray-700 mb-2 uppercase tracking-wider">
                             Email <span class="text-rose-500">*</span>
                         </label>
-                        <input type="email" name="email" value="{{ old('email') }}" required
-                            placeholder="your@email.com"
+                        <input type="email" name="email" value="{{ old('email') }}" required placeholder="your@email.com"
                             class="w-full h-11 text-sm border border-gray-200 rounded-xl px-4 bg-white focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none text-gray-800 placeholder-gray-400 transition shadow-2xs">
                     </div>
                 </div>
@@ -866,8 +869,7 @@
                         <label class="block text-xs font-bold text-gray-700 mb-2 uppercase tracking-wider">
                             No. WhatsApp <span class="text-gray-400 font-normal normal-case">(opsional)</span>
                         </label>
-                        <input type="text" name="phone" value="{{ old('phone') }}"
-                            placeholder="0895-xxxx-xxxx"
+                        <input type="text" name="phone" value="{{ old('phone') }}" placeholder="0895-xxxx-xxxx"
                             class="w-full h-11 text-sm border border-gray-200 rounded-xl px-4 bg-white focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none text-gray-800 placeholder-gray-400 transition shadow-2xs">
                     </div>
 
@@ -886,9 +888,11 @@
                                 <option value="Keluhan & Feedback" {{ old('subject') === 'Keluhan & Feedback' ? 'selected' : '' }}>Keluhan & Feedback</option>
                                 <option value="Lainnya" {{ old('subject') === 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                             </select>
-                            <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-400">
+                            <div
+                                class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
                                 </svg>
                             </div>
                         </div>
@@ -900,14 +904,14 @@
                     <label class="block text-xs font-bold text-gray-700 mb-2 uppercase tracking-wider">
                         Pesan <span class="text-rose-500">*</span>
                     </label>
-                    <textarea name="message" rows="5" required
-                        placeholder="Tuliskan pertanyaan atau detail pesanan Anda..."
+                    <textarea name="message" rows="5" required placeholder="Tuliskan pertanyaan atau detail pesanan Anda..."
                         class="w-full text-sm border border-gray-200 rounded-xl p-4 bg-white focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none text-gray-800 placeholder-gray-400 transition resize-none shadow-2xs min-h-[140px]">{{ old('message') }}</textarea>
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-rose-100">
                     <p class="text-xs text-gray-500 leading-relaxed">
-                        Pesan Anda akan terkirim langsung ke <strong class="text-gray-800 font-semibold">rentcherie@gmail.com</strong>.<br>
+                        Pesan Anda akan terkirim langsung ke <strong
+                            class="text-gray-800 font-semibold">rentcherie@gmail.com</strong>.<br>
                         Balasan otomatis akan dikirim ke email Anda.
                     </p>
                     <button type="submit"
