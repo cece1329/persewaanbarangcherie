@@ -9,7 +9,7 @@ scaling:
 env:
   APP_NAME: "CherieRent"
   APP_ENV: "production"
-  APP_DEBUG: "false"
+  APP_DEBUG: "true"
   APP_KEY: "base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww="
   APP_URL: "https://persewaanbarangcherie.wasmer.app"
   DB_CONNECTION: "sqlite"
