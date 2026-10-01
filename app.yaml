@@ -1,21 +1,17 @@
-kind: WasmerApp
-name: cherie-rent
-package: .
+kind: wasmer.io/App.v0
+name: persewaanbarangcherie
+owner: cece1329
+package: cece1329/persewaanbarangcherie
 
 scaling:
   mode: single_concurrency
-
-capabilities:
-  instaboot:
-    requests:
-      - path: /
 
 env:
   APP_NAME: "CherieRent"
   APP_ENV: "production"
   APP_DEBUG: "false"
   APP_KEY: "base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww="
-  APP_URL: "https://cherie-rent.wasmer.app"
+  APP_URL: "https://persewaanbarangcherie.wasmer.app"
   DB_CONNECTION: "sqlite"
   DB_DATABASE: "/app/database/database.sqlite"
   SESSION_DRIVER: "database"
