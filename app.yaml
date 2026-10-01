@@ -1,0 +1,24 @@
+kind: WasmerApp
+name: cherie-rent
+package: .
+
+scaling:
+  mode: single_concurrency
+
+capabilities:
+  instaboot:
+    requests:
+      - path: /
+
+env:
+  APP_NAME: "CherieRent"
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+  APP_KEY: "base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww="
+  APP_URL: "https://cherie-rent.wasmer.app"
+  DB_CONNECTION: "sqlite"
+  DB_DATABASE: "/app/database/database.sqlite"
+  SESSION_DRIVER: "database"
+  CACHE_STORE: "database"
+  QUEUE_CONNECTION: "database"
+  LOG_CHANNEL: "stderr"

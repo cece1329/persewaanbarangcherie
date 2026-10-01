@@ -11,7 +11,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'), // Mengubah default langsung ke mysql agar tidak nyasar ke sqlite
+    'default' => env('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
