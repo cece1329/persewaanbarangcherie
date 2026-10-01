@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +12,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // On Wasmer Edge, /app is read-only. Copy SQLite DB to writable /tmp.
+        if (PHP_OS_FAMILY === 'Linux' && is_dir('/tmp') && ! is_writable(base_path('database'))) {
+            $source = base_path('database/database.sqlite');
+            $dest = '/tmp/database.sqlite';
+
+            if (file_exists($source) && (! file_exists($dest) || filesize($dest) < filesize($source))) {
+                copy($source, $dest);
+            }
+
+            if (file_exists($dest)) {
+                Config::set('database.connections.sqlite.database', $dest);
+                putenv('DB_DATABASE='.$dest);
+            }
+        }
     }
 
     /**
