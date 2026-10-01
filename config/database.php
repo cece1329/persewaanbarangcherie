@@ -21,17 +21,33 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'url' => env('DB_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'busy_timeout' => null,
-            'journal_mode' => null,
-            'synchronous' => null,
-            'transaction_mode' => 'DEFERRED',
-        ],
+        'sqlite' => (function () {
+            $defaultDb = env('DB_DATABASE', database_path('database.sqlite'));
+
+            // On Wasmer Edge, /app is read-only. Copy DB to /tmp for write access.
+            if (PHP_OS_FAMILY === 'Linux' && is_dir('/tmp')) {
+                $source = __DIR__ . '/../database/database.sqlite';
+                $dest = '/tmp/database.sqlite';
+                if (file_exists($source) && (! file_exists($dest) || filesize($dest) < filesize($source))) {
+                    copy($source, $dest);
+                }
+                if (file_exists($dest)) {
+                    $defaultDb = $dest;
+                }
+            }
+
+            return [
+                'driver' => 'sqlite',
+                'url' => env('DB_URL'),
+                'database' => $defaultDb,
+                'prefix' => '',
+                'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+                'busy_timeout' => null,
+                'journal_mode' => null,
+                'synchronous' => null,
+                'transaction_mode' => 'DEFERRED',
+            ];
+        })(),
 
         'mysql' => [
             'driver' => 'mysql',

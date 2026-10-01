@@ -12,8 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // On Wasmer Edge, /app is read-only. Copy SQLite DB to writable /tmp.
-        if (PHP_OS_FAMILY === 'Linux' && is_dir('/tmp') && ! is_writable(base_path('database'))) {
+        // On Wasmer Edge, /app is a read-only WASI filesystem.
+        // SQLite needs a writable path — copy DB to /tmp unconditionally on Linux.
+        if (PHP_OS_FAMILY === 'Linux' && is_dir('/tmp')) {
             $source = base_path('database/database.sqlite');
             $dest = '/tmp/database.sqlite';
 
@@ -23,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
 
             if (file_exists($dest)) {
                 Config::set('database.connections.sqlite.database', $dest);
-                putenv('DB_DATABASE='.$dest);
             }
         }
     }
