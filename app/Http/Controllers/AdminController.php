@@ -8,6 +8,7 @@ use App\Models\Dress;
 use App\Models\Message;
 use App\Models\Rental;
 use App\Models\User;
+use App\Services\SupabaseStorageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -140,7 +141,8 @@ class AdminController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('dresses', 'public');
+            $storage = new SupabaseStorageService;
+            $imagePath = $storage->upload($request->file('image'), 'dresses');
         } elseif ($request->filled('image_url')) {
             $imagePath = $request->image_url;
         } else {
@@ -201,7 +203,12 @@ class AdminController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $dress->image = $request->file('image')->store('dresses', 'public');
+            $storage = new SupabaseStorageService;
+            // Delete old image if it was stored in Supabase
+            if ($dress->image) {
+                $storage->delete($dress->image);
+            }
+            $dress->image = $storage->upload($request->file('image'), 'dresses');
         } elseif ($request->filled('image_url')) {
             $dress->image = $request->image_url;
         }

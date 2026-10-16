@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dress;
 use App\Models\Rental;
+use App\Services\SupabaseStorageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -120,7 +121,8 @@ class RentalController extends Controller
             $request->validate([
                 'payment_proof' => ['image', 'mimes:jpeg,png,jpg', 'max:4096'],
             ]);
-            $proofPath = $request->file('payment_proof')->store('payments', 'public');
+            $storage = new SupabaseStorageService;
+            $proofPath = $storage->upload($request->file('payment_proof'), 'payments');
         } else {
             $proofPath = 'simulated_instant_payment.png';
         }
