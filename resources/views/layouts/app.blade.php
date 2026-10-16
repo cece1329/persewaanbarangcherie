@@ -8,8 +8,12 @@
     <meta name="description"
         content="ChérieRent offers a curated archive of vintage, coquette, and evening gowns for portraits, galas, and milestone moments.">
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class="bg-[#fffbfa] text-[#2b2d42] flex flex-col min-h-screen selection:bg-pink-100 selection:text-rose-900">
