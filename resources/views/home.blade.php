@@ -271,7 +271,7 @@
     {{-- ═══════════════════════════════════════ --}}
     {{-- CATEGORIES SHOWCASE --}}
     {{-- ═══════════════════════════════════════ --}}
-    <section class="py-16 px-4 max-w-7xl mx-auto relative">
+    <section class="py-16 px-4 max-w-7xl mx-auto relative" id="categories">
 
         {{-- Decorative floral corner --}}
         <div aria-hidden="true" class="absolute top-8 left-0 opacity-10 pointer-events-none hidden md:block">
@@ -298,29 +298,164 @@
             <span class="igari-pill">Curated Collections</span>
             <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 mt-3">Explore By Silhouette &amp;
                 Theme</h2>
-            <p class="text-sm text-gray-500 mt-2 font-light italic">Tailored for portrait archives, formal evenings, and
-                editorial concepts.</p>
+            <p class="text-sm text-gray-500 mt-2 font-light italic">Each style tells a different story — find the gown that speaks to your aesthetic.</p>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            @foreach($categories as $category)
+        {{-- Category aesthetic data (slug → palette, ornament, tags) --}}
+        @php
+        $categoryMeta = [
+            'victorian' => [
+                'gradient'   => 'from-purple-950 via-purple-800 to-violet-700',
+                'badge_bg'   => 'bg-purple-100 text-purple-800',
+                'accent'     => '#7c3aed',
+                'light_bg'   => '#f5f3ff',
+                'tags'       => ['Corset', 'Lace', 'Voluminous', 'Royal'],
+                'ornament'   => '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-80"><path d="M30 5 L35 20 L50 20 L38 29 L43 44 L30 35 L17 44 L22 29 L10 20 L25 20 Z" fill="white" opacity="0.9"/><circle cx="30" cy="30" r="8" fill="none" stroke="white" stroke-width="1" opacity="0.5"/></svg>',
+                'era'        => 'Era 1837–1901',
+            ],
+            'vintage' => [
+                'gradient'   => 'from-amber-700 via-yellow-600 to-amber-500',
+                'badge_bg'   => 'bg-amber-100 text-amber-800',
+                'accent'     => '#b45309',
+                'light_bg'   => '#fffbeb',
+                'tags'       => ['Retro', 'Lace', 'Nostalgia', 'Classic'],
+                'ornament'   => '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-80"><circle cx="30" cy="30" r="20" stroke="white" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.7"/><path d="M30 10 C40 20 40 40 30 50 C20 40 20 20 30 10Z" fill="white" opacity="0.5"/><path d="M10 30 C20 20 40 20 50 30 C40 40 20 40 10 30Z" fill="white" opacity="0.5"/></svg>',
+                'era'        => 'Era 1920–1960',
+            ],
+            'pirate' => [
+                'gradient'   => 'from-slate-800 via-slate-700 to-stone-600',
+                'badge_bg'   => 'bg-slate-100 text-slate-800',
+                'accent'     => '#475569',
+                'light_bg'   => '#f8fafc',
+                'tags'       => ['Ruffles', 'Corset', 'Off-shoulder', 'Drama'],
+                'ornament'   => '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-80"><path d="M30 8 L30 52 M8 30 L52 30" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.8"/><circle cx="30" cy="30" r="12" stroke="white" stroke-width="1.5" opacity="0.6"/><circle cx="30" cy="30" r="4" fill="white" opacity="0.9"/></svg>',
+                'era'        => 'Golden Age Piracy',
+            ],
+            'igari' => [
+                'gradient'   => 'from-rose-400 via-pink-400 to-fuchsia-400',
+                'badge_bg'   => 'bg-rose-100 text-rose-700',
+                'accent'     => '#e05269',
+                'light_bg'   => '#fff1f3',
+                'tags'       => ['Blush', 'Ribbons', 'Coquette', 'Dreamy'],
+                'ornament'   => '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-90"><path d="M30 38 C24 30 12 28 12 20 C12 14 18 10 24 14 C27 16 30 20 30 20 C30 20 33 16 36 14 C42 10 48 14 48 20 C48 28 36 30 30 38Z" fill="white" opacity="0.9"/><circle cx="30" cy="44" r="3" fill="white" opacity="0.7"/></svg>',
+                'era'        => 'Japanese Coquette',
+            ],
+            'mori-kei' => [
+                'gradient'   => 'from-emerald-800 via-green-700 to-teal-600',
+                'badge_bg'   => 'bg-emerald-100 text-emerald-800',
+                'accent'     => '#065f46',
+                'light_bg'   => '#ecfdf5',
+                'tags'       => ['Botanical', 'Layers', 'Earthy', 'Forest'],
+                'ornament'   => '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-80"><path d="M30 50 Q20 35 22 20 Q30 10 38 20 Q40 35 30 50Z" fill="white" opacity="0.7"/><path d="M30 50 Q15 38 10 25 Q20 18 28 30Z" fill="white" opacity="0.5"/><path d="M30 50 Q45 38 50 25 Q40 18 32 30Z" fill="white" opacity="0.5"/></svg>',
+                'era'        => 'Forest Girl Aesthetic',
+            ],
+            'modern' => [
+                'gradient'   => 'from-gray-900 via-zinc-800 to-neutral-700',
+                'badge_bg'   => 'bg-gray-100 text-gray-800',
+                'accent'     => '#3f3f46',
+                'light_bg'   => '#fafafa',
+                'tags'       => ['Minimalist', 'Sleek', 'Chic', 'Editorial'],
+                'ornament'   => '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-80"><rect x="12" y="12" width="36" height="36" stroke="white" stroke-width="1.5" opacity="0.7"/><rect x="20" y="20" width="20" height="20" fill="white" opacity="0.3"/><line x1="12" y1="30" x2="48" y2="30" stroke="white" stroke-width="1" opacity="0.5"/></svg>',
+                'era'        => '2020s Contemporary',
+            ],
+            'elegant' => [
+                'gradient'   => 'from-yellow-700 via-amber-600 to-yellow-500',
+                'badge_bg'   => 'bg-yellow-100 text-yellow-800',
+                'accent'     => '#b45309',
+                'light_bg'   => '#fefce8',
+                'tags'       => ['Satin', 'Couture', 'Gala', 'Luxurious'],
+                'ornament'   => '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-90"><polygon points="30,6 36,24 54,24 40,35 45,53 30,42 15,53 20,35 6,24 24,24" fill="white" opacity="0.85"/></svg>',
+                'era'        => 'Haute Couture',
+            ],
+        ];
+        @endphp
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            @foreach($categories as $i => $category)
+                @php
+                    $meta = $categoryMeta[$category->slug] ?? [
+                        'gradient' => 'from-rose-500 via-pink-500 to-rose-400',
+                        'badge_bg' => 'bg-rose-100 text-rose-700',
+                        'accent'   => '#e05269',
+                        'light_bg' => '#fff1f3',
+                        'tags'     => ['Style', 'Gown'],
+                        'ornament' => '',
+                        'era'      => 'Timeless',
+                    ];
+                    // Make 1 card "wide" (first one) on larger screens for visual variety
+                    $wideClass = ($i === 0) ? 'sm:col-span-2 lg:col-span-1 xl:col-span-2' : '';
+                @endphp
                 <a href="{{ route('catalog.index', ['category' => $category->slug]) }}"
-                    class="igari-card p-5 rounded-3xl text-center group hover:border-rose-300 transition igari-card-hover relative overflow-hidden">
-                    {{-- Background petal on hover --}}
-                    <div
-                        class="absolute inset-0 bg-gradient-to-b from-rose-50/0 to-rose-50/60 opacity-0 group-hover:opacity-100 transition duration-300 rounded-3xl">
-                    </div>
-                    <div class="relative z-10">
-                        {{-- Category icon using first letter with floral frame --}}
-                        <div
-                            class="w-14 h-14 bg-rose-50 group-hover:bg-rose-600 text-rose-600 group-hover:text-white rounded-full flex items-center justify-center font-serif-editorial font-bold text-2xl mx-auto mb-3 transition duration-300 border-2 border-rose-200 group-hover:border-rose-600 shadow-sm">
-                            {{ strtoupper(substr($category->name, 0, 1)) }}
+                    id="cat-{{ $category->slug }}"
+                    class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 block {{ $wideClass }}"
+                    style="min-height: 260px;">
+
+                    {{-- Dark gradient background --}}
+                    <div class="absolute inset-0 bg-gradient-to-br {{ $meta['gradient'] }} transition-all duration-500"></div>
+
+                    {{-- Subtle noise/texture overlay --}}
+                    <div class="absolute inset-0 opacity-10"
+                        style="background-image: url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M0 40L40 0H20L0 20M40 40V20L20 40\'/%3E%3C/g%3E%3C/svg%3E'); background-size: 40px 40px;"></div>
+
+                    {{-- Glowing circle in corner --}}
+                    <div class="absolute -top-8 -right-8 w-32 h-32 rounded-full opacity-20 blur-2xl bg-white group-hover:opacity-30 transition-opacity duration-500"></div>
+                    <div class="absolute -bottom-6 -left-6 w-24 h-24 rounded-full opacity-10 blur-xl bg-white group-hover:opacity-20 transition-opacity duration-500"></div>
+
+                    {{-- Content --}}
+                    <div class="relative z-10 p-6 flex flex-col justify-between h-full" style="min-height: 260px;">
+
+                        {{-- Top row: ornament + era badge --}}
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="drop-shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                {!! $meta['ornament'] !!}
+                            </div>
+                            <span class="text-[9px] font-bold uppercase tracking-widest text-white/60 bg-white/10 px-2.5 py-1 rounded-full backdrop-blur-sm border border-white/10">
+                                {{ $meta['era'] }}
+                            </span>
                         </div>
-                        <h3
-                            class="font-serif-editorial font-semibold text-gray-900 group-hover:text-rose-700 transition text-sm leading-tight">
-                            {{ $category->name }}
-                        </h3>
-                        <p class="text-[11px] text-rose-500 font-semibold mt-1">{{ $category->dresses_count }} Pieces</p>
+
+                        {{-- Middle: category name + description --}}
+                        <div class="flex-1 mt-2">
+                            <h3 class="font-serif-editorial text-white font-bold text-xl leading-tight mb-1 drop-shadow-sm">
+                                {{ $category->name }}
+                            </h3>
+                            {{-- Description: hidden by default, slides up on hover --}}
+                            <p class="text-white/70 text-[11px] leading-relaxed font-light
+                                       max-h-0 overflow-hidden opacity-0
+                                       group-hover:max-h-24 group-hover:opacity-100
+                                       transition-all duration-500 ease-out">
+                                {{ $category->description }}
+                            </p>
+                        </div>
+
+                        {{-- Bottom: tags + count --}}
+                        <div class="mt-4">
+                            {{-- Aesthetic tags --}}
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                @foreach($meta['tags'] as $tag)
+                                    <span class="text-[9px] font-semibold uppercase tracking-wider text-white/80 bg-white/15 px-2 py-0.5 rounded-full border border-white/20">
+                                        {{ $tag }}
+                                    </span>
+                                @endforeach
+                            </div>
+
+                            {{-- Divider line --}}
+                            <div class="h-px bg-white/20 mb-3"></div>
+
+                            {{-- Pieces count + arrow --}}
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/90 text-xs font-bold">
+                                    {{ $category->dresses_count }}
+                                    <span class="font-normal text-white/60">pieces</span>
+                                </span>
+                                <span class="w-7 h-7 rounded-full bg-white/15 border border-white/20 flex items-center justify-center
+                                             group-hover:bg-white group-hover:border-white transition-all duration-300">
+                                    <svg class="w-3 h-3 text-white group-hover:text-gray-800 transition-colors duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M7 7h10v10"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </a>
             @endforeach
