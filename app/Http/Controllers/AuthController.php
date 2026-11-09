@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -24,10 +25,26 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             if (Auth::user()->isAdmin()) {
+                Log::info('Admin authenticated successfully.', [
+                    'user_id' => Auth::id(),
+                    'email' => Auth::user()->email,
+                    'ip' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                ]);
+
                 return redirect()->route('admin.dashboard')->with('success', 'Welcome back to the Atelier Dashboard.');
             }
 
             return redirect()->intended(route('dashboard'))->with('success', 'Welcome back to ChérieRent.');
+        }
+
+        $targetUser = User::where('email', $credentials['email'])->first();
+        if ($targetUser && $targetUser->isAdmin()) {
+            Log::warning('Failed login attempt on admin account.', [
+                'email' => $credentials['email'],
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ]);
         }
 
         return back()->withErrors([
@@ -67,6 +84,14 @@ class AuthController extends Controller
 
     public function quickDemoLogin($role)
     {
+        if (app()->isProduction()) {
+            abort(404);
+        }
+
+        if ($role === 'admin' && ! app()->environment('testing')) {
+            return redirect()->route('login')->with('error', 'Demi keamanan, bypass login admin melalui tombol demo dinonaktifkan. Silakan gunakan form login resmi.');
+        }
+
         $email = match ($role) {
             'admin' => 'admin@cherierent.com',
             default => 'user@cherierent.com',
