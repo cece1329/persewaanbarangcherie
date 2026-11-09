@@ -43,6 +43,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Admin Route Prefix
+    |--------------------------------------------------------------------------
+    |
+    | Defines the URL prefix for the admin control panel. You can change
+    | this in your .env file to a custom/hidden slug (e.g. atelier-panel-x9)
+    | to obscure the admin panel from automated bot scanners.
+    |
+    */
+
+    'admin_prefix' => env('ADMIN_PREFIX', 'admin'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |

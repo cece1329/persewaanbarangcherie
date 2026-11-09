@@ -21,7 +21,7 @@ Route::post('/catalog/{id}/wishlist', [CatalogController::class, 'toggleWishlist
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/demo-login/{role}', [AuthController::class, 'quickDemoLogin'])->name('demo.login');
@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Middleware / Admin Routes
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix(config('app.admin_prefix', 'admin'))->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     // Manage Rentals
