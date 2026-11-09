@@ -8,18 +8,6 @@
             <p class="text-xs text-gray-500 mt-1">Access your client portal & reservation archive.</p>
         </div>
 
-        <div class="bg-rose-50/70 border border-rose-200 rounded-2xl p-4 mb-6">
-            <p class="text-[11px] font-bold text-rose-900 mb-2 text-center uppercase tracking-wider">Quick Demo Login Access:</p>
-            <div class="grid grid-cols-2 gap-2">
-                <a href="{{ route('demo.login', 'customer') }}" class="text-xs font-semibold bg-white text-rose-700 hover:bg-rose-100 py-2.5 px-3 rounded-xl border border-rose-200 text-center shadow-xs transition">
-                    Client Demo
-                </a>
-                <a href="{{ route('demo.login', 'admin') }}" class="text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 py-2.5 px-3 rounded-xl text-center shadow-xs transition">
-                    Atelier Admin
-                </a>
-            </div>
-        </div>
-
         <form action="{{ route('login') }}" method="POST" class="space-y-4">
             @csrf
             <div>
