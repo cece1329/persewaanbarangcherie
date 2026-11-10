@@ -60,8 +60,8 @@ class CherieRentTest extends TestCase
     public function test_admin_can_login_with_credentials_and_access_dashboard(): void
     {
         $response = $this->post('/login', [
-            'email' => 'admin@cherierent.com',
-            'password' => 'password',
+            'email' => 'rentcherie@gmail.com',
+            'password' => 'cece1329',
         ]);
 
         $response->assertRedirect('/admin/dashboard');

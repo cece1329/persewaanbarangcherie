@@ -93,7 +93,7 @@ class AuthController extends Controller
         }
 
         $email = match ($role) {
-            'admin' => 'admin@cherierent.com',
+            'admin' => 'rentcherie@gmail.com',
             default => 'user@cherierent.com',
         };
 
