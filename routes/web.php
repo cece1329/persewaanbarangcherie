@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Middleware / Admin Routes
-Route::middleware(['auth', 'admin'])->prefix(config('app.admin_prefix', 'admin'))->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     // Manage Rentals
