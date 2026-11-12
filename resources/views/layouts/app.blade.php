@@ -34,8 +34,8 @@
 
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                <img src="{{ asset('images/web/logo.png') }}" alt="ChérieRent Logo"
-                    class="w-14 h-16 object-contain group-hover:scale-105 transition">
+                <img src="{{ asset('images/web/logodomain.png') }}" alt="ChérieRent Logo"
+                    class="h-16 sm:h-18 w-auto object-contain group-hover:scale-105 transition">
                 <div>
                     <span class="font-serif-editorial text-2xl font-bold tracking-tight text-gray-900">ChérieRent</span>
                     <span class="block text-[9px] tracking-widest text-rose-600 font-semibold uppercase -mt-1">Couture &
