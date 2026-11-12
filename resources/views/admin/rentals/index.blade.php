@@ -11,9 +11,9 @@
             <p class="text-xs text-gray-500">Update fulfillment status, track returns, and manage security deposits.</p>
         </div>
 
-        <form action="{{ route('admin.rentals.index') }}" method="GET" class="flex items-center gap-2">
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Search code, client name, gown..." class="px-4 py-2 text-xs border border-gray-300 rounded-xl bg-white outline-none w-64">
-            <button type="submit" class="bg-slate-900 text-white text-xs px-4 py-2 rounded-xl font-bold hover:bg-slate-800 transition">
+        <form action="{{ route('admin.rentals.index') }}" method="GET" class="flex items-center gap-2 w-full sm:w-auto">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Search code, client name, gown..." class="px-4 py-2 text-xs border border-gray-300 rounded-xl bg-white outline-none w-full sm:w-64">
+            <button type="submit" class="bg-slate-900 text-white text-xs px-4 py-2 rounded-xl font-bold hover:bg-slate-800 transition shrink-0">
                 Search
             </button>
         </form>
