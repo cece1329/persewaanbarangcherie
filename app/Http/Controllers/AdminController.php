@@ -309,7 +309,7 @@ class AdminController extends Controller
             'card_decoration' => $validated['card_decoration'] ?? null,
         ]);
 
-        return back()->with('success', 'Tampilan dan data kategori berhasil diperbarui.');
+        return redirect()->route('admin.categories.index')->with('success', 'Tampilan dan data kategori berhasil diperbarui.');
     }
 
 
