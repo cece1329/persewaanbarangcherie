@@ -30,22 +30,32 @@ class VerifyEmailNotification extends BaseVerifyEmail
     }
 
     /**
-     * Get the verify email notification mail message for the given URL.
+     * Build the mail representation of the notification.
      *
-     * @param  string  $url
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    protected function buildMailMessage($url): MailMessage
+    public function toMail($notifiable)
     {
+        $verificationUrl = $this->verificationUrl($notifiable);
+
+        if (static::$toMailCallback) {
+            return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
+        }
+
+        $recipientName = ! empty($notifiable->name) ? $notifiable->name : 'Pelanggan ChérieRent';
+
         return (new MailMessage)
-            ->subject('🎀 Verifikasi Alamat Email Akun ChérieRent')
-            ->greeting('Halo, Cantik!')
-            ->line('Terima kasih telah bergabung di ChérieRent Couture & Rental Atelier.')
-            ->line('Untuk mengaktifkan akunmu dan memastikan reservasi gaun aman, silakan klik tombol di bawah ini untuk memverifikasi alamat email kamu:')
-            ->action('Verifikasi Email Saya ✨', $url)
+            ->from('rentcherie@gmail.com', 'ChérieRent Atelier')
+            ->replyTo('rentcherie@gmail.com', 'ChérieRent Atelier')
+            ->subject('Verifikasi Alamat Email - ChérieRent Atelier')
+            ->greeting('Halo, ' . $recipientName . '!')
+            ->line('Terima kasih telah mendaftar di ChérieRent Couture & Rental Atelier.')
+            ->line('Untuk mengaktifkan akunmu dan memastikan keamanan reservasi gaun, silakan klik tombol di bawah ini untuk memverifikasi email kamu:')
+            ->action('Verifikasi Email Saya', $verificationUrl)
             ->line('Tautan verifikasi ini berlaku selama 120 menit.')
-            ->line('Jika kamu tidak merasa mendaftar di ChérieRent, abaikan saja email ini.')
-            ->salutation("Salam hangat,\nTim Atelier ChérieRent");
+            ->line('Jika kamu tidak merasa mendaftar di ChérieRent, abaikan email ini.')
+            ->salutation("Salam hangat,\nTim ChérieRent Atelier\nJl. Flower Ribbon No. 12, Jakarta Selatan");
     }
 }
 

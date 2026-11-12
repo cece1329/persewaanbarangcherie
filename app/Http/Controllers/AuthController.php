@@ -124,13 +124,10 @@ class AuthController extends Controller
         // Selalu loginkan browser sebagai user yang akunnya diverifikasi
         Auth::login($user);
 
-        // Jika akun yang diverifikasi adalah akun admin, masuk ke admin dashboard
-        if ($user->isAdmin()) {
-            return redirect()->route('admin.dashboard')->with('success', 'Email Admin berhasil diverifikasi.');
-        }
-
-        // Akun pelanggan biasa SELALU diarahkan ke Client Portal pelanggan (/dashboard)
-        return redirect()->route('dashboard')->with('success', 'Selamat! Email kamu berhasil diverifikasi. Akunmu sekarang sudah aktif sepenuhnya! ✨');
+        // Tampilkan halaman konfirmasi sukses (mengingatkan user untuk me-refresh web sebelumnya)
+        return view('auth.verified-success', [
+            'user' => $user,
+        ]);
     }
 
     public function resendVerificationEmail(Request $request)

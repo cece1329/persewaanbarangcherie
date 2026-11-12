@@ -37,10 +37,18 @@
             Belum menerima email? Periksa folder <strong>Spam / Promosi</strong> di emailmu atau klik tombol di bawah untuk mengirim ulang tautan verifikasi baru.
         </p>
 
+        {{-- Refresh Reminder Button --}}
+        <div class="mb-4">
+            <button type="button" onclick="window.location.reload()" class="w-full py-3 rounded-2xl border-2 border-rose-300 text-rose-700 bg-rose-50/60 hover:bg-rose-100 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-xs">
+                <span>🔄</span>
+                <span>Sudah Verifikasi di Email? Refresh Halaman Ini</span>
+            </button>
+        </div>
+
         {{-- Resend Verification Form --}}
         <form method="POST" action="{{ route('verification.send') }}" class="space-y-4">
             @csrf
-            <button type="submit" class="w-full btn-igari-primary py-3.5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-md">
+            <button type="submit" class="w-full btn-igari-secondary py-3 rounded-2xl text-xs font-bold uppercase tracking-wider">
                 Kirim Ulang Email Verifikasi ✉️
             </button>
         </form>
