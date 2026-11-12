@@ -12,7 +12,7 @@ env:
   APP_DEBUG: "true"
   APP_KEY: "base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww="
   APP_URL: "https://persewaanbarangcherie.wasmer.app"
-  DB_CONNECTION: "sqlite"
+  DB_CONNECTION: "mysql"
   SESSION_DRIVER: "cookie"
   CACHE_STORE: "array"
   QUEUE_CONNECTION: "sync"
