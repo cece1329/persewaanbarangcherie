@@ -22,7 +22,7 @@
                 Payment Instructions ({{ strtoupper($rental->payment_method) }})
             </h3>
 
-            @if($rental->payment_method === 'qris' || $rental->payment_method === 'shopee_pay')
+            @if(in_array($rental->payment_method, ['qris','shopee_pay','dana']))
                 <div class="text-center space-y-3 bg-rose-50/40 p-6 rounded-2xl border border-rose-200">
                     <p class="text-xs text-gray-600 font-medium">Scan the QR code below via Mobile Banking or E-Wallet:</p>
                     <div class="w-48 h-48 bg-white p-3 rounded-2xl border-2 border-rose-300 mx-auto shadow-md flex items-center justify-center">

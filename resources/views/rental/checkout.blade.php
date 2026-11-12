@@ -88,9 +88,15 @@
                         <span class="font-bold text-gray-800">Bank Mandiri Transfer</span>
                     </label>
                     <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50">
-                        <input type="radio" name="payment_method" value="shopee_pay" class="text-rose-600">
-                        <span class="font-bold text-gray-800">E-Wallet (ShopeePay / DANA)</span>
-                    </label>
+    <input type="radio" name="payment_method" value="shopee_pay" class="text-rose-600">
+    <img src="https://via.placeholder.com/24?text=SP" alt="Shopee Pay" class="w-5 h-5">
+    <span class="font-bold text-gray-800">ShopeePay</span>
+</label>
+<label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50">
+    <input type="radio" name="payment_method" value="dana" class="text-rose-600">
+    <img src="https://via.placeholder.com/24?text=DANA" alt="DANA" class="w-5 h-5">
+    <span class="font-bold text-gray-800">DANA</span>
+</label>
                 </div>
             </div>
 

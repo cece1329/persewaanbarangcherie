@@ -49,7 +49,7 @@ class RentalController extends Controller
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'shipping_method' => ['required', 'in:delivery,pickup'],
             'shipping_address' => ['required_if:shipping_method,delivery', 'nullable', 'string'],
-            'payment_method' => ['required', 'in:qris,bca,mandiri,shopee_pay'],
+            'payment_method' => ['required', 'in:qris,bca,mandiri,shopee_pay,dana'],
             'notes' => ['nullable', 'string', 'max:500'],
             'agree_terms' => ['required', 'accepted'],
         ]);
