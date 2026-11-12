@@ -35,6 +35,10 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard')->with('success', 'Welcome back to the Atelier Dashboard.');
             }
 
+            if (! Auth::user()->hasVerifiedEmail()) {
+                return redirect()->route('verification.notice')->with('warning', 'Silakan verifikasi email kamu terlebih dahulu untuk mengaktifkan akun.');
+            }
+
             return redirect()->intended(route('dashboard'))->with('success', 'Welcome back to ChérieRent.');
         }
 
@@ -77,9 +81,48 @@ class AuthController extends Controller
             'avatar' => 'https://api.dicebear.com/7.x/adventurer/svg?seed='.urlencode($validated['name']),
         ]);
 
+        try {
+            $user->sendEmailVerificationNotification();
+        } catch (\Throwable $e) {
+            Log::error('Gagal mengirim email verifikasi ke '.$user->email.': '.$e->getMessage());
+        }
+
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Your ChérieRent account has been created successfully.');
+        return redirect()->route('verification.notice')->with('success', 'Akun berhasil dibuat! Silakan cek kotak masuk email kamu untuk mengaktifkannya.');
+    }
+
+    public function showVerificationNotice(Request $request)
+    {
+        if ($request->user() && $request->user()->hasVerifiedEmail()) {
+            return redirect()->route('dashboard');
+        }
+
+        return view('auth.verify-email');
+    }
+
+    public function verifyEmail(\Illuminate\Foundation\Auth\EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+
+        return redirect()->route('dashboard')->with('success', 'Selamat! Email kamu berhasil diverifikasi. Akunmu sekarang sudah aktif sepenuhnya! ✨');
+    }
+
+    public function resendVerificationEmail(Request $request)
+    {
+        if ($request->user() && $request->user()->hasVerifiedEmail()) {
+            return redirect()->route('dashboard');
+        }
+
+        try {
+            $request->user()->sendEmailVerificationNotification();
+            $status = 'Tautan verifikasi baru telah berhasil dikirimkan ke email kamu. 💌';
+        } catch (\Throwable $e) {
+            Log::error('Gagal mengirim ulang email verifikasi: '.$e->getMessage());
+            $status = 'Gagal mengirim email verifikasi ('.$e->getMessage().'). Cek konfigurasi SMTP.';
+        }
+
+        return back()->with('status', $status);
     }
 
     public function quickDemoLogin($role)

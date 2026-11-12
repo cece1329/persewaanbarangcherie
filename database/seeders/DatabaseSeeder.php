@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '+62 895-4016-43905',
             'address' => 'Chérie Atelier, Jl. Flower Ribbon No. 12, Jakarta Selatan',
             'avatar' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=AdminCherie',
+            'email_verified_at' => now(),
         ]);
 
         $user = User::create([
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '+62 878-9876-5432',
             'address' => 'Jl. Pink Blossom No. 88, Bandung',
             'avatar' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=Aurelia',
+            'email_verified_at' => now(),
         ]);
 
         $user2 = User::create([
@@ -43,6 +45,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '+62 857-1122-3344',
             'address' => 'Jl. Rose Atelier No. 45, Surabaya',
             'avatar' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=Clarissa',
+            'email_verified_at' => now(),
         ]);
 
         $categories = [

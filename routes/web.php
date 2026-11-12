@@ -27,8 +27,19 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/demo-login/{role}', [AuthController::class, 'quickDemoLogin'])->name('demo.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Customer Authenticated Routes
+// Email Verification Routes
 Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', [AuthController::class, 'showVerificationNotice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+    Route::post('/email/verification-notification', [AuthController::class, 'resendVerificationEmail'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+});
+
+// Customer Authenticated Routes (Requires Verified Email)
+Route::middleware(['auth', 'verified'])->group(function () {
     // Checkout & Rental Process
     Route::get('/checkout/{id}', [RentalController::class, 'checkout'])->name('rental.checkout');
     Route::post('/rental/store', [RentalController::class, 'store'])->name('rental.store');
