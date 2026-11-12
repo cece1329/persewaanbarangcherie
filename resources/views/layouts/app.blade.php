@@ -136,12 +136,14 @@
         <!-- Mobile Menu Overlay -->
         <div x-show="mobileMenuOpen" x-transition
             class="md:hidden bg-white border-b border-rose-100 px-4 py-4 space-y-3">
-            <a href="{{ route('home') }}"
-                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Home</a>
-            <a href="{{ route('catalog.index') }}"
-                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Gown
+            <a href="{{ route('home') }}" @click="mobileMenuOpen = false"
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('home') ? 'text-rose-600 font-bold' : '' }}">Home</a>
+            <a href="{{ route('catalog.index') }}" @click="mobileMenuOpen = false"
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('catalog.*') ? 'text-rose-600 font-bold' : '' }}">Gown
                 Archive</a>
-            <a href="{{ route('home') }}#quiz-section"
+            <a href="{{ route('home') }}#how-it-works" @click="mobileMenuOpen = false"
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Atelier Guide</a>
+            <a href="{{ route('home') }}#quiz-section" @click="mobileMenuOpen = false"
                 class="block text-rose-600 font-bold text-xs uppercase tracking-wider">Style Matcher</a>
 
             @auth
