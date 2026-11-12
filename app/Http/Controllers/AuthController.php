@@ -101,9 +101,37 @@ class AuthController extends Controller
         return view('auth.verify-email');
     }
 
-    public function verifyEmail(\Illuminate\Foundation\Auth\EmailVerificationRequest $request)
+    public function verifyEmail(Request $request, $id, $hash)
     {
-        $request->fulfill();
+        $user = User::findOrFail($id);
+
+        // Validasi cryptographic signature (mendukung relative signature agar tahan domain proxy/custom domain)
+        if (! $request->hasValidSignature() && ! $request->hasValidRelativeSignature()) {
+            abort(403, 'Tautan verifikasi sudah kedaluwarsa atau tidak valid.');
+        }
+
+        // Validasi hash email
+        if (! hash_equals(sha1($user->getEmailForVerification()), (string) $hash)) {
+            abort(403, 'Tautan verifikasi email tidak valid.');
+        }
+
+        // Tandai sebagai terverifikasi jika belum
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+            event(new \Illuminate\Auth\Events\Verified($user));
+        }
+
+        // Jika browser sedang login sebagai akun lain (misal Admin yang mengetes akun baru):
+        if (Auth::check() && Auth::id() !== $user->id) {
+            if (Auth::user()->isAdmin()) {
+                return redirect()->route('admin.dashboard')->with('success', "Email akun {$user->email} berhasil diverifikasi! ✨");
+            }
+        }
+
+        // Login otomatis jika belum ada sesi aktif
+        if (! Auth::check()) {
+            Auth::login($user);
+        }
 
         return redirect()->route('dashboard')->with('success', 'Selamat! Email kamu berhasil diverifikasi. Akunmu sekarang sudah aktif sepenuhnya! ✨');
     }

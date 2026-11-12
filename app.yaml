@@ -11,7 +11,7 @@ env:
   APP_ENV: "production"
   APP_DEBUG: "true"
   APP_KEY: "base64:rWZfocJKOgHefIZWMBVh6DzaKLR8rUPEjrjIEUMv3ww="
-  APP_URL: "https://persewaanbarangcherie.wasmer.app"
+  APP_URL: "https://citraarifera.my.id"
   DB_CONNECTION: "mysql"
   SESSION_DRIVER: "cookie"
   CACHE_STORE: "array"

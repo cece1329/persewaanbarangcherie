@@ -28,11 +28,12 @@ Route::get('/demo-login/{role}', [AuthController::class, 'quickDemoLogin'])->nam
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Email Verification Routes
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+    ->middleware('throttle:6,1')
+    ->name('verification.verify');
+
 Route::middleware('auth')->group(function () {
     Route::get('/email/verify', [AuthController::class, 'showVerificationNotice'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
     Route::post('/email/verification-notification', [AuthController::class, 'resendVerificationEmail'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
