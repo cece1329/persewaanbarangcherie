@@ -26,7 +26,7 @@
             <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto 14px auto;">
                 <tr>
                     <td align="center" style="background: #ffffff; width: 72px; height: 72px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); vertical-align: middle;">
-                        <img src="{{ asset('images/web/logodomain.png') }}" alt="ChérieRent Logo" width="58" height="58" style="display: block; width: 58px; height: 58px; object-fit: contain; margin: 0 auto;" />
+                        <img src="https://citraarifera.my.id/images/web/logodomain.png" alt="ChérieRent Logo" width="58" height="58" style="display: block; width: 58px; height: 58px; object-fit: contain; margin: 0 auto;" />
                     </td>
                 </tr>
             </table>

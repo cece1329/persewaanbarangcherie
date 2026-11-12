@@ -10,7 +10,7 @@
 
         {{-- Brand Header --}}
         <div style="margin-bottom: 24px; text-align: center;">
-            <img src="{{ asset('images/web/logodomain.png') }}" alt="ChérieRent Logo" width="64" height="64" style="display: block; width: 64px; height: 64px; object-fit: contain; margin: 0 auto 10px auto;" />
+            <img src="https://citraarifera.my.id/images/web/logodomain.png" alt="ChérieRent Logo" width="64" height="64" style="display: block; width: 64px; height: 64px; object-fit: contain; margin: 0 auto 10px auto;" />
             <h2 style="font-family: Georgia, 'Times New Roman', serif; font-size: 26px; font-weight: bold; color: #18181b; margin: 0; letter-spacing: -0.5px;">ChérieRent</h2>
             <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 2.5px; color: #e05269; font-weight: bold; margin: 4px 0 0 0;">Couture & Rental Atelier</p>
         </div>
