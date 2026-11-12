@@ -121,18 +121,15 @@ class AuthController extends Controller
             event(new \Illuminate\Auth\Events\Verified($user));
         }
 
-        // Jika browser sedang login sebagai akun lain (misal Admin yang mengetes akun baru):
-        if (Auth::check() && Auth::id() !== $user->id) {
-            if (Auth::user()->isAdmin()) {
-                return redirect()->route('admin.dashboard')->with('success', "Email akun {$user->email} berhasil diverifikasi! ✨");
-            }
+        // Selalu loginkan browser sebagai user yang akunnya diverifikasi
+        Auth::login($user);
+
+        // Jika akun yang diverifikasi adalah akun admin, masuk ke admin dashboard
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard')->with('success', 'Email Admin berhasil diverifikasi.');
         }
 
-        // Login otomatis jika belum ada sesi aktif
-        if (! Auth::check()) {
-            Auth::login($user);
-        }
-
+        // Akun pelanggan biasa SELALU diarahkan ke Client Portal pelanggan (/dashboard)
         return redirect()->route('dashboard')->with('success', 'Selamat! Email kamu berhasil diverifikasi. Akunmu sekarang sudah aktif sepenuhnya! ✨');
     }
 
