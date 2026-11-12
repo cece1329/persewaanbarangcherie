@@ -75,28 +75,46 @@
                 </h3>
 
                 <div class="grid grid-cols-2 gap-3 text-xs">
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50">
+                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
                         <input type="radio" name="payment_method" value="qris" checked class="text-rose-600">
-                        <span class="font-bold text-gray-800">QRIS Instant Payment</span>
+                        <img src="{{ asset('images/payments/qris.png') }}" alt="QRIS" class="h-6 w-auto max-w-[40px] object-contain">
+                        <div>
+                            <span class="font-bold text-gray-800 block">QRIS</span>
+                            <span class="text-[10px] text-gray-500">Instant Payment</span>
+                        </div>
                     </label>
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50">
+                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
                         <input type="radio" name="payment_method" value="bca" class="text-rose-600">
-                        <span class="font-bold text-gray-800">Bank BCA Virtual Account</span>
+                        <img src="{{ asset('images/payments/bca.png') }}" alt="Bank BCA" class="h-6 w-auto max-w-[40px] object-contain">
+                        <div>
+                            <span class="font-bold text-gray-800 block">Bank BCA</span>
+                            <span class="text-[10px] text-gray-500">Virtual Account</span>
+                        </div>
                     </label>
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50">
+                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
                         <input type="radio" name="payment_method" value="mandiri" class="text-rose-600">
-                        <span class="font-bold text-gray-800">Bank Mandiri Transfer</span>
+                        <img src="{{ asset('images/payments/mandiri.png') }}" alt="Bank Mandiri" class="h-6 w-auto max-w-[40px] object-contain">
+                        <div>
+                            <span class="font-bold text-gray-800 block">Bank Mandiri</span>
+                            <span class="text-[10px] text-gray-500">Transfer Bank</span>
+                        </div>
                     </label>
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50">
-    <input type="radio" name="payment_method" value="shopee_pay" class="text-rose-600">
-    <img src="https://via.placeholder.com/24?text=SP" alt="Shopee Pay" class="w-5 h-5">
-    <span class="font-bold text-gray-800">ShopeePay</span>
-</label>
-<label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50">
-    <input type="radio" name="payment_method" value="dana" class="text-rose-600">
-    <img src="https://via.placeholder.com/24?text=DANA" alt="DANA" class="w-5 h-5">
-    <span class="font-bold text-gray-800">DANA</span>
-</label>
+                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
+                        <input type="radio" name="payment_method" value="shopee_pay" class="text-rose-600">
+                        <img src="{{ asset('images/payments/shopeepay.png') }}" alt="ShopeePay" class="h-6 w-auto max-w-[40px] object-contain">
+                        <div>
+                            <span class="font-bold text-gray-800 block">ShopeePay</span>
+                            <span class="text-[10px] text-gray-500">E-Wallet Instant</span>
+                        </div>
+                    </label>
+                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
+                        <input type="radio" name="payment_method" value="dana" class="text-rose-600">
+                        <img src="{{ asset('images/payments/dana.png') }}" alt="DANA" class="h-6 w-auto max-w-[40px] object-contain">
+                        <div>
+                            <span class="font-bold text-gray-800 block">DANA</span>
+                            <span class="text-[10px] text-gray-500">E-Wallet Instant</span>
+                        </div>
+                    </label>
                 </div>
             </div>
 

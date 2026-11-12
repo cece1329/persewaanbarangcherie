@@ -19,11 +19,20 @@
 
         <div class="space-y-4">
             <h3 class="font-serif-editorial font-bold text-gray-900 text-xl text-center">
-                Payment Instructions ({{ strtoupper($rental->payment_method) }})
+                Payment Instructions ({{ strtoupper(str_replace('_', ' ', $rental->payment_method)) }})
             </h3>
 
             @if(in_array($rental->payment_method, ['qris','shopee_pay','dana']))
                 <div class="text-center space-y-3 bg-rose-50/40 p-6 rounded-2xl border border-rose-200">
+                    <div class="flex items-center justify-center gap-2 mb-1">
+                        @if($rental->payment_method === 'shopee_pay')
+                            <img src="{{ asset('images/payments/shopeepay.png') }}" alt="ShopeePay" class="h-7 w-auto object-contain">
+                        @elseif($rental->payment_method === 'dana')
+                            <img src="{{ asset('images/payments/dana.png') }}" alt="DANA" class="h-7 w-auto object-contain">
+                        @else
+                            <img src="{{ asset('images/payments/qris.png') }}" alt="QRIS" class="h-7 w-auto object-contain">
+                        @endif
+                    </div>
                     <p class="text-xs text-gray-600 font-medium">Scan the QR code below via Mobile Banking or E-Wallet:</p>
                     <div class="w-48 h-48 bg-white p-3 rounded-2xl border-2 border-rose-300 mx-auto shadow-md flex items-center justify-center">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CHERIE_RENT_{{ $rental->rental_code }}" class="w-full h-full object-contain" alt="QR Code">
@@ -34,11 +43,19 @@
                 <div class="bg-rose-50/40 p-6 rounded-2xl border border-rose-200 space-y-3">
                     <div class="flex items-center justify-between text-xs">
                         <span class="text-gray-500">Bank Institution:</span>
-                        <strong class="text-gray-900 text-sm">BANK BCA</strong>
+                        <div class="flex items-center gap-2">
+                            @if($rental->payment_method === 'mandiri')
+                                <img src="{{ asset('images/payments/mandiri.png') }}" alt="Mandiri" class="h-5 w-auto object-contain">
+                                <strong class="text-gray-900 text-sm">BANK MANDIRI</strong>
+                            @else
+                                <img src="{{ asset('images/payments/bca.png') }}" alt="BCA" class="h-5 w-auto object-contain">
+                                <strong class="text-gray-900 text-sm">BANK BCA</strong>
+                            @endif
+                        </div>
                     </div>
                     <div class="flex items-center justify-between text-xs">
                         <span class="text-gray-500">Virtual Account Number:</span>
-                        <strong class="text-rose-700 font-mono text-base">8830-1928-4455</strong>
+                        <strong class="text-rose-700 font-mono text-base">{{ $rental->payment_method === 'mandiri' ? '1370-0192-8445-5' : '8830-1928-4455' }}</strong>
                     </div>
                     <div class="flex items-center justify-between text-xs">
                         <span class="text-gray-500">Account Name:</span>
