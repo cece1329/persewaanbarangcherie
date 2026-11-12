@@ -320,6 +320,25 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function destroyUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->isAdmin()) {
+            return back()->with('error', 'Akun Administrator tidak dapat dihapus demi keamanan sistem.');
+        }
+
+        $user->wishlists()->delete();
+        $user->reviews()->delete();
+        $user->rentals()->delete();
+
+        $userName = $user->name;
+        $userEmail = $user->email;
+        $user->delete();
+
+        return back()->with('success', "Akun pelanggan {$userName} ({$userEmail}) berhasil dihapus. Email tersebut sekarang sudah bisa didaftarkan kembali.");
+    }
+
     public function rentalReport(Request $request)
     {
         $query = Rental::with(['user', 'dress']);

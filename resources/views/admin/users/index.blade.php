@@ -19,10 +19,12 @@
                     <tr>
                         <th class="p-4">Client</th>
                         <th class="p-4">Role</th>
+                        <th class="p-4">Status Email</th>
                         <th class="p-4">Phone / Contact</th>
                         <th class="p-4">Shipping Address</th>
                         <th class="p-4 text-center">Reservations</th>
                         <th class="p-4">Joined Date</th>
+                        <th class="p-4 text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -44,6 +46,18 @@
                                 @endif
                             </td>
 
+                            <td class="p-4">
+                                @if($u->isAdmin() || $u->email_verified_at)
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+                                        ✓ Verified
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full">
+                                        ⏳ Belum Verif
+                                    </span>
+                                @endif
+                            </td>
+
                             <td class="p-4 text-gray-700 font-medium">
                                 {{ $u->phone ?? '-' }}
                             </td>
@@ -58,6 +72,21 @@
 
                             <td class="p-4 text-gray-400 text-[11px]">
                                 {{ $u->created_at->format('d M Y') }}
+                            </td>
+
+                            <td class="p-4 text-right">
+                                @if($u->isAdmin())
+                                    <span class="text-gray-400 text-[11px] italic">Admin System</span>
+                                @else
+                                    <form action="{{ route('admin.users.destroy', $u->id) }}" method="POST" onsubmit="return confirm('Apakah kamu yakin ingin menghapus akun pelanggan {{ $u->name }} ({{ $u->email }})? Data dan riwayat terkait akan ikut terhapus.')" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="px-3 py-1.5 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 font-bold text-[11px] transition flex items-center gap-1 ml-auto">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            Hapus Akun
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

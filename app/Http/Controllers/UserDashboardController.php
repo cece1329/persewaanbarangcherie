@@ -99,4 +99,25 @@ class UserDashboardController extends Controller
 
         return back()->with('success', 'Your profile details have been updated.');
     }
+
+    public function deleteAccount(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return back()->with('error', 'Akun Administrator tidak dapat dihapus demi keamanan sistem.');
+        }
+
+        Auth::logout();
+
+        $user->wishlists()->delete();
+        $user->reviews()->delete();
+        $user->rentals()->delete();
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('register')->with('success', 'Akun kamu telah berhasil dihapus. Sekarang kamu sudah bisa mendaftar ulang menggunakan email tersebut.');
+    }
 }

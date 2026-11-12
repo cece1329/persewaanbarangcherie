@@ -94,5 +94,30 @@
         </form>
     </div>
 
+    {{-- Danger Zone: Hapus Akun Sendiri --}}
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-red-100 shadow-xs space-y-4">
+        <div class="flex items-center justify-between border-b border-red-50 pb-3">
+            <div>
+                <h3 class="font-serif-editorial font-bold text-lg text-red-900">Pengaturan Akun & Privasi</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Hapus akun kamu secara permanen beserta semua riwayat dan data reservasi.</p>
+            </div>
+            <span class="px-3 py-1 bg-red-50 text-red-700 text-[10px] font-bold uppercase tracking-wider rounded-full border border-red-200">
+                Zona Bahaya
+            </span>
+        </div>
+
+        <p class="text-xs text-gray-600 leading-relaxed">
+            Setelah akun dihapus, email <strong>{{ $user->email }}</strong> dapat didaftarkan kembali dari awal. Tindakan ini tidak dapat dibatalkan.
+        </p>
+
+        <form action="{{ route('user.account.delete') }}" method="POST" onsubmit="return confirm('Apakah kamu yakin ingin menghapus akun kamu secara permanen? Kamu bisa mendaftar ulang menggunakan email ini kapan saja.')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-red-50 text-red-700 hover:bg-red-600 hover:text-white border border-red-200 font-bold text-xs uppercase tracking-wider transition">
+                Hapus Akun Saya Secara Permanen 🗑️
+            </button>
+        </form>
+    </div>
+
 </div>
 @endsection

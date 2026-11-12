@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', [AuthController::class, 'resendVerificationEmail'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
+    Route::delete('/user/account', [UserDashboardController::class, 'deleteAccount'])->name('user.account.delete');
 });
 
 // Customer Authenticated Routes (Requires Verified Email)
@@ -83,6 +84,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Manage Users
     Route::get('/users', [AdminController::class, 'users'])->name('users.index');
+    Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('users.destroy');
 
     // Reports & Export (PDF / Excel / CSV)
     Route::get('/reports/rentals', [AdminController::class, 'rentalReport'])->name('reports.rentals');

@@ -80,13 +80,21 @@
             </button>
         </form>
 
-        {{-- Sign Out / Change Account --}}
+        {{-- Sign Out / Change Account / Delete Account --}}
         <div class="mt-6 pt-4 border-t border-rose-100 flex items-center justify-between text-xs">
-            <span class="text-gray-400 text-[11px]">Salah alamat email?</span>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold transition">
-                    Keluar / Ganti Akun &rarr;
+                <button type="submit" class="text-gray-500 hover:text-gray-800 text-[11px] font-medium transition">
+                    &larr; Keluar
+                </button>
+            </form>
+
+            <form method="POST" action="{{ route('user.account.delete') }}" onsubmit="return confirm('Hapus akun ini agar kamu bisa mendaftar ulang dengan email {{ Auth::user()->email ?? '' }}?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-600 hover:text-red-800 font-bold text-[11px] transition flex items-center gap-1">
+                    <span>🗑️</span>
+                    <span>Hapus Akun & Daftar Ulang</span>
                 </button>
             </form>
         </div>
