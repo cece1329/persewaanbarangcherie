@@ -130,6 +130,29 @@ class AuthController extends Controller
         ]);
     }
 
+    public function verifyCode(Request $request)
+    {
+        $request->validate([
+            'code' => ['required', 'string', 'size:6'],
+        ], [
+            'code.required' => 'Silakan masukkan 6 angka kode verifikasi.',
+            'code.size'     => 'Kode verifikasi harus terdiri dari 6 angka.',
+        ]);
+
+        $user = $request->user();
+
+        if (! $user->isValidEmailOtp($request->code)) {
+            return back()->withErrors([
+                'code' => 'Kode verifikasi salah atau sudah kedaluwarsa. Silakan periksa kembali email kamu.',
+            ])->onlyInput('code');
+        }
+
+        $user->markEmailAsVerified();
+        event(new \Illuminate\Auth\Events\Verified($user));
+
+        return redirect()->route('dashboard')->with('success', 'Selamat! Email kamu berhasil diverifikasi. Akunmu sekarang sudah aktif sepenuhnya! ✨');
+    }
+
     public function resendVerificationEmail(Request $request)
     {
         if ($request->user() && $request->user()->hasVerifiedEmail()) {

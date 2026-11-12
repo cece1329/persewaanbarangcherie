@@ -37,11 +37,38 @@
             Belum menerima email? Periksa folder <strong>Spam / Promosi</strong> di emailmu atau klik tombol di bawah untuk mengirim ulang tautan verifikasi baru.
         </p>
 
+        {{-- Form Input Kode 6 Angka (OTP) --}}
+        <form method="POST" action="{{ route('verification.verify-code') }}" class="my-5 p-4 bg-rose-50/60 border border-rose-200 rounded-2xl text-left space-y-3">
+            @csrf
+            <div>
+                <label class="block text-[11px] font-bold text-gray-800 uppercase tracking-wider mb-1 text-center">
+                    Masukkan 6 Angka Kode Verifikasi
+                </label>
+                <p class="text-[11px] text-gray-500 text-center mb-2.5">
+                    Lihat 6 angka kode yang kami kirimkan ke emailmu:
+                </p>
+                <input type="text" name="code" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" placeholder="Contoh: 123456" required autofocus
+                       value="{{ old('code') }}"
+                       class="w-full text-center tracking-[8px] font-mono font-bold text-2xl py-2.5 px-4 rounded-xl border border-rose-300 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none bg-white">
+                @error('code')
+                    <span class="block text-xs text-rose-600 font-bold text-center mt-1.5">{{ $message }}</span>
+                @enderror
+            </div>
+            <button type="submit" class="w-full btn-igari-primary py-3 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md">
+                Verifikasi Kode Sekarang ✨
+            </button>
+        </form>
+
+        <div class="relative my-5">
+            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-rose-100"></div></div>
+            <div class="relative flex justify-center text-[10px] uppercase font-bold text-gray-400 bg-white px-2">atau verifikasi via link</div>
+        </div>
+
         {{-- Refresh Reminder Button --}}
         <div class="mb-4">
-            <button type="button" onclick="window.location.reload()" class="w-full py-3 rounded-2xl border-2 border-rose-300 text-rose-700 bg-rose-50/60 hover:bg-rose-100 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-xs">
+            <button type="button" onclick="window.location.reload()" class="w-full py-2.5 rounded-2xl border-2 border-rose-200 text-rose-700 bg-rose-50/40 hover:bg-rose-100 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2">
                 <span>🔄</span>
-                <span>Sudah Verifikasi di Email? Refresh Halaman Ini</span>
+                <span>Sudah Klik Link di Email? Refresh Halaman</span>
             </button>
         </div>
 

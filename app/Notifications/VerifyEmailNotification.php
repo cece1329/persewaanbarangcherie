@@ -38,24 +38,21 @@ class VerifyEmailNotification extends BaseVerifyEmail
     public function toMail($notifiable)
     {
         $verificationUrl = $this->verificationUrl($notifiable);
-
-        if (static::$toMailCallback) {
-            return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
-        }
+        $otpCode = method_exists($notifiable, 'generateEmailOtp')
+            ? $notifiable->generateEmailOtp()
+            : '123456';
 
         $recipientName = ! empty($notifiable->name) ? $notifiable->name : 'Pelanggan ChérieRent';
 
         return (new MailMessage)
             ->from('rentcherie@gmail.com', 'ChérieRent Atelier')
             ->replyTo('rentcherie@gmail.com', 'ChérieRent Atelier')
-            ->subject('Verifikasi Alamat Email - ChérieRent Atelier')
-            ->greeting('Halo, ' . $recipientName . '!')
-            ->line('Terima kasih telah mendaftar di ChérieRent Couture & Rental Atelier.')
-            ->line('Untuk mengaktifkan akunmu dan memastikan keamanan reservasi gaun, silakan klik tombol di bawah ini untuk memverifikasi email kamu:')
-            ->action('Verifikasi Email Saya', $verificationUrl)
-            ->line('Tautan verifikasi ini berlaku selama 120 menit.')
-            ->line('Jika kamu tidak merasa mendaftar di ChérieRent, abaikan email ini.')
-            ->salutation("Salam hangat,\nTim ChérieRent Atelier\nJl. Flower Ribbon No. 12, Jakarta Selatan");
+            ->subject('Kode Verifikasi Akun ChérieRent: '.$otpCode)
+            ->view('emails.verify-email-code', [
+                'recipientName' => $recipientName,
+                'otpCode' => $otpCode,
+                'verificationUrl' => $verificationUrl,
+            ]);
     }
 }
 
