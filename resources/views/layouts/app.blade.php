@@ -8,8 +8,9 @@
     <meta name="description"
         content="ChérieRent offers a curated archive of vintage, coquette, and evening gowns for portraits, galas, and milestone moments.">
 
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
+    <link rel="icon" type="image/png" href="{{ asset('images/web/logodomain.png') }}?v={{ time() }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/web/logodomain.png') }}?v={{ time() }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/web/logodomain.png') }}">
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -29,13 +30,13 @@
 
     <!-- Main Navigation Header -->
     <header x-data="{ mobileMenuOpen: false }"
-        class="sticky top-0 z-50 bg-transparent backdrop-blur-md border-b border-rose-100/60">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[5.5rem] py-2 flex items-center justify-between">
+        class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-rose-100 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                 <img src="{{ asset('images/web/logodomain.png') }}" alt="ChérieRent Logo"
-                    class="h-20 sm:h-24 w-auto object-contain group-hover:scale-105 transition">
+                    class="w-14 h-16 object-contain group-hover:scale-105 transition">
                 <div>
                     <span class="font-serif-editorial text-2xl font-bold tracking-tight text-gray-900">ChérieRent</span>
                     <span class="block text-[9px] tracking-widest text-rose-600 font-semibold uppercase -mt-1">Couture &
