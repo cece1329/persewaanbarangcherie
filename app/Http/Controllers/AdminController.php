@@ -462,11 +462,17 @@ class AdminController extends Controller
         $message->save();
 
         // Kirim email balasan ke pelanggan
-        try {
-            Mail::to($message->email)->send(new AdminReplyToContact($message));
-            $successMsg = "Balasan berhasil dikirim ke {$message->email} via email. ✅";
-        } catch (\Exception $e) {
-            $successMsg = 'Balasan tersimpan, tapi email gagal terkirim. Cek konfigurasi SMTP di .env.';
+        if (config('mail.default') === 'log') {
+            Log::info("Balasan pesan ID {$message->id} ke {$message->email} (mode mail log): {$request->admin_reply}");
+            $successMsg = 'Balasan tersimpan di database. ⚠️ Email tidak terkirim karena server masih memakai mode log. Pastikan konfigurasi SMTP aktif di server.';
+        } else {
+            try {
+                Mail::to($message->email)->send(new AdminReplyToContact($message));
+                $successMsg = "Balasan berhasil dikirim ke {$message->email} via email. ✅";
+            } catch (\Throwable $e) {
+                Log::error('Gagal kirim email balasan ke '.$message->email.': '.$e->getMessage());
+                $successMsg = 'Balasan tersimpan, tapi email gagal terkirim ('.substr($e->getMessage(), 0, 150).'). Cek koneksi/kredensial SMTP.';
+            }
         }
 
         return back()->with('success', $successMsg);
