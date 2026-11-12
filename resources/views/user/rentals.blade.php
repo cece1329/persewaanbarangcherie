@@ -43,13 +43,16 @@
                             {{ $rental->status_label }}
                         </span>
 
-                        <div class="flex gap-2">
-                            <a href="{{ route('rental.invoice', $rental->rental_code) }}" class="btn-igari-secondary text-xs px-4 py-2 rounded-full font-bold">
-                                View Invoice Voucher
+                        <div class="flex flex-wrap items-center gap-2">
+                            <a href="{{ route('rental.invoice', $rental->rental_code) }}" class="btn-igari-secondary text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1">
+                                <span>📄</span> Nota PDF
+                            </a>
+                            <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1 transition">
+                                <span>🧾</span> Resi Thermal
                             </a>
 
                             @if($rental->status === 'completed' && !$rental->review)
-                                <button @click="selectedRental = {{ $rental->id }}; reviewModalOpen = true" class="btn-igari-primary text-xs px-4 py-2 rounded-full font-bold">
+                                <button @click="selectedRental = {{ $rental->id }}; reviewModalOpen = true" class="btn-igari-primary text-xs px-4 py-1.5 rounded-full font-bold">
                                     Submit Review
                                 </button>
                             @elseif($rental->review)

@@ -51,6 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/rental/payment/{rentalCode}', [RentalController::class, 'payment'])->name('rental.payment');
     Route::post('/rental/payment/{rentalCode}', [RentalController::class, 'processPayment'])->name('rental.process-payment');
     Route::get('/rental/invoice/{rentalCode}', [RentalController::class, 'invoice'])->name('rental.invoice');
+    Route::get('/rental/thermal/{rentalCode}', [RentalController::class, 'printThermal'])->name('rental.print-thermal');
 
     // Customer Portal Dashboard
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');

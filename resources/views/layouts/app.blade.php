@@ -14,7 +14,18 @@
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    @stack('styles')
+    <style>
+        @media print {
+            .no-print, header, footer, [class*="announcement"], #chat-widget-container {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-[#fffbfa] text-[#2b2d42] flex flex-col min-h-screen selection:bg-pink-100 selection:text-rose-900">

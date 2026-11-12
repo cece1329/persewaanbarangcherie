@@ -147,4 +147,15 @@ class RentalController extends Controller
 
         return view('rental.invoice', compact('rental'));
     }
+
+    public function printThermal($rentalCode)
+    {
+        $rental = Rental::with(['dress.category', 'user'])->where('rental_code', $rentalCode)->firstOrFail();
+
+        if ($rental->user_id !== Auth::id() && ! Auth::user()->isAdmin()) {
+            abort(403);
+        }
+
+        return view('rental.print-thermal', compact('rental'));
+    }
 }

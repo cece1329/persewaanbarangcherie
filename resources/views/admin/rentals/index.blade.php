@@ -29,7 +29,7 @@
                         <th class="p-4">Reserved Gown</th>
                         <th class="p-4 text-right">Total Payable</th>
                         <th class="p-4 text-center">Current Status</th>
-                        <th class="p-4 text-center">Update Status</th>
+                        <th class="p-4 text-center">Status & Cetak Dokumen</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -68,7 +68,7 @@
                                 </span>
                             </td>
 
-                            <td class="p-4 text-center">
+                            <td class="p-4 text-center space-y-2">
                                 <form action="{{ route('admin.rentals.update-status', $rental->id) }}" method="POST" class="flex items-center justify-center gap-1">
                                     @csrf
                                     <select name="status" class="p-1.5 rounded-lg border border-gray-300 text-[11px] bg-white text-gray-800 font-semibold outline-none">
@@ -84,6 +84,15 @@
                                         Update
                                     </button>
                                 </form>
+
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <a href="{{ route('rental.invoice', $rental->rental_code) }}" target="_blank" title="Cetak Nota / Invoice PDF" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] px-2.5 py-1 rounded-md font-bold flex items-center gap-1 border border-slate-300 transition">
+                                        <span>📄</span> Nota
+                                    </a>
+                                    <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" title="Cetak Struk Resi Thermal (Siap Kirim)" class="bg-amber-500 hover:bg-amber-600 text-white text-[10px] px-2.5 py-1 rounded-md font-bold flex items-center gap-1 shadow-xs transition">
+                                        <span>🧾</span> Resi Thermal
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
