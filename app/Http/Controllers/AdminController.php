@@ -280,6 +280,38 @@ class AdminController extends Controller
         return back()->with('success', 'Kategori berhasil ditambahkan.');
     }
 
+    public function updateCategory(Request $request, Category $category)
+    {
+        $validated = $request->validate([
+            'name'            => ['required', 'string', 'max:255'],
+            'description'     => ['nullable', 'string'],
+            'card_bg'         => ['nullable', 'string', 'max:20'],
+            'card_border'     => ['nullable', 'string', 'max:20'],
+            'card_accent'     => ['nullable', 'string', 'max:20'],
+            'card_text'       => ['nullable', 'string', 'max:20'],
+            'card_tagbg'      => ['nullable', 'string', 'max:20'],
+            'card_label'      => ['nullable', 'string', 'max:100'],
+            'card_quote'      => ['nullable', 'string', 'max:150'],
+            'card_decoration' => ['nullable', 'string', 'max:30'],
+        ]);
+
+        $category->update([
+            'name'            => $validated['name'],
+            'slug'            => Str::slug($validated['name']),
+            'description'     => $validated['description'] ?? null,
+            'card_bg'         => $validated['card_bg'] ?? null,
+            'card_border'     => $validated['card_border'] ?? null,
+            'card_accent'     => $validated['card_accent'] ?? null,
+            'card_text'       => $validated['card_text'] ?? null,
+            'card_tagbg'      => $validated['card_tagbg'] ?? null,
+            'card_label'      => $validated['card_label'] ?? null,
+            'card_quote'      => $validated['card_quote'] ?? null,
+            'card_decoration' => $validated['card_decoration'] ?? null,
+        ]);
+
+        return back()->with('success', 'Tampilan dan data kategori berhasil diperbarui.');
+    }
+
 
     public function users()
     {

@@ -63,6 +63,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Manage Categories
     Route::get('/categories', [AdminController::class, 'categories'])->name('categories.index');
     Route::post('/categories', [AdminController::class, 'storeCategory'])->name('categories.store');
+    Route::put('/categories/{category}', [AdminController::class, 'updateCategory'])->name('categories.update');
 
     // Manage Users
     Route::get('/users', [AdminController::class, 'users'])->name('users.index');
