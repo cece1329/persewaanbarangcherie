@@ -54,12 +54,15 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" id="wishlist-btn" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
-                            <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
+                    <div x-data="{ isWishlisted: {{ $isWishlisted ? 'true' : 'false' }}, loading: false, async toggle() { this.loading = true; try { const res = await fetch('/catalog/{{ $dress->id }}/wishlist', { method: 'POST', headers: {'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'}, body: JSON.stringify({}) }); const data = await res.json(); if(data.success) { this.isWishlisted = data.added; window.dispatchEvent(new CustomEvent('show-notification', { detail: { message: data.message, type: 'success' } })); } } catch(e) { console.error(e); } finally { this.loading = false; } } }" class="inline">
+                        <button type="button" 
+                                @click="toggle()"
+                                :disabled="loading"
+                                class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
+                            <span x-show="!loading" x-text="isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist'"></span>
+                            <span x-show="loading">Loading...</span>
                         </button>
-                    </form>
+                    </div>
                 </div>
 
                 <h1 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">

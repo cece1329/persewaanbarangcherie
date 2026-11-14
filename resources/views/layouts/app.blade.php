@@ -184,9 +184,23 @@
     </header>
 
     <!-- Notification Toast Alerts -->
+    <div x-data="{ notifications: [] }" 
+         x-init="window.addEventListener('show-notification', (e) => { notifications.push({ message: e.detail.message, type: e.detail.type || 'success' }); setTimeout(() => notifications.shift(), 5000); })"
+         class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 space-y-2">
+        <template x-for="notif in notifications" :key="notif.message">
+            <div x-show="true" 
+                 x-transition
+                 :class="notif.type === 'success' ? 'bg-rose-700 border-rose-500' : 'bg-slate-800 border-slate-600'"
+                 class="text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center justify-between gap-4 border text-xs font-medium">
+                <p x-text="notif.message"></p>
+                <button @click="notifications = notifications.filter(n => n.message !== notif.message)" class="text-white hover:text-rose-200 font-bold">&times;</button>
+            </div>
+        </template>
+    </div>
+
     @if(session('success'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
-            class="fixed bottom-6 right-6 z-50 bg-rose-700 text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center justify-between gap-4 border border-rose-500 text-xs font-medium">
+            class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-rose-700 text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center justify-between gap-4 border border-rose-500 text-xs font-medium">
             <p>{{ session('success') }}</p>
             <button @click="show = false" class="text-white hover:text-rose-200 font-bold">&times;</button>
         </div>
@@ -194,7 +208,7 @@
 
     @if(session('error'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)"
-            class="fixed bottom-6 right-6 z-50 bg-slate-800 text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center justify-between gap-4 border border-slate-600 text-xs font-medium">
+            class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-slate-800 text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center justify-between gap-4 border border-slate-600 text-xs font-medium">
             <p>{{ session('error') }}</p>
             <button @click="show = false" class="text-white hover:text-slate-300 font-bold">&times;</button>
         </div>
