@@ -3,7 +3,7 @@
 @section('content')
 <div class="py-8 px-4 max-w-3xl mx-auto">
     <div class="mb-8">
-        <a href="{{ route('admin.reviews') }}" class="text-xs text-rose-600 hover:text-rose-800 font-semibold mb-4 inline-block">
+        <a href="{{ route('admin.reviews.index') }}" class="text-xs text-rose-600 hover:text-rose-800 font-semibold mb-4 inline-block">
             &larr; Kembali ke Reviews
         </a>
         <h1 class="font-serif-editorial text-2xl font-bold text-gray-900 mt-2">Edit Review</h1>
@@ -60,7 +60,7 @@
 
                 <!-- Submit Button -->
                 <div class="flex items-center gap-4 pt-4">
-                    <a href="{{ route('admin.reviews') }}" class="btn-igari-secondary text-xs px-6 py-3 rounded-full font-bold">
+                    <a href="{{ route('admin.reviews.index') }}" class="btn-igari-secondary text-xs px-6 py-3 rounded-full font-bold">
                         Batal
                     </a>
                     <button type="submit" class="btn-igari-primary text-xs px-6 py-3 rounded-full font-bold">
