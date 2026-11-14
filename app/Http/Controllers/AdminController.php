@@ -592,4 +592,15 @@ class AdminController extends Controller
 
         return redirect()->route('admin.reviews.index')->with('success', 'Review berhasil diupdate.');
     }
+
+    public function runMigration()
+    {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            $output = \Illuminate\Support\Facades\Artisan::output();
+            return back()->with('success', 'Migration berhasil dijalankan. ' . $output);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menjalankan migration: ' . $e->getMessage());
+        }
+    }
 }

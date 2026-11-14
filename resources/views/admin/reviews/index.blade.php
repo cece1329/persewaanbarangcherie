@@ -7,9 +7,14 @@
             <h1 class="font-serif-editorial text-2xl font-bold text-gray-900">Kelola Reviews</h1>
             <p class="text-sm text-gray-500 mt-1">Kelola ulasan pelanggan yang ditambahkan oleh admin</p>
         </div>
-        <a href="{{ route('admin.reviews.create') }}" class="btn-igari-primary text-xs px-4 py-2 rounded-full font-bold">
-            + Tambah Review
-        </a>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.run.migration') }}" class="btn-igari-secondary text-xs px-4 py-2 rounded-full font-bold">
+                Run Migration
+            </a>
+            <a href="{{ route('admin.reviews.create') }}" class="btn-igari-primary text-xs px-4 py-2 rounded-full font-bold">
+                + Tambah Review
+            </a>
+        </div>
     </div>
 
     <div class="bg-white rounded-3xl border border-rose-100 shadow-sm overflow-hidden">
