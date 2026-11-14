@@ -55,13 +55,40 @@
                         </button>
                     </div>
                     <div class="inline">
-                        <button type="button" 
-                                id="wishlist-btn"
-                                data-dress-id="{{ $dress->id }}"
-                                data-is-wishlisted="{{ $isWishlisted ? 'true' : 'false' }}"
-                                class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
-                            <span id="wishlist-text">{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
-                        </button>
+                        <a href="#" 
+                           onclick="
+                           event.preventDefault();
+                           var btn = this;
+                           var span = btn.querySelector('span');
+                           var originalText = span.textContent;
+                           span.textContent = 'Loading...';
+                           var dressId = {{ $dress->id }};
+                           fetch('/catalog/' + dressId + '/wishlist', {
+                               method: 'POST',
+                               headers: {
+                                   'X-Requested-With': 'XMLHttpRequest',
+                                   'Accept': 'application/json',
+                                   'Content-Type': 'application/json',
+                                   'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                               },
+                               body: JSON.stringify({})
+                           })
+                           .then(r => r.json())
+                           .then(d => {
+                               if(d.success) {
+                                   span.textContent = d.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
+                                   window.dispatchEvent(new CustomEvent('show-notification', { detail: { message: d.message, type: 'success' } }));
+                               }
+                           })
+                           .catch(e => console.error(e))
+                           .finally(() => {
+                               if(!d || !d.success) span.textContent = originalText;
+                           });
+                           return false;
+                           "
+                           class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200 no-underline">
+                            <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
+                        </a>
                     </div>
                 </div>
 
@@ -252,64 +279,7 @@ window.addEventListener('load', function() {
             window.scrollTo(0, parseInt(scrollPos));
             sessionStorage.removeItem('dressScrollPosition');
         }
-        
-        // Fallback: scroll to wishlist button
-        const wishlistBtn = document.getElementById('wishlist-btn');
-        if (wishlistBtn) {
-            wishlistBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
     }, 200);
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Wishlist button handler
-    const wishlistBtn = document.getElementById('wishlist-btn');
-    if (wishlistBtn) {
-        wishlistBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            const dressId = this.dataset.dressId;
-            const textSpan = document.getElementById('wishlist-text');
-            const originalText = textSpan.textContent;
-            
-            this.disabled = true;
-            textSpan.textContent = 'Loading...';
-            
-            fetch('/catalog/' + dressId + '/wishlist', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({})
-            })
-            .then(r => r.json())
-            .then(data => {
-                if (data.success) {
-                    textSpan.textContent = data.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
-                    // Dispatch custom event for notification
-                    window.dispatchEvent(new CustomEvent('show-notification', { 
-                        detail: { message: data.message, type: 'success' } 
-                    }));
-                } else if (data.redirect) {
-                    window.location.href = data.redirect;
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                textSpan.textContent = originalText;
-            })
-            .finally(() => {
-                this.disabled = false;
-            });
-            
-            return false;
-        }, true);
-    }
 });
 </script>
 @endsection
