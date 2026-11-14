@@ -48,7 +48,7 @@
             
             <div>
                 <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2" x-data x-cloak>
                         <span class="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1 rounded-full border border-rose-200">Size {{ $dress->size }}</span>
                         <button type="button" @click="$dispatch('open-fitting-guide')" class="text-[11px] font-bold text-rose-700 hover:text-rose-900 underline">
                             📏 Fitting Chart &amp; Policy

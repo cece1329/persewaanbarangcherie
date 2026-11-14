@@ -25,6 +25,7 @@
                 color: #000000 !important;
             }
         }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 
