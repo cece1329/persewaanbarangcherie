@@ -216,7 +216,12 @@
 
         {{-- ── Daftar Kategori ──────────────────────────────────── --}}
         <div class="lg:col-span-2 bg-white rounded-3xl border border-gray-200 shadow-xs p-6 space-y-4">
-            <h3 class="font-bold text-gray-900 text-base border-b border-gray-100 pb-3">Kategori Terdaftar</h3>
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                <h3 class="font-bold text-gray-900 text-base">Kategori Terdaftar</h3>
+                <form action="{{ route('admin.categories.index') }}" method="GET" class="flex-1 max-w-xs ml-4">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search category..." class="w-full p-2 rounded-xl border border-gray-300 text-xs bg-gray-50/50 outline-none focus:border-rose-500">
+                </form>
+            </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs">
@@ -264,7 +269,7 @@
                                     </span>
                                 </td>
                                 <td class="p-3 text-center">
-                                    <div class="flex flex-col sm:flex-row items-center justify-center gap-2">
+                                    <div class="flex flex-col gap-2">
                                         <button type="button"
                                                 @click="openEditModal({{ json_encode([
                                                     'id'              => $category->id,
@@ -280,15 +285,15 @@
                                                     'card_decoration' => $category->card_decoration ?? '',
                                                     'update_url'      => route('admin.categories.update', $category->id),
                                                 ]) }})"
-                                                class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-rose-600 text-white font-bold text-[11px] transition shadow-xs inline-flex items-center gap-1.5 whitespace-nowrap w-full sm:w-auto justify-center">
+                                                class="w-full px-3 py-2 rounded-xl bg-slate-900 hover:bg-rose-600 text-white font-bold text-[11px] transition shadow-xs inline-flex items-center justify-center gap-1.5">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                             <span>Edit</span>
                                         </button>
                                         @if($category->dresses_count == 0)
-                                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')" class="w-full sm:w-auto">
+                                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="w-full px-3 py-1.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-[11px] transition shadow-xs inline-flex items-center gap-1.5 whitespace-nowrap justify-center">
+                                            <button type="submit" class="w-full px-3 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-[11px] transition shadow-xs inline-flex items-center justify-center gap-1.5">
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                                 <span>Hapus</span>
                                             </button>

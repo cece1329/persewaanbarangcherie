@@ -99,8 +99,8 @@ class AdminController extends Controller
     {
         $query = Dress::with('category');
 
-        if ($request->filled('q')) {
-            $query->where('name', 'like', "%{$request->q}%");
+        if ($request->filled('search')) {
+            $query->where('name', 'like', "%{$request->search}%");
         }
 
         if ($request->filled('category_id')) {
@@ -243,7 +243,13 @@ class AdminController extends Controller
 
     public function categories()
     {
-        $categories = Category::withCount('dresses')->get();
+        $query = Category::withCount('dresses');
+
+        if (request()->filled('search')) {
+            $query->where('name', 'like', '%' . request('search') . '%');
+        }
+
+        $categories = $query->get();
 
         return view('admin.categories.index', compact('categories'));
     }
