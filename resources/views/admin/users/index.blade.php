@@ -30,29 +30,31 @@
                 <tbody class="divide-y divide-gray-100">
                     @foreach($users as $u)
                         <tr class="hover:bg-rose-50/20 transition">
-                            <td class="p-4 flex items-center gap-3">
-                                <img src="{{ $u->avatar ?? 'https://api.dicebear.com/7.x/adventurer/svg?seed='.$u->name }}" class="w-9 h-9 rounded-full border border-rose-300" alt="Avatar">
-                                <div>
-                                    <strong class="text-gray-900 text-xs block font-bold">{{ $u->name }}</strong>
-                                    <span class="text-gray-500 text-[11px] block">{{ $u->email }}</span>
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ $u->avatar ?? 'https://api.dicebear.com/7.x/adventurer/svg?seed='.$u->name }}" class="w-9 h-9 rounded-full border border-rose-300 shrink-0" alt="Avatar">
+                                    <div class="min-w-0">
+                                        <strong class="text-gray-900 text-xs block font-bold truncate">{{ $u->name }}</strong>
+                                        <span class="text-gray-500 text-[11px] block truncate">{{ $u->email }}</span>
+                                    </div>
                                 </div>
                             </td>
 
-                            <td class="p-4">
+                            <td class="p-4 whitespace-nowrap">
                                 @if($u->isAdmin())
-                                    <span class="bg-purple-100 text-purple-700 font-bold px-2.5 py-1 rounded-full text-[10px]">Admin</span>
+                                    <span class="bg-purple-100 text-purple-700 font-bold px-2.5 py-1 rounded-full text-[10px] inline-block whitespace-nowrap">Admin</span>
                                 @else
-                                    <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2.5 py-1 rounded-full text-[10px]">Client Member</span>
+                                    <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2.5 py-1 rounded-full text-[10px] inline-block whitespace-nowrap">Client Member</span>
                                 @endif
                             </td>
 
-                            <td class="p-4">
+                            <td class="p-4 whitespace-nowrap">
                                 @if($u->isAdmin() || $u->email_verified_at)
-                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full whitespace-nowrap">
                                         ✓ Verified
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full whitespace-nowrap">
                                         ⏳ Belum Verif
                                     </span>
                                 @endif
@@ -81,9 +83,10 @@
                                     <form action="{{ route('admin.users.destroy', $u->id) }}" method="POST" onsubmit="return confirm('Apakah kamu yakin ingin menghapus akun pelanggan {{ $u->name }} ({{ $u->email }})? Data dan riwayat terkait akan ikut terhapus.')" class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="px-3 py-1.5 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 font-bold text-[11px] transition flex items-center gap-1 ml-auto">
+                                        <button type="submit" class="px-3 py-1.5 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 font-bold text-[11px] transition flex items-center gap-1">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                            Hapus Akun
+                                            <span class="hidden sm:inline">Hapus Akun</span>
+                                            <span class="sm:hidden">Hapus</span>
                                         </button>
                                     </form>
                                 @endif
