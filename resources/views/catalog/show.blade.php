@@ -54,13 +54,13 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <div x-data="{ isWishlisted: {{ $isWishlisted ? 'true' : 'false' }}, loading: false, async toggle() { this.loading = true; try { const res = await fetch('/catalog/{{ $dress->id }}/wishlist', { method: 'POST', headers: {'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'}, body: JSON.stringify({}) }); const data = await res.json(); if(data.success) { this.isWishlisted = data.added; window.dispatchEvent(new CustomEvent('show-notification', { detail: { message: data.message, type: 'success' } })); } } catch(e) { console.error(e); } finally { this.loading = false; } } }" class="inline">
+                    <div class="inline">
                         <button type="button" 
-                                @click="toggle()"
-                                :disabled="loading"
+                                id="wishlist-btn"
+                                data-dress-id="{{ $dress->id }}"
+                                data-is-wishlisted="{{ $isWishlisted ? 'true' : 'false' }}"
                                 class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
-                            <span x-show="!loading" x-text="isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist'"></span>
-                            <span x-show="loading">Loading...</span>
+                            <span id="wishlist-text">{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
                         </button>
                     </div>
                 </div>
@@ -262,14 +262,53 @@ window.addEventListener('load', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Wishlist button handler
     const wishlistBtn = document.getElementById('wishlist-btn');
     if (wishlistBtn) {
-        const form = wishlistBtn.closest('form');
-        if (form) {
-            form.addEventListener('submit', function() {
-                sessionStorage.setItem('dressScrollPosition', window.scrollY);
+        wishlistBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            const dressId = this.dataset.dressId;
+            const textSpan = document.getElementById('wishlist-text');
+            const originalText = textSpan.textContent;
+            
+            this.disabled = true;
+            textSpan.textContent = 'Loading...';
+            
+            fetch('/catalog/' + dressId + '/wishlist', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({})
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    textSpan.textContent = data.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
+                    // Dispatch custom event for notification
+                    window.dispatchEvent(new CustomEvent('show-notification', { 
+                        detail: { message: data.message, type: 'success' } 
+                    }));
+                } else if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                textSpan.textContent = originalText;
+            })
+            .finally(() => {
+                this.disabled = false;
             });
-        }
+            
+            return false;
+        }, true);
     }
 });
 </script>
