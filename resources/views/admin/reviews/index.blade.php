@@ -48,11 +48,14 @@
                                 <span class="text-xs text-gray-500">{{ $review->created_at->format('d M Y') }}</span>
                             </td>
                             <td class="px-6 py-4">
-                                <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus review ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-xs text-red-600 hover:text-red-800 font-semibold">Hapus</button>
-                                </form>
+                                <div class="flex items-center gap-3">
+                                    <a href="{{ route('admin.reviews.edit', $review->id) }}" class="text-xs text-rose-600 hover:text-rose-800 font-semibold">Edit</a>
+                                    <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus review ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-xs text-red-600 hover:text-red-800 font-semibold">Hapus</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

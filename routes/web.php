@@ -99,5 +99,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reviews', [AdminController::class, 'reviews'])->name('reviews.index');
     Route::get('/reviews/create', [AdminController::class, 'createReview'])->name('reviews.create');
     Route::post('/reviews', [AdminController::class, 'storeReview'])->name('reviews.store');
+    Route::get('/reviews/{id}/edit', [AdminController::class, 'editReview'])->name('reviews.edit');
+    Route::put('/reviews/{id}', [AdminController::class, 'updateReview'])->name('reviews.update');
     Route::delete('/reviews/{id}', [AdminController::class, 'destroyReview'])->name('reviews.destroy');
 });

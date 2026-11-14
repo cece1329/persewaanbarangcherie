@@ -553,4 +553,33 @@ class AdminController extends Controller
 
         return back()->with('success', 'Review berhasil dihapus.');
     }
+
+    public function editReview($id)
+    {
+        $review = Review::findOrFail($id);
+        $dresses = Dress::all();
+        $users = User::where('role', 'customer')->get();
+
+        return view('admin.reviews.edit', compact('review', 'dresses', 'users'));
+    }
+
+    public function updateReview(Request $request, $id)
+    {
+        $review = Review::findOrFail($id);
+
+        $validated = $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'dress_id' => ['required', 'exists:dresses,id'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['required', 'string', 'min:5'],
+        ]);
+
+        $review->update($validated);
+
+        // Update dress rating
+        $avgRating = Review::where('dress_id', $validated['dress_id'])->avg('rating');
+        Dress::where('id', $validated['dress_id'])->update(['rating' => round($avgRating, 2)]);
+
+        return redirect()->route('admin.reviews')->with('success', 'Review berhasil diupdate.');
+    }
 }
