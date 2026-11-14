@@ -662,10 +662,10 @@
                             &ldquo;{{ $review->comment }}&rdquo;</p>
                         <div class="pt-3 border-t border-rose-50 flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <img src="{{ $review->user->avatar ?? 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . ($review->user_name ?? $review->user->name) }}"
+                                <img src="{{ $review->user?->avatar ?? 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . ($review->user_name ?? 'reviewer') }}"
                                     class="w-8 h-8 rounded-full border-2 border-rose-200" alt="Reviewer">
                                 <div>
-                                    <p class="text-xs font-bold text-gray-900">{{ $review->user_name ?? $review->user->name }}</p>
+                                    <p class="text-xs font-bold text-gray-900">{{ $review->user_name ?? ($review->user?->name ?? 'Customer') }}</p>
                                     <p class="text-[10px] text-rose-500 font-semibold">
                                         {{ $review->dress->name ?? 'Chérie Gown' }}
                                     </p>
