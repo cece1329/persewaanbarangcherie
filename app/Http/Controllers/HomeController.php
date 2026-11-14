@@ -22,7 +22,7 @@ class HomeController extends Controller
 
         $categories = Category::withCount('dresses')->get();
 
-        $recentReviews = Review::with(['user', 'dress'])
+        $recentReviews = Review::with(['dress'])
             ->latest()
             ->take(4)
             ->get();
