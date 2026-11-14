@@ -518,27 +518,41 @@ class AdminController extends Controller
     public function createReview()
     {
         $dresses = Dress::all();
-        $users = User::where('role', 'customer')->get();
 
-        return view('admin.reviews.create', compact('dresses', 'users'));
+        return view('admin.reviews.create', compact('dresses'));
     }
 
     public function storeReview(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => ['required', 'exists:users,id'],
+            'user_name' => ['required', 'string', 'max:255'],
             'dress_id' => ['required', 'exists:dresses,id'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'comment' => ['required', 'string', 'min:5'],
         ]);
 
-        Review::create($validated);
+        // Find or create user by name
+        $user = User::firstOrCreate(
+            ['name' => $validated['user_name']],
+            [
+                'email' => strtolower(str_replace(' ', '', $validated['user_name'])) . '@review.local',
+                'password' => bcrypt('password'),
+                'role' => 'customer',
+            ]
+        );
+
+        Review::create([
+            'user_id' => $user->id,
+            'dress_id' => $validated['dress_id'],
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+        ]);
 
         // Update dress rating
         $avgRating = Review::where('dress_id', $validated['dress_id'])->avg('rating');
         Dress::where('id', $validated['dress_id'])->update(['rating' => round($avgRating, 2)]);
 
-        return redirect()->route('admin.reviews')->with('success', 'Review berhasil ditambahkan.');
+        return redirect()->route('admin.reviews.index')->with('success', 'Review berhasil ditambahkan.');
     }
 
     public function destroyReview($id)
@@ -556,11 +570,10 @@ class AdminController extends Controller
 
     public function editReview($id)
     {
-        $review = Review::findOrFail($id);
+        $review = Review::with('user')->findOrFail($id);
         $dresses = Dress::all();
-        $users = User::where('role', 'customer')->get();
 
-        return view('admin.reviews.edit', compact('review', 'dresses', 'users'));
+        return view('admin.reviews.edit', compact('review', 'dresses'));
     }
 
     public function updateReview(Request $request, $id)
@@ -568,18 +581,33 @@ class AdminController extends Controller
         $review = Review::findOrFail($id);
 
         $validated = $request->validate([
-            'user_id' => ['required', 'exists:users,id'],
+            'user_name' => ['required', 'string', 'max:255'],
             'dress_id' => ['required', 'exists:dresses,id'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'comment' => ['required', 'string', 'min:5'],
         ]);
 
-        $review->update($validated);
+        // Find or create user by name
+        $user = User::firstOrCreate(
+            ['name' => $validated['user_name']],
+            [
+                'email' => strtolower(str_replace(' ', '', $validated['user_name'])) . '@review.local',
+                'password' => bcrypt('password'),
+                'role' => 'customer',
+            ]
+        );
+
+        $review->update([
+            'user_id' => $user->id,
+            'dress_id' => $validated['dress_id'],
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+        ]);
 
         // Update dress rating
         $avgRating = Review::where('dress_id', $validated['dress_id'])->avg('rating');
         Dress::where('id', $validated['dress_id'])->update(['rating' => round($avgRating, 2)]);
 
-        return redirect()->route('admin.reviews')->with('success', 'Review berhasil diupdate.');
+        return redirect()->route('admin.reviews.index')->with('success', 'Review berhasil diupdate.');
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-8 px-4 max-w-3xl mx-auto" x-data="{ rating: {{ $review->rating }} }">
+<div class="py-8 px-4 max-w-3xl mx-auto">
     <div class="mb-8">
         <a href="{{ route('admin.reviews.index') }}" class="text-xs text-rose-600 hover:text-rose-800 font-semibold mb-4 inline-block">
             &larr; Kembali ke Reviews
@@ -16,15 +16,11 @@
             @method('PUT')
 
             <div class="space-y-6">
-                <!-- User Selection -->
+                <!-- User Name -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Pilih User</label>
-                    <select name="user_id" required class="w-full p-3 rounded-xl border border-rose-200 text-xs bg-rose-50/40 outline-none text-gray-700 font-medium">
-                        <option value="">-- Pilih User --</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ $review->user_id == $user->id ? 'selected' : '' }}>{{ $user->name }} ({{ $user->email }})</option>
-                        @endforeach
-                    </select>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nama User</label>
+                    <input type="text" name="user_name" value="{{ $review->user->name }}" required placeholder="Masukkan nama user..."
+                        class="w-full p-3 rounded-xl border border-rose-200 text-xs bg-rose-50/40 outline-none text-gray-700 font-medium">
                 </div>
 
                 <!-- Dress Selection -->
@@ -41,12 +37,10 @@
                 <!-- Rating -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Rating</label>
+                    <input type="hidden" name="rating" id="rating-input" value="{{ $review->rating }}" required>
                     <div class="flex items-center gap-2">
                         @for($i = 1; $i <= 5; $i++)
-                            <label class="cursor-pointer">
-                                <input type="radio" name="rating" value="{{ $i }}" required x-model.number="rating" class="hidden">
-                                <span @click="rating = {{ $i }}" class="text-3xl transition cursor-pointer" :class="rating >= $i ? 'text-amber-500' : 'text-gray-300'">★</span>
-                            </label>
+                            <span onclick="setRating({{ $i }})" class="star text-3xl transition cursor-pointer text-gray-300" data-rating="{{ $i }}">★</span>
                         @endfor
                     </div>
                 </div>
@@ -71,4 +65,26 @@
         </form>
     </div>
 </div>
+
+<script>
+function setRating(rating) {
+    document.getElementById('rating-input').value = rating;
+    const stars = document.querySelectorAll('.star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.remove('text-gray-300');
+            star.classList.add('text-amber-500');
+        } else {
+            star.classList.remove('text-amber-500');
+            star.classList.add('text-gray-300');
+        }
+    });
+}
+
+// Initialize stars with existing rating
+document.addEventListener('DOMContentLoaded', function() {
+    const currentRating = {{ $review->rating }};
+    setRating(currentRating);
+});
+</script>
 @endsection
