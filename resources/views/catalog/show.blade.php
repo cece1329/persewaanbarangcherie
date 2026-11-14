@@ -54,12 +54,13 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <div x-data="{ isWishlisted: {{ $isWishlisted ? 'true' : 'false' }}, loading: false, async toggleWishlist(e) { e.preventDefault(); this.loading = true; try { const formData = new FormData(); formData.append('_token', '{{ csrf_token() }}'); const res = await fetch('{{ route('catalog.wishlist', $dress->id) }}', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }, body: formData }); const data = await res.json(); if (data.success) { this.isWishlisted = data.added; } else if (data.redirect) { window.location.href = data.redirect; } } catch(e) { console.error(e); } finally { this.loading = false; } } }" class="flex items-center gap-2">
-                        <button type="button" @click="toggleWishlist($event)" :disabled="loading" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition" :class="isWishlisted ? 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100' : 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100'">
+                    <form x-data="{ isWishlisted: {{ $isWishlisted ? 'true' : 'false' }}, loading: false, async submitWishlist() { this.loading = true; try { const formData = new FormData(this.$el); const res = await fetch('{{ route('catalog.wishlist', $dress->id) }}', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }, body: formData }); const data = await res.json(); if (data.success) { this.isWishlisted = data.added; } else if (data.redirect) { window.location.href = data.redirect; } } catch(e) { console.error(e); } finally { this.loading = false; } }" @submit.prevent="submitWishlist()" class="flex items-center gap-2">
+                        @csrf
+                        <button type="submit" :disabled="loading" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition" :class="isWishlisted ? 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100' : 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100'">
                             <span x-show="!loading" x-text="isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist'"></span>
                             <span x-show="loading" class="text-xs">Loading...</span>
                         </button>
-                    </div>
+                    </form>
                 </div>
 
                 <h1 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
