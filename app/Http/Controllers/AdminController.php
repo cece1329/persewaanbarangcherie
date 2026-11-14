@@ -6,6 +6,7 @@ use App\Mail\AdminReplyToContact;
 use App\Models\Category;
 use App\Models\Dress;
 use App\Models\Message;
+use App\Models\Review;
 use App\Models\Rental;
 use App\Models\User;
 use App\Services\SupabaseStorageService;
@@ -504,5 +505,52 @@ class AdminController extends Controller
         $message->save();
 
         return back()->with('success', 'Pesan ditandai sebagai sudah dibaca.');
+    }
+
+    // Review Management
+    public function reviews()
+    {
+        $reviews = Review::with(['user', 'dress'])->latest()->paginate(15);
+
+        return view('admin.reviews.index', compact('reviews'));
+    }
+
+    public function createReview()
+    {
+        $dresses = Dress::all();
+        $users = User::where('role', 'customer')->get();
+
+        return view('admin.reviews.create', compact('dresses', 'users'));
+    }
+
+    public function storeReview(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'dress_id' => ['required', 'exists:dresses,id'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['required', 'string', 'min:5'],
+        ]);
+
+        Review::create($validated);
+
+        // Update dress rating
+        $avgRating = Review::where('dress_id', $validated['dress_id'])->avg('rating');
+        Dress::where('id', $validated['dress_id'])->update(['rating' => round($avgRating, 2)]);
+
+        return redirect()->route('admin.reviews')->with('success', 'Review berhasil ditambahkan.');
+    }
+
+    public function destroyReview($id)
+    {
+        $review = Review::findOrFail($id);
+        $dressId = $review->dress_id;
+        $review->delete();
+
+        // Update dress rating
+        $avgRating = Review::where('dress_id', $dressId)->avg('rating');
+        Dress::where('id', $dressId)->update(['rating' => $avgRating ? round($avgRating, 2) : 0]);
+
+        return back()->with('success', 'Review berhasil dihapus.');
     }
 }

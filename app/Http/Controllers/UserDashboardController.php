@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rental;
-use App\Models\Review;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,35 +54,6 @@ class UserDashboardController extends Controller
         return view('user.wishlists', compact('wishlists'));
     }
 
-    public function storeReview(Request $request)
-    {
-        $validated = $request->validate([
-            'rental_id' => ['required', 'exists:rentals,id'],
-            'rating' => ['required', 'integer', 'min:1', 'max:5'],
-            'comment' => ['required', 'string', 'min:5'],
-        ]);
-
-        $rental = Rental::where('id', $validated['rental_id'])
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
-
-        Review::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'dress_id' => $rental->dress_id,
-                'rental_id' => $rental->id,
-            ],
-            [
-                'rating' => $validated['rating'],
-                'comment' => $validated['comment'],
-            ]
-        );
-
-        $avgRating = Review::where('dress_id', $rental->dress_id)->avg('rating');
-        $rental->dress->update(['rating' => round($avgRating, 2)]);
-
-        return back()->with('success', 'Thank you for submitting your review.');
-    }
 
     public function updateProfile(Request $request)
     {

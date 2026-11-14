@@ -57,7 +57,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('/my-rentals', [UserDashboardController::class, 'rentals'])->name('user.rentals');
     Route::get('/my-wishlists', [UserDashboardController::class, 'wishlists'])->name('user.wishlists');
-    Route::post('/user/review', [UserDashboardController::class, 'storeReview'])->name('user.review.store');
     Route::post('/user/profile', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
 });
 
@@ -95,4 +94,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/messages', [AdminController::class, 'messages'])->name('messages.index');
     Route::post('/messages/{id}/reply', [AdminController::class, 'replyMessage'])->name('messages.reply');
     Route::post('/messages/{id}/read', [AdminController::class, 'markMessageRead'])->name('messages.read');
+
+    // Reviews
+    Route::get('/reviews', [AdminController::class, 'reviews'])->name('reviews.index');
+    Route::get('/reviews/create', [AdminController::class, 'createReview'])->name('reviews.create');
+    Route::post('/reviews', [AdminController::class, 'storeReview'])->name('reviews.store');
+    Route::delete('/reviews/{id}', [AdminController::class, 'destroyReview'])->name('reviews.destroy');
 });
