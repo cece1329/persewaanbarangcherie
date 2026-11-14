@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-10 px-4 max-w-7xl mx-auto space-y-8">
+<div class="py-10 px-4 max-w-7xl mx-auto space-y-8" x-cloak>
 
     <div class="border-b border-rose-200 pb-4">
         <span class="igari-pill">Saved Pieces</span>
@@ -22,7 +22,9 @@
                     <form action="{{ route('catalog.wishlist', $item->dress->id) }}" method="POST" class="absolute top-3 right-3 z-10">
                         @csrf
                         <button type="submit" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition" title="Remove Wishlist">
-                            &times;
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
                         </button>
                     </form>
 
