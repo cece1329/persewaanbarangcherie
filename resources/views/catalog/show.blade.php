@@ -56,7 +56,6 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <button type="button" 
-                                onclick="toggleWishlist(event, {{ $dress->id }})" 
                                 id="wishlist-btn"
                                 class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
                             <span id="wishlist-text">{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
@@ -255,41 +254,69 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function toggleWishlist(event, dressId) {
-    event.preventDefault();
-    event.stopPropagation();
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+    }
     
     const btn = document.getElementById('wishlist-btn');
     const text = document.getElementById('wishlist-text');
     
-    btn.disabled = true;
-    text.textContent = 'Loading...';
+    if (btn) btn.disabled = true;
+    const originalText = text ? text.textContent : 'Add to Wishlist';
+    if (text) text.textContent = 'Loading...';
     
-    fetch('{{ route('catalog.wishlist', 0) }}'.replace('0', dressId), {
+    const url = '/catalog/' + dressId + '/wishlist';
+    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}';
+    
+    fetch(url, {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'Accept': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': token
         },
-        body: ''
+        body: JSON.stringify({})
     })
-    .then(r => r.json())
-    .then(d => {
-        if (d.success) {
-            text.textContent = d.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
-            if (d.message) {
-                alert(d.message);
-            }
-        } else if (d.redirect) {
-            window.location.href = d.redirect;
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success && text) {
+            text.textContent = data.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
+        } else if (data.redirect) {
+            window.location.href = data.redirect;
+        } else if (text) {
+            text.textContent = originalText;
         }
     })
-    .catch(e => console.error(e))
+    .catch(error => {
+        console.error('Error:', error);
+        if (text) text.textContent = originalText;
+    })
     .finally(() => {
-        btn.disabled = false;
+        if (btn) btn.disabled = false;
     });
     
     return false;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('wishlist-btn');
+    if (btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            const dressId = {{ $dress->id }};
+            toggleWishlist(null, dressId);
+        }, true);
+    }
+});
 </script>
 @endsection
