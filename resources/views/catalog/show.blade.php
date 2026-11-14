@@ -195,7 +195,6 @@ function dressCalculator(dailyPrice, deposit) {
 
         init() {
             this.calculateTotal();
-            this.restoreScroll();
         },
 
         calculateTotal() {
@@ -246,18 +245,22 @@ function dressCalculator(dailyPrice, deposit) {
 
 // Save scroll position before form submit and restore after load
 window.addEventListener('load', function() {
-    // Restore scroll position with delay to ensure page is fully loaded
     setTimeout(function() {
         const scrollPos = sessionStorage.getItem('dressScrollPosition');
         if (scrollPos) {
             window.scrollTo(0, parseInt(scrollPos));
             sessionStorage.removeItem('dressScrollPosition');
         }
-    }, 100);
+        
+        // Fallback: scroll to wishlist button
+        const wishlistBtn = document.getElementById('wishlist-btn');
+        if (wishlistBtn) {
+            wishlistBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 200);
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Save scroll position before wishlist submit
     const wishlistBtn = document.getElementById('wishlist-btn');
     if (wishlistBtn) {
         const form = wishlistBtn.closest('form');
