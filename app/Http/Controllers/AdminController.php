@@ -596,11 +596,15 @@ class AdminController extends Controller
     public function runMigration()
     {
         try {
-            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-            $output = \Illuminate\Support\Facades\Artisan::output();
-            return back()->with('success', 'Migration berhasil dijalankan. ' . $output);
+            // Jalankan SQL langsung untuk tambah kolom user_name
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE reviews ADD COLUMN user_name VARCHAR(255) NULL AFTER user_id');
+            return back()->with('success', 'Kolom user_name berhasil ditambahkan ke tabel reviews.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menjalankan migration: ' . $e->getMessage());
+            // Kalau kolom sudah ada, abaikan error
+            if (str_contains($e->getMessage(), 'Duplicate column') || str_contains($e->getMessage(), 'already exists')) {
+                return back()->with('success', 'Kolom user_name sudah ada.');
+            }
+            return back()->with('error', 'Gagal: ' . $e->getMessage());
         }
     }
 }
