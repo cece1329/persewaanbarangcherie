@@ -54,7 +54,7 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="flex items-center gap-2">
+                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="flex items-center gap-2" id="wishlist-section">
                         @csrf
                         <button type="submit" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
                             <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>

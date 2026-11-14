@@ -85,7 +85,7 @@ class CatalogController extends Controller
             $message = 'Saved to your wishlist.';
         }
 
-        return back()->with('success', $message);
+        return back()->withFragment('wishlist-section')->with('success', $message);
     }
 
     public function checkAvailability(Request $request, $id)
