@@ -40,7 +40,7 @@
     </div>
 
     <!-- Main Navigation Header -->
-    <header x-data="{ mobileMenuOpen: false }" x-init="$store.activeSection = 'home'; checkActiveSection()" @scroll.window="checkActiveSection()"
+    <header x-data="{ mobileMenuOpen: false }"
         class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-rose-100 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
@@ -57,14 +57,14 @@
 
             <nav class="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-gray-700">
                 <a href="{{ route('home') }}"
-                    :class="$store.activeSection === 'home' ? 'text-rose-600 font-bold' : 'hover:text-rose-600 transition'">Home</a>
+                    class="hover:text-rose-600 transition {{ request()->routeIs('home') ? 'text-rose-600 font-bold' : '' }}">Home</a>
                 <a href="{{ route('catalog.index') }}"
                     class="hover:text-rose-600 transition {{ request()->routeIs('catalog.*') ? 'text-rose-600 font-bold' : '' }}">Gown
                     Archive</a>
                 <a href="{{ route('home') }}#how-it-works"
-                    :class="$store.activeSection === 'how-it-works' ? 'text-rose-600 font-bold' : 'hover:text-rose-600 transition'">Atelier Guide</a>
+                    class="hover:text-rose-600 transition">Atelier Guide</a>
                 <a href="{{ route('home') }}#quiz-section"
-                    :class="$store.activeSection === 'quiz-section' ? 'text-rose-600 font-bold' : 'hover:text-rose-600 transition'">Style Matcher</a>
+                    class="hover:text-rose-600 transition">Style Matcher</a>
             </nav>
 
             <!-- Right Buttons / Auth -->
@@ -149,14 +149,14 @@
         <div x-show="mobileMenuOpen" x-transition
             class="md:hidden bg-white border-b border-rose-100 px-4 py-4 space-y-3">
             <a href="{{ route('home') }}" @click="mobileMenuOpen = false"
-                :class="$store.activeSection === 'home' ? 'text-rose-600 font-bold' : 'text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider'">Home</a>
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('home') ? 'text-rose-600 font-bold' : '' }}">Home</a>
             <a href="{{ route('catalog.index') }}" @click="mobileMenuOpen = false"
                 class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('catalog.*') ? 'text-rose-600 font-bold' : '' }}">Gown
                 Archive</a>
             <a href="{{ route('home') }}#how-it-works" @click="mobileMenuOpen = false"
-                :class="$store.activeSection === 'how-it-works' ? 'text-rose-600 font-bold' : 'text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider'">Atelier Guide</a>
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Atelier Guide</a>
             <a href="{{ route('home') }}#quiz-section" @click="mobileMenuOpen = false"
-                :class="$store.activeSection === 'quiz-section' ? 'text-rose-600 font-bold' : 'text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider'">Style Matcher</a>
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Style Matcher</a>
 
             @auth
                 <div class="pt-3 border-t border-rose-100">
@@ -295,28 +295,6 @@
     <!-- Interactive Widgets & Modals -->
     <x-chat-widget />
     <x-fitting-guide-modal />
-
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('activeSection', 'home');
-
-            window.checkActiveSection = function() {
-                const hash = window.location.hash;
-                if (hash) {
-                    const sectionId = hash.substring(1);
-                    Alpine.store('activeSection', sectionId);
-                } else {
-                    Alpine.store('activeSection', 'home');
-                }
-            };
-
-            // Initialize on page load
-            window.checkActiveSection();
-
-            // Update on hash change
-            window.addEventListener('hashchange', window.checkActiveSection);
-        });
-    </script>
 
 </body>
 
