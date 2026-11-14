@@ -54,14 +54,13 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <div x-data="{ isWishlisted: {{ $isWishlisted ? 'true' : 'false' }}, loading: false, async toggle() { this.loading = true; try { const res = await fetch('/catalog/{{ $dress->id }}/wishlist', { method: 'POST', headers: {'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'}, body: JSON.stringify({}) }); const data = await res.json(); if(data.success) this.isWishlisted = data.added; } catch(e) { console.error(e); } finally { this.loading = false; } } }" class="flex items-center gap-2">
-                        <button type="button" 
-                                @click.prevent="toggle()"
-                                :disabled="loading"
-                                class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
-                            <span x-show="!loading" x-text="isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist'"></span>
-                            <span x-show="loading">Loading...</span>
-                        </button>
+                    <div class="flex items-center gap-2">
+                        <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" id="wishlist-btn" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
+                                <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -245,13 +244,24 @@ function dressCalculator(dailyPrice, deposit) {
     }
 }
 
-// Save scroll position before form submit
+// Save scroll position before form submit and restore after load
 document.addEventListener('DOMContentLoaded', function() {
-    const wishlistForm = document.querySelector('#wishlist-section');
-    if (wishlistForm) {
-        wishlistForm.addEventListener('submit', function() {
-            sessionStorage.setItem('dressScrollPosition', window.scrollY);
-        });
+    // Restore scroll position
+    const scrollPos = sessionStorage.getItem('dressScrollPosition');
+    if (scrollPos) {
+        window.scrollTo(0, parseInt(scrollPos));
+        sessionStorage.removeItem('dressScrollPosition');
+    }
+
+    // Save scroll position before wishlist submit
+    const wishlistBtn = document.getElementById('wishlist-btn');
+    if (wishlistBtn) {
+        const form = wishlistBtn.closest('form');
+        if (form) {
+            form.addEventListener('submit', function() {
+                sessionStorage.setItem('dressScrollPosition', window.scrollY);
+            });
+        }
     }
 });
 </script>
