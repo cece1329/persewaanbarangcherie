@@ -164,6 +164,7 @@
                     <p class="font-bold text-gray-900 text-xs">{{ Auth::user()->name }}</p>
                     <a href="{{ route('dashboard') }}" class="block text-xs text-rose-600 mt-2">Client Portal</a>
                     <a href="{{ route('user.rentals') }}" class="block text-xs text-rose-600 mt-1">Reservations</a>
+                    <a href="{{ route('user.wishlists') }}" class="block text-xs text-rose-600 mt-1">Saved Wishlist</a>
                     @if(Auth::user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="block text-xs text-purple-700 font-bold mt-1">Atelier
                             Dashboard</a>

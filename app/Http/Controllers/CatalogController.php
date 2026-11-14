@@ -70,8 +70,6 @@ class CatalogController extends Controller
 
     public function toggleWishlist($id)
     {
-        \Log::info('toggleWishlist called', ['id' => $id, 'auth' => Auth::check()]);
-        
         if (! Auth::check()) {
             if (request()->header('X-Requested-With') === 'XMLHttpRequest') {
                 return response()->json(['success' => false, 'redirect' => route('login'), 'message' => 'Please sign in to add pieces to your wishlist.']);
@@ -82,15 +80,12 @@ class CatalogController extends Controller
         $userId = Auth::id();
         $wishlist = Wishlist::where('user_id', $userId)->where('dress_id', $id)->first();
 
-        \Log::info('Wishlist check', ['userId' => $userId, 'dressId' => $id, 'exists' => $wishlist ? true : false]);
-
         if ($wishlist) {
             $wishlist->delete();
             $message = 'Removed from your wishlist.';
             $added = false;
         } else {
-            $newWishlist = Wishlist::create(['user_id' => $userId, 'dress_id' => $id]);
-            \Log::info('Wishlist created', ['id' => $newWishlist->id]);
+            Wishlist::create(['user_id' => $userId, 'dress_id' => $id]);
             $message = 'Saved to your wishlist.';
             $added = true;
         }

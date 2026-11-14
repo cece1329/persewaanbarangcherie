@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-10 px-4 max-w-7xl mx-auto space-y-8" x-cloak>
+<div class="py-10 px-4 max-w-7xl mx-auto space-y-8">
 
     <div class="border-b border-rose-200 pb-4">
         <span class="igari-pill">Saved Pieces</span>
@@ -17,6 +17,7 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach($wishlists as $item)
+                @if($item->dress)
                 <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative">
                     
                     <form action="{{ route('catalog.wishlist', $item->dress->id) }}" method="POST" class="absolute top-3 right-3 z-10">
@@ -49,6 +50,7 @@
                     </div>
 
                 </div>
+                @endif
             @endforeach
         </div>
     @endif

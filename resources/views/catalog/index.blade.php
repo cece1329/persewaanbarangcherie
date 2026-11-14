@@ -98,16 +98,54 @@
                     @foreach($dresses as $dress)
                         <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative group">
                             
-                            <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="absolute top-4 right-4 z-20">
-                                @csrf
-                                <button type="submit" class="w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition" title="Save to Wishlist">
-                                    @if(in_array($dress->id, $userWishlists))
-                                        <svg class="w-4 h-4 text-rose-600 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                    @else
-                                        <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                                    @endif
+                            <div x-data="{ 
+                                wishlisted: {{ in_array($dress->id, $userWishlists) ? 'true' : 'false' }},
+                                loading: false,
+                                async toggleWishlist() {
+                                    if (this.loading) return;
+                                    this.loading = true;
+                                    try {
+                                        const response = await fetch('{{ route('catalog.wishlist', $dress->id) }}', {
+                                            method: 'POST',
+                                            headers: {
+                                                'X-Requested-With': 'XMLHttpRequest',
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                            },
+                                            body: JSON.stringify({})
+                                        });
+                                        if (response.status === 401) {
+                                            window.location.href = '{{ route('login') }}';
+                                            return;
+                                        }
+                                        const data = await response.json();
+                                        if (data.redirect) {
+                                            window.location.href = data.redirect;
+                                            return;
+                                        }
+                                        if (data.success) {
+                                            this.wishlisted = data.added;
+                                            window.dispatchEvent(new CustomEvent('show-notification', { 
+                                                detail: { message: data.message, type: 'success' } 
+                                            }));
+                                        }
+                                    } catch (err) {
+                                        console.error('Wishlist error:', err);
+                                    } finally {
+                                        this.loading = false;
+                                    }
+                                }
+                            }" class="absolute top-4 right-4 z-20">
+                                <button type="button" 
+                                        @click.prevent.stop="toggleWishlist()"
+                                        :disabled="loading"
+                                        class="w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 active:scale-95 transition" 
+                                        :title="wishlisted ? 'Remove from Wishlist' : 'Save to Wishlist'">
+                                    <svg x-show="wishlisted" class="w-4 h-4 text-rose-600 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    <svg x-show="!wishlisted" class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                                 </button>
-                            </form>
+                            </div>
 
                             <a href="{{ route('catalog.show', $dress->slug) }}" class="relative aspect-[4/5] bg-pink-50 overflow-hidden block">
                                 <img src="{{ $dress->image_url }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="{{ $dress->name }}">

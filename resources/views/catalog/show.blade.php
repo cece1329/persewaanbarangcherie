@@ -73,16 +73,28 @@
                                },
                                body: JSON.stringify({})
                            })
-                           .then(r => r.json())
+                           .then(r => {
+                               if (r.status === 401) {
+                                   window.location.href = '{{ route('login') }}';
+                                   return;
+                               }
+                               return r.json();
+                           })
                            .then(d => {
-                               if(d.success) {
+                               if(d && d.redirect) {
+                                   window.location.href = d.redirect;
+                                   return;
+                               }
+                               if(d && d.success) {
                                    span.textContent = d.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
                                    window.dispatchEvent(new CustomEvent('show-notification', { detail: { message: d.message, type: 'success' } }));
+                               } else {
+                                   span.textContent = originalText;
                                }
                            })
-                           .catch(e => console.error(e))
-                           .finally(() => {
-                               if(!d || !d.success) span.textContent = originalText;
+                           .catch(e => {
+                               console.error(e);
+                               span.textContent = originalText;
                            });
                            return false;
                            "
