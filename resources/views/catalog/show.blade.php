@@ -160,8 +160,8 @@
                     <div class="bg-rose-50/30 p-4 rounded-2xl border border-rose-100 space-y-2">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <img src="{{ $rev->user->avatar }}" class="w-7 h-7 rounded-full" alt="Avatar">
-                                <span class="text-xs font-bold text-gray-800">{{ $rev->user->name }}</span>
+                                <img src="{{ $rev->user?->avatar ?? 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . ($rev->user_name ?? 'reviewer') }}" class="w-7 h-7 rounded-full" alt="Avatar">
+                                <span class="text-xs font-bold text-gray-800">{{ $rev->user_name ?? ($rev->user?->name ?? 'Customer') }}</span>
                             </div>
                             <span class="text-xs text-amber-500">@for($i=0; $i<$rev->rating; $i++) ★ @endfor</span>
                         </div>

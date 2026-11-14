@@ -54,7 +54,7 @@ class CatalogController extends Controller
 
     public function show($slug)
     {
-        $dress = Dress::with(['category', 'reviews.user'])->where('slug', $slug)->firstOrFail();
+        $dress = Dress::with(['category', 'reviews'])->where('slug', $slug)->firstOrFail();
 
         $relatedDresses = Dress::where('category_id', $dress->category_id)
             ->where('id', '!=', $dress->id)
