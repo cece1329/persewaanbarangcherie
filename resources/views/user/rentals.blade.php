@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold border {{ $rental->status_badge_class }}">
+                        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold border inline-block whitespace-nowrap {{ $rental->status_badge_class }}">
                             {{ $rental->status_label }}
                         </span>
 

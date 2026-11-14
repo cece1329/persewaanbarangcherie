@@ -41,7 +41,7 @@
                     <div class="bg-white p-6 rounded-3xl border border-rose-200 shadow-xs space-y-4">
                         <div class="flex items-center justify-between border-b border-rose-50 pb-3">
                             <span class="font-mono text-xs font-bold text-gray-700">#{{ $rental->rental_code }}</span>
-                            <span class="px-3 py-1 rounded-full text-[10px] font-bold border {{ $rental->status_badge_class }}">
+                            <span class="px-3 py-1 rounded-full text-[10px] font-bold border inline-block whitespace-nowrap {{ $rental->status_badge_class }}">
                                 {{ $rental->status_label }}
                             </span>
                         </div>

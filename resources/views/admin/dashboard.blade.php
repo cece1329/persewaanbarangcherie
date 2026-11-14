@@ -79,8 +79,8 @@
                                 <td class="p-3 text-right font-bold text-rose-700">
                                     Rp {{ number_format($rental->total_price, 0, ',', '.') }}
                                 </td>
-                                <td class="p-3 text-center">
-                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border {{ $rental->status_badge_class }}">
+                                <td class="p-3 text-center whitespace-nowrap">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border inline-block whitespace-nowrap {{ $rental->status_badge_class }}">
                                         {{ $rental->status_label }}
                                     </span>
                                 </td>

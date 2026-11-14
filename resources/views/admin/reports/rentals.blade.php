@@ -168,8 +168,8 @@
                                 <span class="text-[10px] text-gray-400 block">Dep: Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }}</span>
                             </td>
 
-                            <td class="p-4 text-center">
-                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border inline-block {{ $rental->status_badge_class }}">
+                            <td class="p-4 text-center whitespace-nowrap">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border inline-block whitespace-nowrap {{ $rental->status_badge_class }}">
                                     {{ $rental->status_label }}
                                 </span>
                             </td>

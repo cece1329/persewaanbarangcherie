@@ -62,13 +62,13 @@
                                 <span class="text-[10px] text-amber-800 font-semibold block">Deposit: Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }}</span>
                             </td>
 
-                            <td class="p-4 text-center">
-                                <span class="px-3 py-1 rounded-full text-[10px] font-bold border inline-block {{ $rental->status_badge_class }}">
+                            <td class="p-4 text-center whitespace-nowrap">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold border inline-block whitespace-nowrap {{ $rental->status_badge_class }}">
                                     {{ $rental->status_label }}
                                 </span>
                             </td>
 
-                            <td class="p-4 text-center space-y-2">
+                            <td class="p-4 text-center space-y-2 whitespace-nowrap">
                                 <form action="{{ route('admin.rentals.update-status', $rental->id) }}" method="POST" class="flex items-center justify-center gap-1">
                                     @csrf
                                     <select name="status" class="p-1.5 rounded-lg border border-gray-300 text-[11px] bg-white text-gray-800 font-semibold outline-none">

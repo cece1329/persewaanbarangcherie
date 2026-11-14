@@ -71,7 +71,7 @@ class CatalogController extends Controller
     public function toggleWishlist($id)
     {
         if (! Auth::check()) {
-            return redirect()->route('login')->with('info', 'Please sign in to add pieces to your wishlist.');
+            return response()->json(['success' => false, 'redirect' => route('login'), 'message' => 'Please sign in to add pieces to your wishlist.']);
         }
 
         $userId = Auth::id();
@@ -80,12 +80,14 @@ class CatalogController extends Controller
         if ($wishlist) {
             $wishlist->delete();
             $message = 'Removed from your wishlist.';
+            $added = false;
         } else {
             Wishlist::create(['user_id' => $userId, 'dress_id' => $id]);
             $message = 'Saved to your wishlist.';
+            $added = true;
         }
 
-        return back()->withFragment('wishlist-section')->with('success', $message);
+        return response()->json(['success' => true, 'added' => $added, 'message' => $message]);
     }
 
     public function checkAvailability(Request $request, $id)

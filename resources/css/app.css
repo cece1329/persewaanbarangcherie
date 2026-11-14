@@ -89,6 +89,7 @@
   border-radius: 9999px;
   border: 1px solid #f8cfd4;
   display: inline-block;
+  white-space: nowrap;
 }
 
 /* ─── Coquette Bow Label ──────────────────────────────────── */

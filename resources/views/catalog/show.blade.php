@@ -54,12 +54,14 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="flex items-center gap-2" id="wishlist-section">
-                        @csrf
-                        <button type="submit" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
-                            <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" 
+                                onclick="toggleWishlist(event, {{ $dress->id }})" 
+                                id="wishlist-btn"
+                                class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
+                            <span id="wishlist-text">{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
                         </button>
-                    </form>
+                    </div>
                 </div>
 
                 <h1 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
@@ -251,5 +253,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function toggleWishlist(event, dressId) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const btn = document.getElementById('wishlist-btn');
+    const text = document.getElementById('wishlist-text');
+    
+    btn.disabled = true;
+    text.textContent = 'Loading...';
+    
+    fetch('{{ route('catalog.wishlist', 0) }}'.replace('0', dressId), {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: ''
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) {
+            text.textContent = d.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
+            if (d.message) {
+                alert(d.message);
+            }
+        } else if (d.redirect) {
+            window.location.href = d.redirect;
+        }
+    })
+    .catch(e => console.error(e))
+    .finally(() => {
+        btn.disabled = false;
+    });
+    
+    return false;
+}
 </script>
 @endsection
