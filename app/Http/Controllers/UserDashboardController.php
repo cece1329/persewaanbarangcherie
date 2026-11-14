@@ -49,7 +49,11 @@ class UserDashboardController extends Controller
     public function wishlists()
     {
         $user = Auth::user();
+        \Log::info('wishlists called', ['userId' => $user->id]);
+        
         $wishlists = Wishlist::with('dress.category')->where('user_id', $user->id)->latest()->get();
+        
+        \Log::info('wishlists query result', ['count' => $wishlists->count()]);
 
         return view('user.wishlists', compact('wishlists'));
     }
