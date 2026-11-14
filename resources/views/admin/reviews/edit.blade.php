@@ -19,7 +19,7 @@
                 <!-- User Name -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nama User</label>
-                    <input type="text" name="user_name" value="{{ $review->user->name }}" required placeholder="Masukkan nama user..."
+                    <input type="text" name="user_name" value="{{ $review->user_name ?? $review->user->name }}" required placeholder="Masukkan nama user..."
                         class="w-full p-3 rounded-xl border border-rose-200 text-xs bg-rose-50/40 outline-none text-gray-700 font-medium">
                 </div>
 

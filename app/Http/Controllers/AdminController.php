@@ -531,18 +531,9 @@ class AdminController extends Controller
             'comment' => ['required', 'string', 'min:5'],
         ]);
 
-        // Find or create user by name
-        $user = User::firstOrCreate(
-            ['name' => $validated['user_name']],
-            [
-                'email' => strtolower(str_replace(' ', '', $validated['user_name'])) . '@review.local',
-                'password' => bcrypt('password'),
-                'role' => 'customer',
-            ]
-        );
-
         Review::create([
-            'user_id' => $user->id,
+            'user_id' => null,
+            'user_name' => $validated['user_name'],
             'dress_id' => $validated['dress_id'],
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],
@@ -587,18 +578,9 @@ class AdminController extends Controller
             'comment' => ['required', 'string', 'min:5'],
         ]);
 
-        // Find or create user by name
-        $user = User::firstOrCreate(
-            ['name' => $validated['user_name']],
-            [
-                'email' => strtolower(str_replace(' ', '', $validated['user_name'])) . '@review.local',
-                'password' => bcrypt('password'),
-                'role' => 'customer',
-            ]
-        );
-
         $review->update([
-            'user_id' => $user->id,
+            'user_id' => null,
+            'user_name' => $validated['user_name'],
             'dress_id' => $validated['dress_id'],
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],

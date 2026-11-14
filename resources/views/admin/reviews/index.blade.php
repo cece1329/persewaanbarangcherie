@@ -30,8 +30,7 @@
                     @foreach($reviews as $review)
                         <tr class="hover:bg-rose-50/50 transition">
                             <td class="px-6 py-4">
-                                <div class="text-xs font-semibold text-gray-900">{{ $review->user->name }}</div>
-                                <div class="text-[10px] text-gray-500">{{ $review->user->email }}</div>
+                                <div class="text-xs font-semibold text-gray-900">{{ $review->user_name ?? $review->user->name }}</div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-xs font-semibold text-gray-900">{{ $review->dress->name }}</div>
