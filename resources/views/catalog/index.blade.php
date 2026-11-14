@@ -173,6 +173,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const heartIcon = this.querySelector('.heart-icon');
             const isWishlisted = this.dataset.isWishlisted === 'true';
             
+            console.log('Wishlist toggle clicked:', { dressId, isWishlisted });
+            
             this.disabled = true;
             
             fetch('/catalog/' + dressId + '/wishlist', {
@@ -185,8 +187,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({})
             })
-            .then(r => r.json())
+            .then(r => {
+                console.log('Response status:', r.status);
+                return r.json();
+            })
             .then(data => {
+                console.log('Response data:', data);
                 if (data.success) {
                     this.dataset.isWishlisted = data.added ? 'true' : 'false';
                     if (data.added) {
@@ -206,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(err => {
-                console.error(err);
+                console.error('Error:', err);
             })
             .finally(() => {
                 this.disabled = false;
