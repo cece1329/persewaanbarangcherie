@@ -98,19 +98,16 @@
                     @foreach($dresses as $dress)
                         <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative group">
                             
-                            <div class="absolute top-4 right-4 z-20">
-                                <button type="button" 
-                                        data-dress-id="{{ $dress->id }}"
-                                        data-is-wishlisted="{{ in_array($dress->id, $userWishlists) ? 'true' : 'false' }}"
-                                        class="wishlist-toggle-btn w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition"
-                                        title="Save to Wishlist">
+                            <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="absolute top-4 right-4 z-20">
+                                @csrf
+                                <button type="submit" class="w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition" title="Save to Wishlist">
                                     @if(in_array($dress->id, $userWishlists))
-                                        <svg class="w-4 h-4 text-rose-600 fill-current heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                        <svg class="w-4 h-4 text-rose-600 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                                     @else
-                                        <svg class="w-4 h-4 stroke-current heart-icon" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                                        <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                                     @endif
                                 </button>
-                            </div>
+                            </form>
 
                             <a href="{{ route('catalog.show', $dress->slug) }}" class="relative aspect-[4/5] bg-pink-50 overflow-hidden block">
                                 <img src="{{ $dress->image_url }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="{{ $dress->name }}">
@@ -159,68 +156,4 @@
 
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const wishlistBtns = document.querySelectorAll('.wishlist-toggle-btn');
-    wishlistBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            const dressId = this.dataset.dressId;
-            const heartIcon = this.querySelector('.heart-icon');
-            const isWishlisted = this.dataset.isWishlisted === 'true';
-            
-            console.log('Wishlist toggle clicked:', { dressId, isWishlisted });
-            
-            this.disabled = true;
-            
-            fetch('/catalog/' + dressId + '/wishlist', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({})
-            })
-            .then(r => {
-                console.log('Response status:', r.status);
-                return r.json();
-            })
-            .then(data => {
-                console.log('Response data:', data);
-                if (data.success) {
-                    this.dataset.isWishlisted = data.added ? 'true' : 'false';
-                    if (data.added) {
-                        heartIcon.classList.remove('stroke-current');
-                        heartIcon.classList.add('fill-current', 'text-rose-600');
-                        heartIcon.setAttribute('fill', 'currentColor');
-                    } else {
-                        heartIcon.classList.remove('fill-current', 'text-rose-600');
-                        heartIcon.classList.add('stroke-current');
-                        heartIcon.setAttribute('fill', 'none');
-                    }
-                    window.dispatchEvent(new CustomEvent('show-notification', { 
-                        detail: { message: data.message, type: 'success' } 
-                    }));
-                } else if (data.redirect) {
-                    window.location.href = data.redirect;
-                }
-            })
-            .catch(err => {
-                console.error('Error:', err);
-            })
-            .finally(() => {
-                this.disabled = false;
-            });
-            
-            return false;
-        }, true);
-    });
-});
-</script>
 @endsection
