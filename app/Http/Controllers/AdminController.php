@@ -596,14 +596,10 @@ class AdminController extends Controller
     public function runMigration()
     {
         try {
-            // Jalankan SQL langsung untuk tambah kolom user_name
-            \Illuminate\Support\Facades\DB::statement('ALTER TABLE reviews ADD COLUMN user_name VARCHAR(255) NULL AFTER user_id');
-            return back()->with('success', 'Kolom user_name berhasil ditambahkan ke tabel reviews.');
+            // Ubah user_id menjadi nullable
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE reviews MODIFY COLUMN user_id INT NULL');
+            return back()->with('success', 'Kolom user_id berhasil diubah menjadi nullable.');
         } catch (\Exception $e) {
-            // Kalau kolom sudah ada, abaikan error
-            if (str_contains($e->getMessage(), 'Duplicate column') || str_contains($e->getMessage(), 'already exists')) {
-                return back()->with('success', 'Kolom user_name sudah ada.');
-            }
             return back()->with('error', 'Gagal: ' . $e->getMessage());
         }
     }
