@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-8 px-4 max-w-3xl mx-auto">
+<div class="py-8 px-4 max-w-3xl mx-auto" x-data="{ rating: {{ $review->rating }} }">
     <div class="mb-8">
         <a href="{{ route('admin.reviews.index') }}" class="text-xs text-rose-600 hover:text-rose-800 font-semibold mb-4 inline-block">
             &larr; Kembali ke Reviews
@@ -41,11 +41,11 @@
                 <!-- Rating -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Rating</label>
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
                         @for($i = 1; $i <= 5; $i++)
                             <label class="cursor-pointer">
-                                <input type="radio" name="rating" value="{{ $i }}" required class="hidden peer" {{ $review->rating == $i ? 'checked' : '' }}>
-                                <span class="text-2xl text-gray-300 peer-checked:text-amber-500 transition">★</span>
+                                <input type="radio" name="rating" value="{{ $i }}" required x-model="rating" class="hidden">
+                                <span class="text-3xl transition" :class="rating >= $i ? 'text-amber-500' : 'text-gray-300'">★</span>
                             </label>
                         @endfor
                     </div>

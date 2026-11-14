@@ -14,7 +14,8 @@
 
     <div class="bg-white rounded-3xl border border-rose-100 shadow-sm overflow-hidden">
         @if($reviews->count() > 0)
-            <table class="w-full">
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[600px]">
                 <thead class="bg-rose-50 border-b border-rose-100">
                     <tr>
                         <th class="text-left text-xs font-bold text-gray-700 uppercase tracking-wider px-6 py-4">User</th>
@@ -61,6 +62,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
 
             <div class="px-6 py-4 border-t border-rose-100">
                 {{ $reviews->links() }}
