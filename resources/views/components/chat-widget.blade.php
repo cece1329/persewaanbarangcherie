@@ -1,7 +1,7 @@
 <!-- Floating Live Chat & WhatsApp Widget -->
 <div x-data="{ openChat: false, activeTab: 'faq', chatInput: '', messages: [
     { sender: 'stylist', text: 'Bonjour darling! Welcome to Chérie Atelier Concierge 🎀 How may we assist your gown fitting today?' }
-] }" class="fixed bottom-6 right-6 z-50">
+] }" x-cloak class="fixed bottom-6 right-6 z-50">
 
     <!-- Floating Chat Button -->
     <button @click="openChat = !openChat" 
