@@ -94,7 +94,7 @@
                     <a href="{{ route('catalog.index') }}" class="inline-block btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold">Reset Filters</a>
                 </div>
             @else
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach($dresses as $dress)
                         <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative group">
                             
