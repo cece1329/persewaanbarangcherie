@@ -54,11 +54,10 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <form x-data="{ isWishlisted: {{ $isWishlisted ? 'true' : 'false' }}, loading: false, async submitWishlist() { this.loading = true; try { const formData = new FormData(this.$el); const res = await fetch('{{ route('catalog.wishlist', $dress->id) }}', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }, body: formData }); const data = await res.json(); if (data.success) { this.isWishlisted = data.added; } else if (data.redirect) { window.location.href = data.redirect; } } catch(e) { console.error(e); } finally { this.loading = false; } }" @submit.prevent="submitWishlist()" class="flex items-center gap-2">
+                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="flex items-center gap-2">
                         @csrf
-                        <button type="submit" :disabled="loading" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition" :class="isWishlisted ? 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100' : 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100'">
-                            <span x-show="!loading" x-text="isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist'"></span>
-                            <span x-show="loading" class="text-xs">Loading...</span>
+                        <button type="submit" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
+                            <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
                         </button>
                     </form>
                 </div>
