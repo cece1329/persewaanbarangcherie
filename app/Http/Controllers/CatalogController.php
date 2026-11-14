@@ -42,7 +42,7 @@ class CatalogController extends Controller
             default => $query->latest(),
         };
 
-        $dresses = $query->paginate(9)->withQueryString();
+        $dresses = $query->paginate(50)->withQueryString();
         $categories = Category::withCount('dresses')->get();
 
         $userWishlists = Auth::check()
