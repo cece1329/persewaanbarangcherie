@@ -72,14 +72,14 @@ class Rental extends Model
     public function getStatusBadgeClassAttribute(): string
     {
         return match ($this->status) {
-            'pending_payment' => 'bg-amber-50 text-amber-800 border-amber-200',
-            'paid' => 'bg-rose-50 text-rose-800 border-rose-200',
-            'shipping' => 'bg-purple-50 text-purple-800 border-purple-200',
-            'in_use' => 'bg-pink-100 text-pink-900 border-pink-300',
-            'returned' => 'bg-indigo-50 text-indigo-800 border-indigo-200',
-            'completed' => 'bg-emerald-50 text-emerald-800 border-emerald-200',
-            'cancelled' => 'bg-slate-100 text-slate-700 border-slate-200',
-            default => 'bg-gray-50 text-gray-700 border-gray-200',
+            'pending_payment' => 'bg-amber-50 text-amber-800 border-amber-200 whitespace-nowrap inline-block',
+            'paid' => 'bg-rose-50 text-rose-800 border-rose-200 whitespace-nowrap inline-block',
+            'shipping' => 'bg-purple-50 text-purple-800 border-purple-200 whitespace-nowrap inline-block',
+            'in_use' => 'bg-pink-100 text-pink-900 border-pink-300 whitespace-nowrap inline-block',
+            'returned' => 'bg-indigo-50 text-indigo-800 border-indigo-200 whitespace-nowrap inline-block',
+            'completed' => 'bg-emerald-50 text-emerald-800 border-emerald-200 whitespace-nowrap inline-block',
+            'cancelled' => 'bg-slate-100 text-slate-700 border-slate-200 whitespace-nowrap inline-block',
+            default => 'bg-gray-50 text-gray-700 border-gray-200 whitespace-nowrap inline-block',
         };
     }
 }
