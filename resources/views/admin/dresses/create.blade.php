@@ -13,7 +13,7 @@
         <a href="{{ route('admin.dresses.index') }}" class="text-xs font-bold text-gray-600 hover:text-gray-900">&larr; Cancel & Return</a>
     </div>
 
-    <form action="{{ route('admin.dresses.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-3xl border border-gray-200 shadow-xs space-y-6">
+    <form action="{{ route('admin.dresses.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off" class="bg-white p-8 rounded-3xl border border-gray-200 shadow-xs space-y-6">
         @csrf
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
