@@ -81,7 +81,7 @@
                     </a>
 
                     <!-- User Dropdown Menu -->
-                    <div x-data="{ open: false }" class="relative">
+                    <div x-data="{ open: false }" x-cloak class="relative">
                         <button @click="open = !open"
                             class="flex items-center gap-2.5 text-xs font-semibold text-gray-800 hover:text-rose-600 p-1.5 rounded-full border border-rose-200 bg-rose-50/40">
                             <img src="{{ Auth::user()->avatar ?? 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . Auth::user()->name }}"
