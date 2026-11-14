@@ -17,7 +17,28 @@ Route::post('/contact', [HomeController::class, 'sendContact'])->name('contact.s
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/catalog/{slug}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/catalog/{id}/check-availability', [CatalogController::class, 'checkAvailability'])->name('catalog.check-availability');
-Route::post('/catalog/{id}/wishlist', [CatalogController::class, 'toggleWishlist'])->name('catalog.wishlist');
+
+// Customer Authenticated Routes (Requires Verified Email)
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Checkout & Rental Process
+    Route::get('/checkout/{id}', [RentalController::class, 'checkout'])->name('rental.checkout');
+    Route::post('/rental/store', [RentalController::class, 'store'])->name('rental.store');
+    Route::get('/rental/payment/{rentalCode}', [RentalController::class, 'payment'])->name('rental.payment');
+    Route::post('/rental/payment/{rentalCode}', [RentalController::class, 'processPayment'])->name('rental.process-payment');
+    Route::get('/rental/invoice/{rentalCode}', [RentalController::class, 'invoice'])->name('rental.invoice');
+    Route::get('/rental/thermal/{rentalCode}', [RentalController::class, 'printThermal'])->name('rental.print-thermal');
+
+    // Customer Portal Dashboard
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/my-rentals', [UserDashboardController::class, 'rentals'])->name('user.rentals');
+    Route::get('/my-wishlists', [UserDashboardController::class, 'wishlists'])->name('user.wishlists');
+    Route::post('/user/profile', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
+});
+
+// Wishlist route (auth only, no email verification required)
+Route::middleware(['auth'])->group(function () {
+    Route::post('/catalog/{id}/wishlist', [CatalogController::class, 'toggleWishlist'])->name('catalog.wishlist');
+});
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
