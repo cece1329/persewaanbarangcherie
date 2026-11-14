@@ -47,11 +47,19 @@
         <div class="space-y-6">
             
             <div>
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1 rounded-full border border-rose-200">Size {{ $dress->size }}</span>
-                    <button type="button" @click="$dispatch('open-fitting-guide')" class="text-[11px] font-bold text-rose-700 hover:text-rose-900 underline">
-                        📏 Fitting Chart &amp; Policy
-                    </button>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1 rounded-full border border-rose-200">Size {{ $dress->size }}</span>
+                        <button type="button" @click="$dispatch('open-fitting-guide')" class="text-[11px] font-bold text-rose-700 hover:text-rose-900 underline">
+                            📏 Fitting Chart &amp; Policy
+                        </button>
+                    </div>
+                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" id="wishlist-btn" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
+                            <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
+                        </button>
+                    </form>
                 </div>
 
                 <h1 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
@@ -64,15 +72,6 @@
                     <span class="text-xs bg-amber-50 text-amber-800 px-2.5 py-1 rounded-full font-bold ml-auto border border-amber-200">
                         Refundable Deposit {{ $dress->formatted_deposit }}
                     </span>
-                </div>
-
-                <div class="mt-3 flex justify-end">
-                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" id="wishlist-btn" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200">
-                            <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
-                        </button>
-                    </form>
                 </div>
             </div>
 
