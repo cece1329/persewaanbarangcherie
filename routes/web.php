@@ -102,7 +102,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reviews/{id}/edit', [AdminController::class, 'editReview'])->name('reviews.edit');
     Route::put('/reviews/{id}', [AdminController::class, 'updateReview'])->name('reviews.update');
     Route::delete('/reviews/{id}', [AdminController::class, 'destroyReview'])->name('reviews.destroy');
-
-    // Migration (hanya untuk admin)
-    Route::get('/run-migration', [AdminController::class, 'runMigration'])->name('run.migration');
 });

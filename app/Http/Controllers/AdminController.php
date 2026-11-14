@@ -592,19 +592,4 @@ class AdminController extends Controller
 
         return redirect()->route('admin.reviews.index')->with('success', 'Review berhasil diupdate.');
     }
-
-    public function runMigration()
-    {
-        try {
-            // Hapus foreign key constraint
-            \Illuminate\Support\Facades\DB::statement('ALTER TABLE reviews DROP FOREIGN KEY reviews_user_id_foreign');
-            
-            // Ubah user_id menjadi nullable
-            \Illuminate\Support\Facades\DB::statement('ALTER TABLE reviews MODIFY COLUMN user_id INT NULL');
-            
-            return back()->with('success', 'Kolom user_id berhasil diubah menjadi nullable.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Gagal: ' . $e->getMessage());
-        }
-    }
 }
