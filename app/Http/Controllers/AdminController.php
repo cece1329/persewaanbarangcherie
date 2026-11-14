@@ -313,6 +313,18 @@ class AdminController extends Controller
         return redirect()->route('admin.categories.index')->with('success', 'Tampilan dan data kategori berhasil diperbarui.');
     }
 
+    public function destroyCategory(Category $category)
+    {
+        // Cek apakah ada gaun di kategori ini
+        if ($category->dresses()->count() > 0) {
+            return back()->with('error', 'Tidak bisa menghapus kategori yang masih memiliki gaun. Pindahkan atau hapus gaun terlebih dahulu.');
+        }
+
+        $category->delete();
+
+        return back()->with('success', 'Kategori berhasil dihapus.');
+    }
+
 
     public function users()
     {

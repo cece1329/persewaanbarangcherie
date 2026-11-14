@@ -37,7 +37,9 @@
                 {{-- ── Kustomisasi Kartu (Opsional) ─────────────── --}}
                 <details class="group">
                     <summary class="cursor-pointer flex items-center gap-2 text-xs font-bold text-rose-600 uppercase tracking-wider select-none">
-                        <span class="w-4 h-4 rounded-full border border-rose-300 flex items-center justify-center text-[10px] group-open:rotate-90 transition-transform duration-200">▶</span>
+                        <span class="w-4 h-4 rounded-full border border-rose-300 flex items-center justify-center shrink-0 group-open:rotate-90 transition-transform duration-200">
+                            <svg class="w-2.5 h-2.5 text-rose-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                        </span>
                         Kustomisasi Tampilan Kartu
                         <span class="ml-auto text-gray-400 font-normal normal-case tracking-normal">opsional</span>
                     </summary>
@@ -256,31 +258,43 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="p-3 text-center">
-                                    <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2.5 py-1 rounded-full text-[10px]">
+                                <td class="p-3 text-center whitespace-nowrap">
+                                    <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2.5 py-1 rounded-full text-[10px] inline-block whitespace-nowrap">
                                         {{ $category->dresses_count }} Pieces
                                     </span>
                                 </td>
                                 <td class="p-3 text-center">
-                                    <button type="button"
-                                            @click="openEditModal({{ json_encode([
-                                                'id'              => $category->id,
-                                                'name'            => $category->name,
-                                                'description'     => $category->description ?? '',
-                                                'card_bg'         => $category->card_bg ?? '',
-                                                'card_border'     => $category->card_border ?? '',
-                                                'card_accent'     => $category->card_accent ?? '',
-                                                'card_text'       => $category->card_text ?? '',
-                                                'card_tagbg'      => $category->card_tagbg ?? '',
-                                                'card_label'      => $category->card_label ?? '',
-                                                'card_quote'      => $category->card_quote ?? '',
-                                                'card_decoration' => $category->card_decoration ?? '',
-                                                'update_url'      => route('admin.categories.update', $category->id),
-                                            ]) }})"
-                                            class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-rose-600 text-white font-bold text-[11px] transition shadow-xs inline-flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                        <span>Edit Tampilan</span>
-                                    </button>
+                                    <div class="flex flex-col sm:flex-row items-center justify-center gap-2">
+                                        <button type="button"
+                                                @click="openEditModal({{ json_encode([
+                                                    'id'              => $category->id,
+                                                    'name'            => $category->name,
+                                                    'description'     => $category->description ?? '',
+                                                    'card_bg'         => $category->card_bg ?? '',
+                                                    'card_border'     => $category->card_border ?? '',
+                                                    'card_accent'     => $category->card_accent ?? '',
+                                                    'card_text'       => $category->card_text ?? '',
+                                                    'card_tagbg'      => $category->card_tagbg ?? '',
+                                                    'card_label'      => $category->card_label ?? '',
+                                                    'card_quote'      => $category->card_quote ?? '',
+                                                    'card_decoration' => $category->card_decoration ?? '',
+                                                    'update_url'      => route('admin.categories.update', $category->id),
+                                                ]) }})"
+                                                class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-rose-600 text-white font-bold text-[11px] transition shadow-xs inline-flex items-center gap-1.5 whitespace-nowrap w-full sm:w-auto justify-center">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                            <span>Edit</span>
+                                        </button>
+                                        @if($category->dresses_count == 0)
+                                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')" class="w-full sm:w-auto">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-full px-3 py-1.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-[11px] transition shadow-xs inline-flex items-center gap-1.5 whitespace-nowrap justify-center">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                <span>Hapus</span>
+                                            </button>
+                                        </form>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

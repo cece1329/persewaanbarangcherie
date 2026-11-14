@@ -24,12 +24,15 @@
 
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Category</label>
-                <select name="category_id" required class="w-full p-3 rounded-xl border border-gray-300 text-xs bg-gray-50/50 outline-none font-bold text-gray-800">
-                    <option value="">-- Select Category --</option>
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-                    @endforeach
-                </select>
+                <div x-data="{ search: '', isOpen: false, selected: '{{ old('category_id') }}' }" class="relative">
+                    <input type="text" x-model="search" @focus="isOpen = true" @click="isOpen = true" @input="isOpen = true" placeholder="Search category..." required class="w-full p-3 rounded-xl border border-gray-300 text-xs bg-gray-50/50 outline-none focus:border-rose-500 font-bold text-gray-800">
+                    <input type="hidden" name="category_id" :value="selected">
+                    <div x-show="isOpen" @click.away="isOpen = false" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                        <template x-for="cat in @js($categories)" :key="cat.id">
+                            <div x-show="cat.name.toLowerCase().includes(search.toLowerCase())" @click="search = cat.name; selected = cat.id; isOpen = false" class="p-3 hover:bg-rose-50 cursor-pointer text-xs font-bold text-gray-800" x-text="cat.name"></div>
+                        </template>
+                    </div>
+                </div>
             </div>
         </div>
 
