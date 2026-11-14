@@ -16,3 +16,14 @@ main-args = ["-t", "/app/public", "-S", "0.0.0.0:8080", "/app/public/index.php"]
 env = [
     "APP_ENV=production"
 ]
+
+[[command]]
+name = "migrate"
+module = "php/php:php"
+runner = "wasi"
+
+[command.annotations.wasi]
+main-args = ["artisan", "migrate", "--force"]
+env = [
+    "APP_ENV=production"
+]
