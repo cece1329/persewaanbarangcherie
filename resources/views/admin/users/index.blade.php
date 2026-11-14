@@ -14,7 +14,7 @@
 
     <div class="bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
+            <table class="w-full text-left text-xs min-w-[800px]">
                 <thead class="bg-slate-100 text-slate-700 font-bold uppercase">
                     <tr>
                         <th class="p-4">Client</th>
@@ -44,7 +44,7 @@
                                 @if($u->isAdmin())
                                     <span class="bg-purple-100 text-purple-700 font-bold px-2.5 py-1 rounded-full text-[10px] inline-block whitespace-nowrap">Admin</span>
                                 @else
-                                    <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2.5 py-1 rounded-full text-[10px] inline-block whitespace-nowrap">Client Member</span>
+                                    <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2.5 py-1 rounded-full text-[10px] inline-block whitespace-nowrap">Member</span>
                                 @endif
                             </td>
 
