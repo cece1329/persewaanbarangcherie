@@ -54,12 +54,12 @@
                             📏 Fitting Chart &amp; Policy
                         </button>
                     </div>
-                    <form action="{{ route('catalog.wishlist', $dress->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="flex items-center gap-1 text-xs text-rose-700 font-semibold bg-rose-50 px-3.5 py-1.5 rounded-full border border-rose-200 hover:bg-rose-100 transition">
-                            <span>{{ $isWishlisted ? 'Saved to Wishlist' : 'Add to Wishlist' }}</span>
+                    <div x-data="{ isWishlisted: {{ $isWishlisted ? 'true' : 'false' }}, loading: false, async toggleWishlist() { this.loading = true; try { const res = await fetch('{{ route('catalog.wishlist', $dress->id) }}', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify({ _token: '{{ csrf_token() }}' }) }); const data = await res.json(); if (data.success) { this.isWishlisted = data.added; } } catch(e) { console.error(e); } finally { this.loading = false; } } }" class="flex items-center gap-2">
+                        <button type="button" @click="toggleWishlist()" :disabled="loading" class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition" :class="isWishlisted ? 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100' : 'text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100'">
+                            <span x-show="!loading" x-text="isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist'"></span>
+                            <span x-show="loading" class="text-xs">Loading...</span>
                         </button>
-                    </form>
+                    </div>
                 </div>
 
                 <h1 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
