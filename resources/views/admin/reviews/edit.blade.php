@@ -44,8 +44,8 @@
                     <div class="flex items-center gap-2">
                         @for($i = 1; $i <= 5; $i++)
                             <label class="cursor-pointer">
-                                <input type="radio" name="rating" value="{{ $i }}" required x-model="rating" class="hidden">
-                                <span class="text-3xl transition" :class="rating >= $i ? 'text-amber-500' : 'text-gray-300'">★</span>
+                                <input type="radio" name="rating" value="{{ $i }}" required x-model.number="rating" class="hidden">
+                                <span @click="rating = {{ $i }}" class="text-3xl transition cursor-pointer" :class="rating >= $i ? 'text-amber-500' : 'text-gray-300'">★</span>
                             </label>
                         @endfor
                     </div>
