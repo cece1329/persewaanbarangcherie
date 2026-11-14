@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-10 px-4 max-w-7xl mx-auto space-y-12" x-data="dressCalculator({{ $dress->rental_price_per_day }}, {{ $dress->deposit_fee }})">
+<div class="py-10 px-4 max-w-7xl mx-auto space-y-12" x-data="dressCalculator({{ $dress->rental_price_per_day }}, {{ $dress->deposit_fee }})" id="dress-detail-page">
 
     <nav class="flex items-center gap-2 text-xs font-medium text-gray-500">
         <a href="{{ route('home') }}" class="hover:text-rose-600">Home</a>
@@ -193,6 +193,7 @@ function dressCalculator(dailyPrice, deposit) {
 
         init() {
             this.calculateTotal();
+            this.restoreScroll();
         },
 
         calculateTotal() {
@@ -229,8 +230,26 @@ function dressCalculator(dailyPrice, deposit) {
 
         formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+        },
+
+        restoreScroll() {
+            const scrollPos = sessionStorage.getItem('dressScrollPosition');
+            if (scrollPos) {
+                window.scrollTo(0, parseInt(scrollPos));
+                sessionStorage.removeItem('dressScrollPosition');
+            }
         }
     }
 }
+
+// Save scroll position before form submit
+document.addEventListener('DOMContentLoaded', function() {
+    const wishlistForm = document.querySelector('#wishlist-section');
+    if (wishlistForm) {
+        wishlistForm.addEventListener('submit', function() {
+            sessionStorage.setItem('dressScrollPosition', window.scrollY);
+        });
+    }
+});
 </script>
 @endsection
