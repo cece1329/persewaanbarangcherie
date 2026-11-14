@@ -18,7 +18,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach($wishlists as $item)
                 @if($item->dress)
-                <div class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative">
+                <div data-wishlist-dress-id="{{ $item->dress->id }}" class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative">
                     
                     <form action="{{ route('catalog.wishlist', $item->dress->id) }}" method="POST" class="absolute top-3 right-3 z-10">
                         @csrf
@@ -56,4 +56,51 @@
     @endif
 
 </div>
+
+<script>
+    (function() {
+        var pageLoadedAt = Date.now();
+
+        function syncWishlistState() {
+            try {
+                var removedId = localStorage.getItem('cherie_wishlist_removed_id');
+                if (removedId) {
+                    var card = document.querySelector('[data-wishlist-dress-id="' + removedId + '"]');
+                    if (card) {
+                        card.remove();
+                    }
+                    localStorage.removeItem('cherie_wishlist_removed_id');
+                    var remaining = document.querySelectorAll('[data-wishlist-dress-id]');
+                    if (remaining.length === 0) {
+                        window.location.reload();
+                        return;
+                    }
+                }
+                var lastUpdated = parseInt(localStorage.getItem('cherie_wishlist_updated') || '0', 10);
+                if (lastUpdated > pageLoadedAt) {
+                    window.location.reload();
+                }
+            } catch (e) {}
+        }
+
+        window.addEventListener('pageshow', function(event) {
+            var navEntries = window.performance && window.performance.getEntriesByType ? window.performance.getEntriesByType('navigation') : null;
+            var isBackForward = (navEntries && navEntries.length > 0 && navEntries[0].type === 'back_forward') 
+                             || (window.performance && window.performance.navigation && window.performance.navigation.type === 2);
+            
+            if (event.persisted || isBackForward) {
+                window.location.reload();
+            } else {
+                syncWishlistState();
+            }
+        });
+
+        window.addEventListener('focus', syncWishlistState);
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                syncWishlistState();
+            }
+        });
+    })();
+</script>
 @endsection

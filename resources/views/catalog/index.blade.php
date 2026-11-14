@@ -129,6 +129,12 @@
                                             window.dispatchEvent(new CustomEvent('show-notification', { 
                                                 detail: { message: data.message, type: 'success' } 
                                             }));
+                                            try {
+                                                localStorage.setItem('cherie_wishlist_updated', Date.now());
+                                                if (!data.added) {
+                                                    localStorage.setItem('cherie_wishlist_removed_id', String('{{ $dress->id }}'));
+                                                }
+                                            } catch (e) {}
                                         }
                                     } catch (err) {
                                         console.error('Wishlist error:', err);

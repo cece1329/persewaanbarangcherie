@@ -88,6 +88,12 @@
                                if(d && d.success) {
                                    span.textContent = d.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
                                    window.dispatchEvent(new CustomEvent('show-notification', { detail: { message: d.message, type: 'success' } }));
+                                   try {
+                                       localStorage.setItem('cherie_wishlist_updated', Date.now());
+                                       if (!d.added) {
+                                           localStorage.setItem('cherie_wishlist_removed_id', String(dressId));
+                                       }
+                                   } catch(err) {}
                                } else {
                                    span.textContent = originalText;
                                }
