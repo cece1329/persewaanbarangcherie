@@ -99,22 +99,15 @@
             <textarea name="description" rows="4" required class="w-full p-3 rounded-xl border border-gray-300 text-xs bg-gray-50/50 outline-none">{{ old('description', $dress->description) }}</textarea>
         </div>
 
-        <!-- Rating Gaun -->
-        <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-200">
-            <div class="flex items-center justify-between mb-2">
-                <div>
-                    <label class="block text-xs font-bold text-gray-800 uppercase tracking-wider">Rating Gaun</label>
-                    <p class="text-[11px] text-gray-500">Sesuaikan rating bintang gaun ini (1 - 5 bintang)</p>
-                </div>
-                <span id="gown-rating-text" class="text-xs font-bold text-amber-700 bg-amber-100 border border-amber-300 px-3 py-1 rounded-full shadow-xs">{{ number_format((float)$dress->rating, 1) }} / 5.0</span>
+        <!-- Rating Gaun (Info Otomatis dari Pelanggan) -->
+        <div class="bg-amber-50/40 p-4 rounded-2xl border border-amber-200/80 flex items-center justify-between">
+            <div>
+                <label class="block text-xs font-bold text-gray-800 uppercase tracking-wider">Rating Gaun Saat Ini</label>
+                <p class="text-[11px] text-gray-500">Dihitung otomatis dari ulasan pelanggan asli yang telah menyewa gaun ini.</p>
             </div>
-            <input type="hidden" name="rating" id="gown-rating-input" value="{{ old('rating', round($dress->rating)) }}">
-            <div class="flex items-center gap-1.5 pt-1">
-                @for($i = 1; $i <= 5; $i++)
-                    <button type="button" onclick="setGownRating({{ $i }})" class="gown-star-btn text-3xl transition cursor-pointer text-gray-300 hover:scale-110 active:scale-95 focus:outline-none" data-rating="{{ $i }}" title="Beri rating {{ $i }} bintang">★</button>
-                @endfor
-                <span class="text-[11px] text-gray-400 ml-2 font-medium">Klik bintang untuk mengubah rating</span>
-            </div>
+            <span class="text-xs font-bold text-amber-700 bg-amber-100 border border-amber-300 px-3.5 py-1.5 rounded-full shadow-2xs">
+                ★ {{ number_format((float)$dress->rating, 1) }} / 5.0 ({{ $dress->reviews->count() }} ulasan)
+            </span>
         </div>
 
         <div>
@@ -152,25 +145,4 @@
     </form>
 
 </div>
-
-<script>
-function setGownRating(rating) {
-    document.getElementById('gown-rating-input').value = rating;
-    document.getElementById('gown-rating-text').textContent = Number(rating).toFixed(1) + ' / 5.0';
-    const stars = document.querySelectorAll('.gown-star-btn');
-    stars.forEach((star, index) => {
-        if (index < rating) {
-            star.classList.remove('text-gray-300');
-            star.classList.add('text-amber-500');
-        } else {
-            star.classList.remove('text-amber-500');
-            star.classList.add('text-gray-300');
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    setGownRating({{ old('rating', round($dress->rating)) ?: 5 }});
-});
-</script>
 @endsection

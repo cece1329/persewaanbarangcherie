@@ -149,7 +149,6 @@ class AdminController extends Controller
             'length' => ['nullable', 'string'],
             'fabric' => ['nullable', 'string'],
             'stock' => ['required', 'integer', 'min:1'],
-            'rating' => ['nullable', 'numeric', 'min:1', 'max:5'],
             'is_featured' => ['nullable', 'boolean'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'image_url' => ['nullable', 'url'],
@@ -179,7 +178,7 @@ class AdminController extends Controller
             'length' => $validated['length'] ?? null,
             'fabric' => $validated['fabric'] ?? null,
             'stock' => $validated['stock'],
-            'rating' => $validated['rating'] ?? 5.0,
+            'rating' => 0.0, // Rating awal selalu 0.0 sampai ada review dari penyewa
             'is_featured' => $request->boolean('is_featured'),
             'image' => $imagePath,
             'status' => 'available',
@@ -214,7 +213,6 @@ class AdminController extends Controller
             'fabric' => ['nullable', 'string'],
             'stock' => ['required', 'integer', 'min:0'],
             'status' => ['required', 'in:available,maintenance'],
-            'rating' => ['nullable', 'numeric', 'min:1', 'max:5'],
             'is_featured' => ['nullable', 'boolean'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'image_url' => ['nullable', 'url'],
@@ -244,9 +242,6 @@ class AdminController extends Controller
         $dress->fabric = $validated['fabric'] ?? null;
         $dress->stock = $validated['stock'];
         $dress->status = $validated['status'];
-        if ($request->filled('rating')) {
-            $dress->rating = $validated['rating'];
-        }
         $dress->is_featured = $request->boolean('is_featured');
         $dress->save();
 
