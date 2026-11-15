@@ -151,6 +151,11 @@
                             <td class="p-4">
                                 <strong class="text-gray-900 text-xs block">{{ $rental->user->name ?? 'Guest' }}</strong>
                                 <span class="text-[10px] text-gray-500 block">{{ $rental->user->email ?? '-' }}</span>
+                                @if($rental->identity_photo_url)
+                                    <a href="{{ $rental->identity_photo_url }}" target="_blank" class="inline-flex items-center gap-1 text-[10px] text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md font-bold hover:bg-rose-100 transition mt-1">
+                                        <span>🪪</span> Foto Identitas
+                                    </a>
+                                @endif
                             </td>
 
                             <td class="p-4">

@@ -88,6 +88,8 @@
                         <option value="5">5 Stars - Exceptional Craftsmanship & Fit</option>
                         <option value="4">4 Stars - Excellent Gown</option>
                         <option value="3">3 Stars - Satisfactory</option>
+                        <option value="2">2 Stars - Below Expectations</option>
+                        <option value="1">1 Star - Poor Experience</option>
                     </select>
                 </div>
 

@@ -78,7 +78,27 @@ class RentalController extends Controller
 
         $rentalCode = 'CR-'.date('Ymd').'-'.strtoupper(Str::random(4));
 
-        $rental = Rental::create([
+        $identityPath = null;
+        if ($request->hasFile('identity_photo')) {
+            $storage = new SupabaseStorageService;
+            $identityPath = $storage->upload($request->file('identity_photo'), 'identities');
+        } elseif ($request->filled('identity_photo_data')) {
+            $base64Data = $request->input('identity_photo_data');
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Data, $type)) {
+                $data = substr($base64Data, strpos($base64Data, ',') + 1);
+                $decoded = base64_decode($data);
+                if ($decoded !== false) {
+                    $ext = strtolower($type[1]);
+                    $tempFile = tempnam(sys_get_temp_dir(), 'id_') . '.' . $ext;
+                    file_put_contents($tempFile, $decoded);
+                    $storage = new SupabaseStorageService;
+                    $identityPath = $storage->upload(new \Illuminate\Http\File($tempFile), 'identities');
+                    @unlink($tempFile);
+                }
+            }
+        }
+
+        $rentalData = [
             'rental_code' => $rentalCode,
             'user_id' => Auth::id(),
             'dress_id' => $dress->id,
@@ -95,7 +115,17 @@ class RentalController extends Controller
                 ? $validated['shipping_address']
                 : 'Self Pickup at Chérie Atelier',
             'notes' => $validated['notes'] ?? null,
-        ]);
+        ];
+
+        if ($identityPath) {
+            if (\Illuminate\Support\Facades\Schema::hasColumn('rentals', 'identity_photo')) {
+                $rentalData['identity_photo'] = $identityPath;
+            } else {
+                $rentalData['notes'] = ($rentalData['notes'] ? $rentalData['notes'] . "\n" : '') . '[ID_PHOTO: ' . $identityPath . ']';
+            }
+        }
+
+        $rental = Rental::create($rentalData);
 
         return redirect()->route('rental.payment', $rental->rental_code)
             ->with('success', 'Reservation created. Please finalize payment to confirm your booking.');

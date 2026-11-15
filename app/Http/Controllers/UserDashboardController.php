@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rental;
+use App\Models\Review;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +64,44 @@ class UserDashboardController extends Controller
             ->header('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
     }
 
+
+    public function storeReview(Request $request)
+    {
+        $validated = $request->validate([
+            'rental_id' => ['required', 'exists:rentals,id'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['required', 'string', 'min:5', 'max:1000'],
+        ]);
+
+        $rental = Rental::with('dress')
+            ->where('id', $validated['rental_id'])
+            ->where('user_id', Auth::id())
+            ->where('status', 'completed')
+            ->firstOrFail();
+
+        $existing = Review::where('rental_id', $rental->id)->first();
+        if ($existing) {
+            return back()->with('error', 'You have already submitted a review for this reservation.');
+        }
+
+        Review::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'dress_id' => $rental->dress_id,
+            'rental_id' => $rental->id,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+        ]);
+
+        if ($rental->dress) {
+            $avg = Review::where('dress_id', $rental->dress_id)->avg('rating');
+            if ($avg) {
+                $rental->dress->update(['rating' => round($avg, 2)]);
+            }
+        }
+
+        return back()->with('success', 'Terima kasih! Ulasan kamu telah berhasil disimpan dan ditampilkan di halaman gaun.');
+    }
 
     public function updateProfile(Request $request)
     {

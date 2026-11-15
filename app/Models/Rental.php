@@ -24,6 +24,7 @@ class Rental extends Model
         'status',
         'payment_method',
         'payment_proof',
+        'identity_photo',
         'shipping_method',
         'shipping_address',
         'notes',
@@ -53,6 +54,17 @@ class Rental extends Model
     public function review(): HasOne
     {
         return $this->hasOne(Review::class);
+    }
+
+    public function getIdentityPhotoUrlAttribute(): ?string
+    {
+        if (!empty($this->identity_photo)) {
+            return $this->identity_photo;
+        }
+        if (preg_match('/\[ID_PHOTO:\s*([^\]]+)\]/', $this->notes ?? '', $matches)) {
+            return trim($matches[1]);
+        }
+        return null;
     }
 
     public function getStatusLabelAttribute(): string

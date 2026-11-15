@@ -8,7 +8,7 @@
         <h1 class="font-serif-editorial text-3xl font-bold text-gray-900 mt-2">Reservation & Delivery Details</h1>
     </div>
 
-    <form action="{{ route('rental.store') }}" method="POST" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <form action="{{ route('rental.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         @csrf
         <input type="hidden" name="dress_id" value="{{ $dress->id }}">
 
@@ -36,6 +36,14 @@
                     <div>
                         <span class="text-gray-400 block uppercase font-bold text-[10px]">Return Date:</span>
                         <input type="date" name="end_date" value="{{ $endDate }}" readonly class="font-bold text-gray-800 bg-transparent outline-none mt-1">
+                    </div>
+                </div>
+
+                <div class="p-3 bg-white/80 rounded-xl border border-rose-100 flex items-start gap-2.5 text-[11px] text-gray-600">
+                    <span class="text-rose-500 font-bold text-sm">🚚</span>
+                    <div>
+                        <strong class="text-rose-900 font-semibold block">Estimasi Jadwal Pengiriman Atelier:</strong>
+                        Gaun akan disiapkan dan dikirim H-2 / H-1 sebelum tanggal mulai sewa ({{ \Carbon\Carbon::parse($startDate)->format('d M Y') }}) agar tiba tepat waktu sebelum acaramu dimulai.
                     </div>
                 </div>
             </div>
@@ -118,6 +126,83 @@
                 </div>
             </div>
 
+            <!-- Identity Guarantee Section -->
+            <div x-data="identityCapture()" class="bg-white p-5 sm:p-6 rounded-3xl border border-rose-100 shadow-xs space-y-4">
+                <div class="flex items-center justify-between border-b border-rose-50 pb-3">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">🪪</span>
+                            <h3 class="font-serif-editorial font-bold text-gray-900 text-lg">Jaminan Identitas Penyewa</h3>
+                        </div>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Untuk simulasi keamanan rental. Bebas foto selfie, kartu pelajar, atau gambar apa saja.</p>
+                    </div>
+                    <span class="text-[10px] bg-rose-50 text-rose-700 font-bold px-2.5 py-1 rounded-full border border-rose-200 whitespace-nowrap">Simulasi Tugas</span>
+                </div>
+
+                <!-- Hidden inputs -->
+                <input type="file" name="identity_photo" accept="image/*" class="hidden" x-ref="fileInput" @change="handleFileSelect($event)">
+                <input type="hidden" name="identity_photo_data" x-ref="base64Input">
+
+                <!-- 1. Belum ada foto & kamera tidak aktif -->
+                <div x-show="!photoPreview && !cameraActive" class="space-y-3">
+                    <div class="border-2 border-dashed border-rose-200 rounded-2xl p-6 text-center bg-rose-50/20">
+                        <div class="w-12 h-12 mx-auto bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-xl mb-2">
+                            📷
+                        </div>
+                        <p class="text-xs font-bold text-gray-800">Unggah Foto / Buka Kamera</p>
+                        <p class="text-[11px] text-gray-500 max-w-xs mx-auto mt-0.5">Pilih salah satu metode di bawah ini untuk melengkapi jaminan sewa.</p>
+                        
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 mt-4">
+                            <button type="button" @click="startCamera()" class="w-full sm:w-auto btn-igari-primary text-xs px-4 py-2.5 rounded-full font-bold flex items-center justify-center gap-1.5 shadow-xs">
+                                <span>📸</span> Buka Kamera
+                            </button>
+                            <button type="button" @click="$refs.fileInput.click()" class="w-full sm:w-auto btn-igari-secondary text-xs px-4 py-2.5 rounded-full font-bold flex items-center justify-center gap-1.5">
+                                <span>🖼️</span> Pilih dari Galeri
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Kamera sedang aktif -->
+                <div x-show="cameraActive" x-cloak class="space-y-3">
+                    <div class="relative bg-black rounded-2xl overflow-hidden aspect-[4/3] max-w-sm mx-auto shadow-md">
+                        <video x-ref="video" autoplay playsinline class="w-full h-full object-cover"></video>
+                        
+                        <!-- Viewfinder overlay frame -->
+                        <div class="absolute inset-4 sm:inset-6 border-2 border-dashed border-rose-300/80 rounded-xl pointer-events-none flex items-center justify-center">
+                            <span class="bg-black/60 text-white text-[10px] sm:text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-xs">
+                                Posisikan Objek / Foto di Sini
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-3">
+                        <button type="button" @click="takeSnapshot()" class="btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold flex items-center gap-1.5 shadow-md">
+                            <span>⚪</span> Jepret Foto
+                        </button>
+                        <button type="button" @click="stopCamera()" class="btn-igari-secondary text-xs px-4 py-2.5 rounded-full font-bold">
+                            Batal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Preview Foto yang sudah diambil/diupload -->
+                <div x-show="photoPreview" x-cloak class="space-y-3">
+                    <div class="relative bg-pink-50 rounded-2xl p-2 border border-rose-200 max-w-xs mx-auto">
+                        <img :src="photoPreview" class="w-full h-44 sm:h-52 object-cover rounded-xl shadow-xs" alt="Preview Foto">
+                        <div class="absolute top-4 right-4 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow">
+                            ✓ Foto Terlampir
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="button" @click="removePhoto()" class="text-xs text-rose-600 hover:text-rose-800 font-bold underline">
+                            Ganti / Hapus Foto
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="bg-white p-6 rounded-3xl border border-rose-100 shadow-xs space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Special Handling Instructions (Optional)</label>
@@ -181,4 +266,64 @@
 
     </form>
 </div>
+
+<script>
+function identityCapture() {
+    return {
+        photoPreview: null,
+        cameraActive: false,
+        stream: null,
+        async startCamera() {
+            try {
+                this.stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
+                    audio: false
+                });
+                this.$refs.video.srcObject = this.stream;
+                this.cameraActive = true;
+            } catch (err) {
+                console.error(err);
+                alert('Tidak dapat mengakses kamera. Silakan pilih foto dari galeri HP atau laptop.');
+                this.$refs.fileInput.click();
+            }
+        },
+        takeSnapshot() {
+            const video = this.$refs.video;
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+            this.photoPreview = dataUrl;
+            this.$refs.base64Input.value = dataUrl;
+            this.stopCamera();
+        },
+        stopCamera() {
+            if (this.stream) {
+                this.stream.getTracks().forEach(track => track.stop());
+                this.stream = null;
+            }
+            this.cameraActive = false;
+        },
+        handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    this.photoPreview = event.target.result;
+                    this.$refs.base64Input.value = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        removePhoto() {
+            this.photoPreview = null;
+            this.$refs.base64Input.value = '';
+            this.$refs.fileInput.value = '';
+            this.stopCamera();
+        }
+    };
+}
+</script>
 @endsection

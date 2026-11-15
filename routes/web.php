@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Customer Portal Dashboard
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('/my-rentals', [UserDashboardController::class, 'rentals'])->name('user.rentals');
+    Route::post('/user/reviews', [UserDashboardController::class, 'storeReview'])->name('user.review.store');
     Route::post('/user/profile', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
 });
 
