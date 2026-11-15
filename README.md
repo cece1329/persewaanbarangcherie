@@ -5,193 +5,341 @@
 <h1 align="center">🎀 ChérieRent Atelier 🌸</h1>
 <p align="center">
   <em>Exclusive Haute Couture, Vintage & Coquette Gown Rental Atelier</em><br>
-  <strong>Aesthetic Fashion Rental Web Application with Smart Booking, Inspection & Payment Workflows</strong>
+  <strong>Aesthetic Fashion Rental Web Application with Reactive UI, WebRTC Camera Verification & Serverless Architecture</strong>
 </p>
 
 <p align="center">
-  <a href="https://citraarifera.my.id"><img src="https://img.shields.io/badge/Live_Site-citraarifera.my.id-ff758f?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Demo"></a>
+  <a href="https://citraarifera.my.id"><img src="https://img.shields.io/badge/Live_Website-citraarifera.my.id-ff758f?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Demo"></a>
   <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-11.x-f43f5e?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel"></a>
   <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.3-fb7185?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3"></a>
   <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-v4.0-fda4af?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"></a>
-  <a href="https://wasmer.io"><img src="https://img.shields.io/badge/Deployed_on-Wasmer_Edge_WASI-be185d?style=for-the-badge&logo=webassembly&logoColor=white" alt="Wasmer Edge"></a>
+  <a href="https://alpinejs.dev"><img src="https://img.shields.io/badge/Alpine.js-Reactive_UI-8b5cf6?style=for-the-badge&logo=alpinedotjs&logoColor=white" alt="Alpine.js"></a>
+  <a href="https://wasmer.io"><img src="https://img.shields.io/badge/Runtime-Wasmer_Edge_WASI-be185d?style=for-the-badge&logo=webassembly&logoColor=white" alt="Wasmer Edge"></a>
 </p>
 
 ---
 
-## 🩰 Tentang ChérieRent
+## 🩰 1. Tentang ChérieRent
 
-**ChérieRent** adalah platform persewaan busana dan gaun pesta premium (*haute couture, vintage, rococo, dan coquette*) berbasis web. Dirancang khusus dengan palet warna lembut nan memikat (*blush pink, rose gold, cream ivory*), tipografi *editorial serif*, serta ornamen pita (*ribbons & lace*) yang menciptakan nuansa butik atelier Prancis bernuansa romantis dan estetik.
+**ChérieRent** adalah platform persewaan busana dan gaun pesta (*haute couture, vintage, rococo, dan coquette*) berbasis web modern. Dirancang khusus dengan palet warna lembut nan memikat (*blush pink, rose gold, cream ivory*), tipografi *editorial serif*, serta ornamen pita (*ribbons & lace*) yang menciptakan nuansa butik atelier Prancis bernuansa romantis, anggun, dan estetik.
 
-Aplikasi ini tidak hanya memanjakan mata, namun juga dibangun di atas fondasi sistem persewaan yang ketat, modern, dan lengkap: mulai dari **algoritma ketersediaan jadwal sewa**, **otentikasi Google OAuth 2.0**, **kamera WebRTC untuk jaminan identitas**, **verifikasi pembayaran multi-channel**, **sistem inspeksi pengembalian gaun dengan refund deposit**, hingga **cetak struk thermal kasir & invoice PDF**.
-
----
-
-## ✨ Kelebihan & Keunggulan Utama
-
-* 🌸 **Desain Igari & Coquette Visual Aesthetic:** Tampilan visual bergaya butik atelier mewah dengan micro-interaction lembut, font editorial berkelas, rounded corners elegan, dan ornamen pita.
-* ⚡ **Single Sign-On (SSO) Google Asli:** Pengguna dapat masuk atau mendaftar dengan satu kali klik akun Google mereka. Email otomatis terverifikasi tanpa kendala delay OTP atau folder spam.
-* 👗 **Dynamic Schedule Conflict Guard:** Sistem otomatis menghitung durasi sewa, mengecek bentrok tanggal dengan peminjam lain, dan mengunci stok secara real-time.
-* 📸 **Kamera WebRTC & Galeri untuk Jaminan:** Penyewa dapat mengambil foto identitas/penjamin langsung dari kamera HP/laptop secara instan tanpa perlu aplikasi tambahan.
-* 💳 **Pemisahan Metode Pembayaran (E-Wallet vs Transfer Bank):** Dilengkapi QRIS nasional dummy untuk scan ShopeePay, DANA, GoPay, dan rekening virtual dummy BCA/Mandiri beserta fitur unggah bukti bayar.
-* ⏳ **1-Hour Auto-Cancel Pending Payment:** Reservasi yang belum dibayar dalam batas waktu 1 jam akan kedaluwarsa secara otomatis agar stok gaun tidak terkunci sia-sia.
-* 🔍 **Workflow Inspeksi Gaun & Refund Deposit 100%:** Pelanggan dapat mengajukan pengembalian gaun (`returned`), lalu admin memeriksa kondisi fisik kain sebelum mencairkan kembali deposit jaminan.
-* ⭐ **Sistem Rating Murni Pelanggan & Kurasi Home Testimoni:** Bintang gaun dihitung 100% murni dari pelanggan yang telah menyelesaikan sewa, sedangkan ulasan pada Beranda dikurasi khusus oleh admin maksimal 3 ulasan.
-* 🧾 **Printable Thermal Receipt & Digital PDF Invoice:** Dilengkapi tombol cetak nota thermal kasir 80mm/58mm dan voucher invoice resmi siap print untuk bukti fisik.
+Aplikasi ini dibangun untuk memberikan pengalaman penyewaan busana yang mulus (*seamless*), aman, dan terintegrasi dari hulu ke hilir: mulai dari **pengecekan jadwal ketersediaan otomatis**, **otentikasi Google OAuth 2.0 tanpa spam**, **kamera WebRTC langsung di browser untuk jaminan identitas**, **pembayaran multi-kanal (QRIS & Bank Transfer)**, hingga **inspeksi fisik pengembalian busana dengan refund deposit 100%**.
 
 ---
 
-## 🎀 Fitur-Fitur Lengkap (Feature Matrix)
+## 🌟 2. Kelebihan & Nilai Unggul
 
-### 👤 1. Portal Pelanggan (Customer Features)
-| Fitur | Deskripsi |
-| :--- | :--- |
-| **Katalog Gaun Interaktif** | Filter gaun berdasarkan kategori (*Haute Couture, Vintage, Coquette, Minimalist*), ukuran (*S, M, L, XL*), rentang harga, dan status ketersediaan. |
-| **Quiz Gown Matcher** | Kuis rekomendasi gaun interaktif untuk menemukan gaun yang paling cocok dengan *vibe* acara dan warna favorit pelanggan. |
-| **Kalkulator Sewa & Deposit** | Perhitungan biaya sewa per hari, deposit jaminan (*refundable*), dan total bayar secara otomatis saat memilih tanggal mulai dan selesai. |
-| **Wishlist Gaun Impian** | Simpan gaun favorit ke daftar *wishlist* pribadi dengan animasi tombol hati yang responsif. |
-| **Jaminan Identitas Kamera** | Pengambilan foto verifikasi sewa langsung menggunakan kamera perangkat (*in-browser camera viewfinder*) atau unggah foto dari galeri. |
-| **Pilihan Pembayaran Rapi** | Pilihan jalur pembayaran terpisah antara **E-Wallet / QRIS** (dengan QRIS interaktif) dan **Transfer Bank** (dengan nomor rekening admin + fitur salin cepat). |
-| **Unggah Bukti Transfer** | Fitur melampirkan screenshot bukti transfer dengan preview gambar langsung sebelum checkout. |
-| **Client Reservation History** | Pantau status pemesanan secara transparan: *Pending Payment, Paid, Shipping, In Use, Returned, Completed, Cancelled*. |
-| **Batalkan Reservasi Mandiri** | Fitur membatalkan pesanan yang belum dibayar jika ada perubahan rencana tanpa menunggu admin. |
-| **Ajukan Pengembalian Gaun** | Tombol kembalikan gaun saat masa sewa selesai untuk memulai proses inspeksi oleh atelier. |
-| **Beri Ulasan Bintang & Testimoni** | Input rating bintang (1-5) dan review kepuasan setelah gaun selesai disewa, langsung tampil di halaman detail gaun terkait. |
-
-### 👑 2. Panel Admin Atelier (Admin Features)
-| Fitur | Deskripsi |
-| :--- | :--- |
-| **Executive Analytics Dashboard** | Ringkasan metrik atelier: total pendapatan, gaun aktif, reservasi berjalan, dan grafik tren sewa bulanan. |
-| **Manajemen Busana (Gown CRUD)** | Tambah gaun baru, unggah foto berkualitas tinggi ke cloud storage, atur stok fisik, ukuran lingkar dada/pinggang, dan tandai edisi unggulan (*featured*). |
-| **Verifikasi Pembayaran & Bukti Bayar** | Cek foto struk transfer yang dikirim penyewa secara pop-up dan ubah status pesanan menjadi lunas (*Paid*). |
-| **Pelacakan Pengiriman & Pengembalian** | Update status pengiriman (*Shipping*), status pemakaian (*In Use*), hingga konfirmasi penerimaan gaun kembali (*Returned*). |
-| **Inspeksi & Catatan Refund Deposit** | Form pencatatan hasil inspeksi fisik kain gaun, denda jika ada kerusakan/keterlambatan, dan konfirmasi pengembalian dana deposit 100%. |
-| **Kelola Review Home (Maksimal 3)** | Panel khusus untuk menambah, mengedit, dan menghapus ulasan pilihan pada halaman Beranda dengan kuota ketat 3 ulasan tetap (tidak mengubah rating gaun). |
-| **Pusat Pesan & Inbox Kontak** | Kelola pesan pertanyaan pelanggan dari form *Contact Atelier* dengan sistem penanda sudah dibaca dan auto-reply email. |
-| **Penghapusan Histori Pesanan** | Bersihkan histori reservasi yang dibatalkan atau selesai demi kerapian data atelier. |
+* 🌸 **Aesthetic French Coquette & Igari Visuals:** Tampilan visual mewah bernuansa butik couture dengan micro-interaction halus, kartu membulat (*rounded-3xl*), dan ornamen khas busana vintage.
+* ⚡ **Single Sign-On (SSO) Google Asli:** Pengguna dapat masuk atau mendaftar instan dengan akun Google resmi (`Google OAuth 2.0`). Akun langsung aktif tanpa kendala delay kode OTP atau tersesat di folder spam.
+* 👗 **Dynamic Schedule Conflict Guard:** Sistem pintar yang otomatis memeriksa jadwal sewa dan bentrok tanggal dengan peminjam lain secara *real-time*.
+* 📸 **Kamera WebRTC In-Browser untuk Jaminan:** Penyewa dapat mengambil foto identitas/penjamin langsung dari kamera HP/laptop secara instan tanpa perlu aplikasi pihak ketiga.
+* 💳 **Pemisahan Jalur Pembayaran (E-Wallet vs Transfer Bank):** Dilengkapi QRIS nasional dummy interaktif untuk scan ShopeePay/DANA/GoPay dan rekening resmi dummy BCA/Mandiri beserta fitur unggah bukti bayar.
+* ⏳ **1-Hour Auto-Cancel Pending Payment:** Pesanan yang belum dibayar dalam 1 jam otomatis dibatalkan sistem agar stok gaun tidak terkunci sia-sia dan bisa disewa orang lain.
+* 🔍 **Siklus Lengkap Inspeksi & Refund Deposit:** Pelanggan dapat mengajukan pengembalian gaun (`returned`), lalu admin memeriksa kondisi fisik kain sebelum mencairkan kembali deposit jaminan 100%.
+* ⭐ **Rating Objektif Pelanggan & Kurasi 3 Review Beranda:** Rating bintang pada gaun dihitung 100% murni dari pelanggan yang sudah selesai menyewa, sementara ulasan pada halaman Beranda dikurasi khusus oleh admin maksimal 3 review tetap.
+* 🧾 **Printable Thermal Receipt & Digital PDF Invoice:** Dilengkapi cetak struk kasir thermal 80mm/58mm dan voucher nota resmi siap print/simpan PDF untuk arsip pelanggan.
 
 ---
 
-## 🔒 Arsitektur Keamanan (Security System)
+## 🧭 3. Alur Sistem & Siklus Pemesanan (Workflows)
 
-Aplikasi ChérieRent mengedepankan prinsip *Security by Design*:
+### 🎀 A. Alur Pendaftaran & Masuk (Authentication Flow)
 
-1. **Otentikasi Aman Google OAuth 2.0:** Menggunakan token exchange langsung ke server otorisasi Google (`oauth2.googleapis.com`) dengan verifikasi parameter `state` untuk mencegah serangan *Cross-Site Request Forgery (CSRF)*.
-2. **Relative Cryptographic Signature:** Tautan verifikasi email menggunakan signature kriptografis berbasis HMAC SHA-256 yang kompatibel dengan protokol reverse-proxy HTTPS / custom domain.
-3. **Role-Based Access Control (RBAC):** Pemisahan hak akses mutlak antara `customer` dan `admin` menggunakan middleware `auth` dan route grouping terproteksi.
-4. **Proteksi CSRF & Sanitasi XSS:** Seluruh permintaan formulir dilindungi token `@csrf`, enkripsi cookie ganda, dan sanitasi escape otomatis pada Blade engine.
-5. **Anti-Tampering Rating System:** Admin tidak dapat memalsukan bintang rating gaun pada katalog; rating gaun murni terakumulasi secara otomatis dari relasi database tabel `reviews` penyewa asli.
-6. **Isolated Sandbox & Safe Uploads:** Pengunggahan gambar diproses dengan validasi MIME-Type ketat dan disimpan pada bucket cloud Supabase yang terisolasi.
+```mermaid
+flowchart TD
+    Start([Pengunjung Membuka Web]) --> Choice{Pilih Metode Masuk}
+    
+    Choice -- "Opsi 1: Google Sign-In (Rekomendasi)" --> GoogleOAuth[Klik Masuk dengan Google]
+    GoogleOAuth --> GoogleConsent[Pilih Akun Gmail di Popup Resmi Google]
+    GoogleConsent --> Callback[/auth/google/callback]
+    Callback --> CheckUser{Akun Sudah Terdaftar?}
+    CheckUser -- Ya --> LoginGoogle[Login Instan & Buat Sesi]
+    CheckUser -- Belum --> RegisterGoogle[Buat Akun Otomatis dari Profil Google]
+    RegisterGoogle --> AutoVerify[Email Otomatis Terverifikasi & Login]
+    
+    Choice -- "Opsi 2: Email & Password Manual" --> InputForm[Isi Nama, Email & Password]
+    InputForm --> SendNotice[Kirim Notifikasi Verifikasi Email]
+    SendNotice --> InputOTP[Masukkan 6 Digit OTP / Klik Link di Email]
+    InputOTP --> VerifySuccess[Akun Aktif & Masuk Dashboard]
+    
+    LoginGoogle --> Dashboard([Client Portal Dashboard])
+    AutoVerify --> Dashboard
+    VerifySuccess --> Dashboard
+```
 
 ---
 
-## 🗄️ Struktur Basis Data (Database Architecture)
+### 👗 B. Siklus Lengkap Persewaan Gaun (Rental Lifecycle)
 
-Aplikasi menggunakan database relasional MySQL dengan relasi Eloquent yang terstruktur rapi:
+```mermaid
+flowchart TD
+    A[Pelanggan Memilih Gaun di Katalog] --> B[Pilih Tanggal Sewa di Kalender Interaktif]
+    B --> C{Cek Ketersediaan Tanggal}
+    C -- Bentrok / Tidak Tersedia --> B
+    C -- Tersedia --> D[Kalkulator Alpine.js Hitung Total Sewa & Deposit Jaminan]
+    
+    D --> E[Masuk Halaman Checkout]
+    E --> F[Ambil Foto Jaminan via Kamera WebRTC atau Galeri]
+    F --> G[Pilih Metode Pembayaran: QRIS atau Transfer Bank]
+    G --> H[Klik Proceed to Payment -> Status: Pending Payment]
+    
+    H --> I{Batas Waktu Bayar: 1 Jam}
+    I -- Melebihi 1 Jam / Dibatalkan Pelanggan --> J[Status: Cancelled & Stok Kembali Tersedia]
+    I -- Dibayar Tepat Waktu --> K[Unggah Bukti Transfer / Konfirmasi QRIS]
+    
+    K --> L[Admin Atelier Verifikasi Bukti Pembayaran]
+    L --> M[Status: Paid & Gaun Dipersiapkan]
+    M --> N[Status: Shipping / Express Courier / Self Pickup]
+    N --> O[Status: In Use / Gaun Sedang Dipakai Pelanggan]
+    
+    O --> P[Masa Sewa Berakhir -> Pelanggan Ajukan Pengembalian Gaun]
+    P --> Q[Status: Returned / Gaun Dikirim Balik ke Atelier]
+    Q --> R[Admin Melakukan Inspeksi Fisik Kondisi Kain & Jahitan]
+    R --> S[Admin Mengembalikan Uang Deposit Jaminan 100%]
+    S --> T[Status: Completed / Reservasi Selesai Sempurna]
+    
+    T --> U[Pelanggan Memberikan Rating Bintang & Review Gaun]
+    U --> V[Rating Gaun di Halaman Katalog Terupdate Otomatis]
+```
+
+---
+
+## 🛠️ 4. Di Balik Layar: Teknologi & Rahasia Fitur Interaktif
+
+Aplikasi ChérieRent mengadopsi teknik rekayasa perangkat lunak modern untuk menciptakan pengalaman pengguna setara aplikasi *Single Page Application (SPA)* tanpa membebani browser:
+
+### 💖 A. Kenapa Tombol Wishlist Bisa Diklik Tanpa Reload Halaman? (AJAX & Fetch API)
+Di kebanyakan website tradisional, menekan tombol favorit/wishlist akan menyebabkan layar berkedip putih dan memuat ulang (*refresh*) seluruh halaman web. Di ChérieRent, hal tersebut diatasi menggunakan teknik **Asynchronous JavaScript and XML (AJAX)**:
+
+1. **Event Interception:** Saat tombol berbentuk hati diklik, skrip JavaScript mengintersepsi event klik bawaan browser (`e.preventDefault()`).
+2. **Background HTTP Request:** Browser diam-diam mengirimkan permintaan `POST` di latar belakang ke endpoint `/wishlist/{id}/toggle` menggunakan **`window.fetch` API**.
+3. **Security Headers:** Permintaan menyertakan header khusus:
+   - `X-CSRF-TOKEN`: Melindungi dari serangan pemalsuan permintaan antar-situs.
+   - `X-Requested-With: XMLHttpRequest`: Memberitahu server Laravel bahwa ini adalah panggilan AJAX.
+4. **Respon JSON Ringan:** Controller Laravel tidak mengirim kembali seluruh tampilan HTML, melainkan hanya paket data kecil berformat JSON:
+   ```json
+   {
+     "success": true,
+     "added": true,
+     "message": "Saved to your wishlist."
+   }
+   ```
+5. **DOM Mutation Instan:** Begitu paket data diterima, JavaScript langsung mengubah warna ikon hati menjadi merah muda merona (`fill-rose-500 text-rose-500`) dan memunculkan *floating toast notification* lembut di sudut layar **tanpa ada refresh halaman sama sekali**.
+
+---
+
+### ⚡ B. Apa itu Alpine.js & Perannya di ChérieRent?
+**[Alpine.js](https://alpinejs.dev/)** adalah framework JavaScript reaktif yang ringan (*lightweight*, ~15kb) yang bekerja secara deklaratif langsung di dalam tag HTML Blade. Di ChérieRent, Alpine.js bertindak sebagai otak reaktif antarmuka pengguna:
+
+* 🧮 **Kalkulator Sewa Gaun Real-time (`dressCalculator`):**
+  Saat pelanggan mengubah tanggal sewa di kalender, fungsi reaktif Alpine langsung menghitung selisih hari (`totalDays`), mengalikan harga sewa, menambahkan biaya jaminan, dan memperbarui angka total bayar di layar seketika secara matematis tanpa menghubungi server.
+* 🔄 **Peralihan Tab Metode Pembayaran Cepat:**
+  Beralih antara tab **📱 E-Wallet & QRIS** dan **🏛️ Transfer Bank** terjadi secara instan menggunakan `x-show="category === 'ewallet'"` dengan transisi *fade-in* yang mulus.
+* 📋 **Salin Rekening Otomatis:**
+  Menyalin nomor rekening admin ke clipboard perangkat dalam satu klik dengan indikator feedback *"Tersalin!"* yang otomatis hilang setelah 2.5 detik.
+* 👁️ **Show / Hide Password Visibility:**
+  Fitur intip password interaktif di halaman login dan registrasi (`showPassword = !showPassword`) yang mengganti tipe input antara `text` dan `password`.
+* 💬 **Modal & Dialog Interaktif:**
+  Membuka dan menutup modal ulasan gaun, petunjuk ukuran gaun (*fitting guide*), dan modal kuis pencocok gaya gaun tanpa library jQuery yang berat.
+
+---
+
+### 📷 C. Kamera WebRTC Langsung di Browser (`navigator.mediaDevices.getUserMedia`)
+Untuk keamanan gaun bernilai tinggi, ChérieRent mengintegrasikan API **WebRTC modern**:
+* Browser meminta izin akses kamera perangkat secara legal dan aman melalui protokol HTTPS.
+* Aliran video kamera ditampilkan di dalam bingkai bidik (*viewfinder overlay*) atelier secara live.
+* Saat tombol *"Jepret Foto"* ditekan, elemen HTML5 `<canvas>` menangkap frame video terkini, mengonversinya menjadi format data URI Base64 JPEG beresolusi tinggi, dan menyematkannya ke formulir checkout.
+* Penyewa juga bebas memilih jalur alternatif: memilih foto dari galeri file jika kamera tidak tersedia.
+
+---
+
+### ☁️ D. Supabase Cloud Object Storage
+Semua aset media penting (foto busana haute couture, kartu jaminan identitas, dan bukti transfer pembayaran) diunggah menggunakan service `SupabaseStorageService`:
+* Berkomunikasi langsung dengan REST API Supabase Storage menggunakan enkripsi bearer token *service role key*.
+* File disimpan pada bucket cloud terisolasi berkecepatan tinggi dengan tautan URL publik yang tahan lama dan aman dari risiko kehilangan data server lokal.
+
+---
+
+### 🌐 E. Runtime Wasmer Edge WASI
+Berbeda dengan web hosting konvensional:
+* Proyek ini dikompilasi dan dijalankan di atas **Wasmer Edge** menggunakan arsitektur **WebAssembly System Interface (WASI)**.
+* Server dijalankan secara *sandboxed* dengan performa mendekati *native code*, waktu booting nyaris instan (*sub-millisecond cold start*), serta konsumsi memori yang sangat hemat.
+
+---
+
+## 🗄️ 5. Struktur Lengkap Basis Data (Database Schema)
+
+Berikut adalah rancangan tabel database relasional ChérieRent secara mendalam beserta tipe data, atribut primary key (PK), foreign key (FK), dan unique key (UK):
 
 ```mermaid
 erDiagram
-    USERS ||--o{ RENTALS : "places"
-    USERS ||--o{ REVIEWS : "writes"
-    USERS ||--o{ WISHLISTS : "saves"
-    CATEGORIES ||--o{ DRESSES : "contains"
-    DRESSES ||--o{ RENTALS : "booked_in"
-    DRESSES ||--o{ REVIEWS : "receives"
-    DRESSES ||--o{ WISHLISTS : "favorited"
-    RENTALS ||--o| REVIEWS : "reviewed_after_completion"
+    users {
+        bigint id PK
+        string name
+        string email UK
+        string google_id UK
+        string password
+        string role "customer, admin"
+        string phone
+        text address
+        string avatar
+        timestamp email_verified_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    categories {
+        bigint id PK
+        string name
+        string slug UK
+        string icon
+        string card_style
+        text description
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    dresses {
+        bigint id PK
+        bigint category_id FK
+        string name
+        string slug UK
+        text description
+        decimal rental_price_per_day
+        decimal deposit_fee
+        string size "XS, S, M, L, XL"
+        string color
+        string chest_size
+        string waist_size
+        string length
+        string fabric
+        string image
+        int stock
+        boolean is_featured
+        decimal rating
+        string status "available, rented, maintenance"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    rentals {
+        bigint id PK
+        string rental_code UK
+        bigint user_id FK
+        bigint dress_id FK
+        date start_date
+        date end_date
+        int total_days
+        decimal rental_price
+        decimal deposit_fee
+        decimal total_price
+        string status "pending_payment, paid, shipping, in_use, returned, completed, cancelled"
+        string payment_method "qris, bca, mandiri, shopee_pay, dana"
+        string payment_proof
+        string identity_photo
+        string shipping_method "delivery, pickup"
+        text shipping_address
+        text notes
+        text return_notes
+        string return_tracking_number
+        timestamp paid_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    reviews {
+        bigint id PK
+        bigint user_id FK
+        bigint dress_id FK
+        bigint rental_id FK
+        string user_name
+        int rating "1 sampai 5"
+        text comment
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    wishlists {
+        bigint id PK
+        bigint user_id FK
+        bigint dress_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    messages {
+        bigint id PK
+        string name
+        string email
+        string phone
+        string subject
+        text message
+        boolean is_read
+        boolean auto_reply_sent
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    users ||--o{ rentals : "melakukan pemesanan"
+    users ||--o{ reviews : "menulis ulasan"
+    users ||--o{ wishlists : "menyimpan gaun impian"
+    categories ||--o{ dresses : "mengelompokkan busana"
+    dresses ||--o{ rentals : "disewa dalam transaksi"
+    dresses ||--o{ reviews : "menerima bintang ulasan"
+    dresses ||--o{ wishlists : "disukai pelanggan"
+    rentals ||--o| reviews : "diulas pasca sewa selesai"
 ```
 
-### Entitas Utama:
-* **`users`**: Data pelanggan & admin atelier (`name`, `email`, `password`, `google_id`, `role`, `phone`, `address`, `avatar`, `email_verified_at`).
-* **`categories`**: Klasifikasi gaya gaun (*Haute Couture, Vintage Rococo, Coquette Lace, Modern Minimalist*).
-* **`dresses`**: Spesifikasi busana (`name`, `slug`, `rental_price_per_day`, `deposit_fee`, `size`, `chest_size`, `waist_size`, `length`, `fabric`, `stock`, `status`, `rating`, `is_featured`, `image`).
-* **`rentals`**: Transaksi pemesanan busana (`rental_code`, `start_date`, `end_date`, `total_days`, `rental_price`, `deposit_fee`, `total_price`, `payment_method`, `payment_proof`, `shipping_method`, `shipping_address`, `status`, `identity_photo`, `notes`, `return_notes`).
-* **`reviews`**: Ulasan dan bintang kepuasan (`user_id`, `dress_id`, `rental_id`, `rating`, `comment`, `user_name`).
-* **`wishlists`**: Daftar gaun simpanan pelanggan (`user_id`, `dress_id`).
-* **`messages`**: Pesan konsultasi kontak atelier (`name`, `email`, `phone`, `subject`, `message`, `is_read`, `auto_reply_sent`).
+---
+
+## 🔒 6. Arsitektur Keamanan (Security System)
+
+1. **Google OAuth 2.0 State Verification:** Menggunakan parameter acak kriptografis `state` (40 karakter) yang disimpan di sesi untuk menangkal serangan *Cross-Site Request Forgery (CSRF)* saat otentikasi pihak ketiga.
+2. **Relative Cryptographic Signatures:** Mengatasi kendala verifikasi email pada lingkungan *reverse-proxy* atau *custom domain* HTTPS dengan validasi hash SHA-256 relatif yang kebal terhadap perubahan skema header server.
+3. **Role-Based Access Control (RBAC):** Pemisahan ketat antara rute pelanggan (`customer`) dan rute eksekutif atelier (`admin`). Upaya akses ilegal ke rute admin langsung dialihkan dengan status HTTP 403 Forbidden.
+4. **Anti-Tampering Rating System:** Admin dilarang memanipulasi bintang rating gaun secara manual. Rating gaun murni terakumulasi secara otomatis melalui relasi database tabel `reviews` penyewa asli.
+5. **1-Hour Automatic Reservation Expiry:** Mencegah penimbunan stok palsu dengan membatalkan reservasi berstatus `pending_payment` yang tidak dibayar dalam 60 menit.
 
 ---
 
-## 🚀 Deployment & Infrastruktur Server
+## 🚀 7. Infrastruktur & Deployment Stack
 
-Aplikasi ini telah dideploy secara penuh ke lingkungan produksi (*production ready*):
-
-* **Platform Hosting:** **[Wasmer Edge](https://wasmer.io)** — Dijalankan menggunakan WebAssembly System Interface (WASI) berkecepatan tinggi dengan konkurensi terisolasi.
-* **Web Server & Runtime:** PHP 8.3 WASI module via `wasmer.toml` & `app.yaml`.
-* **Database Cloud:** Managed MySQL Server pada infrastruktur cluster WasmerNet (`db.fr-roub1.bengt.wasmernet.com`).
-* **Media & File Storage:** **[Supabase S3 Storage](https://supabase.com)** — Penyimpanan awan aman untuk foto gaun, bukti transfer bank, dan foto identitas penyewa.
-* **Email Gateway:** Google SMTP Server (`smtp.gmail.com:587`) dengan enkripsi TLS untuk notifikasi invoice dan kode verifikasi 6 angka.
-* **Custom Domain:** `https://citraarifera.my.id` dengan sertifikat SSL/TLS otomatis (*HTTPS Grade A*).
+* **Production URL:** **[citraarifera.my.id](https://citraarifera.my.id)**
+* **Edge Cloud Platform:** **Wasmer Edge** (WebAssembly System Interface / WASI)
+* **PHP Runtime:** PHP 8.3 WASI Module (`wasmer.toml` & `app.yaml`)
+* **Cloud Database:** Managed MySQL Server pada jaringan WasmerNet (`db.fr-roub1.bengt.wasmernet.com`)
+* **Storage Provider:** Supabase Cloud Storage (S3 REST API)
+* **Mail Server:** Google SMTP Relay (`smtp.gmail.com:587 TLS`)
+* **Security & SSL:** Otomatis dengan sertifikat TLS Let's Encrypt (*Grade A HTTPS*)
 
 ---
 
-## 💻 Panduan Instalasi Lokal (Local Development)
+## 💻 8. Panduan Menjalankan di Lokal (Local Setup)
 
-Jika ingin menjalankan aplikasi ini di komputer lokal:
-
-### 1. Kloning Repositori
 ```bash
+# 1. Kloning repositori
 git clone https://github.com/cece1329/persewaanbarangcherie.git
 cd persewaanbarangcherie
-```
 
-### 2. Pasang Dependensi PHP & Node.js
-```bash
+# 2. Pasang paket PHP & Node.js
 composer install
 npm install
-```
 
-### 3. Konfigurasi Environment (`.env`)
-Salin file konfigurasi contoh dan buat application key:
-```bash
+# 3. Konfigurasi berkas environment
 cp .env.example .env
 php artisan key:generate
-```
 
-Sesuaikan parameter database dan kredensial pada file `.env`:
-```env
-APP_NAME="ChérieRent"
-APP_URL=http://localhost:8000
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=cherierent
-DB_USERNAME=root
-DB_PASSWORD=
-
-# Google OAuth (Opsional untuk Login Google)
-GOOGLE_CLIENT_ID=your_client_id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=your_client_secret
-GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
-```
-
-### 4. Migrasi & Seed Database
-```bash
+# 4. Migrasi tabel & jalankan seeder
 php artisan migrate --seed
+
+# 5. Jalankan server pengembang
+npm run dev          # Terminal 1: Kompilasi Tailwind v4
+php artisan serve    # Terminal 2: Server Laravel lokal (http://localhost:8000)
 ```
-
-### 5. Kompilasi Aset Frontend & Jalankan Server
-```bash
-# Terminal 1: Kompilasi Tailwind CSS
-npm run dev
-
-# Terminal 2: Server Laravel
-php artisan serve
-```
-Buka browser pada alamat: **`http://localhost:8000`** 🌸
-
----
-
-## 🌸 Akun Demo Pengujian
-
-| Tipe Akun | Email | Password | Akses |
-| :--- | :--- | :--- | :--- |
-| **Admin Atelier** | `rentcherie@gmail.com` | *(Sesuai setting admin)* | Dashboard `/admin/dashboard` |
-| **Client / User** | *(Bisa Login Langsung via Google)* | - | Portal `/dashboard` |
 
 ---
 
 <p align="center">
-  Dibuat dengan cinta, pita, dan keanggunan atelier busana 🎀<br>
+  Dibuat dengan cinta, keindahan pita, dan dedikasi atelier busana 🎀 🌸<br>
   <strong>&copy; 2026 ChérieRent Atelier. All Rights Reserved.</strong>
 </p>
