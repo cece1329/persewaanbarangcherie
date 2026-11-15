@@ -99,6 +99,24 @@
             <textarea name="description" rows="4" required class="w-full p-3 rounded-xl border border-gray-300 text-xs bg-gray-50/50 outline-none">{{ old('description', $dress->description) }}</textarea>
         </div>
 
+        <!-- Rating Gaun -->
+        <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-200">
+            <div class="flex items-center justify-between mb-2">
+                <div>
+                    <label class="block text-xs font-bold text-gray-800 uppercase tracking-wider">Rating Gaun</label>
+                    <p class="text-[11px] text-gray-500">Sesuaikan rating bintang gaun ini (1 - 5 bintang)</p>
+                </div>
+                <span id="gown-rating-text" class="text-xs font-bold text-amber-700 bg-amber-100 border border-amber-300 px-3 py-1 rounded-full shadow-xs">{{ number_format((float)$dress->rating, 1) }} / 5.0</span>
+            </div>
+            <input type="hidden" name="rating" id="gown-rating-input" value="{{ old('rating', round($dress->rating)) }}">
+            <div class="flex items-center gap-1.5 pt-1">
+                @for($i = 1; $i <= 5; $i++)
+                    <button type="button" onclick="setGownRating({{ $i }})" class="gown-star-btn text-3xl transition cursor-pointer text-gray-300 hover:scale-110 active:scale-95 focus:outline-none" data-rating="{{ $i }}" title="Beri rating {{ $i }} bintang">★</button>
+                @endfor
+                <span class="text-[11px] text-gray-400 ml-2 font-medium">Klik bintang untuk mengubah rating</span>
+            </div>
+        </div>
+
         <div>
             <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Availability Status</label>
             <select name="status" class="w-full p-3 rounded-xl border border-gray-300 text-xs bg-gray-50/50 outline-none font-bold">
@@ -134,4 +152,25 @@
     </form>
 
 </div>
+
+<script>
+function setGownRating(rating) {
+    document.getElementById('gown-rating-input').value = rating;
+    document.getElementById('gown-rating-text').textContent = Number(rating).toFixed(1) + ' / 5.0';
+    const stars = document.querySelectorAll('.gown-star-btn');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.remove('text-gray-300');
+            star.classList.add('text-amber-500');
+        } else {
+            star.classList.remove('text-amber-500');
+            star.classList.add('text-gray-300');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setGownRating({{ old('rating', round($dress->rating)) ?: 5 }});
+});
+</script>
 @endsection

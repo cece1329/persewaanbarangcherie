@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-10 px-4 max-w-7xl mx-auto space-y-8">
+<div class="py-6 sm:py-10 px-3 sm:px-4 max-w-7xl mx-auto space-y-6 sm:space-y-8">
 
     <div class="border-b border-rose-200 pb-4">
         <span class="igari-pill">Saved Pieces</span>
-        <h1 class="font-serif-editorial text-3xl font-bold text-gray-900 mt-1">My Saved Wishlist</h1>
+        <h1 class="font-serif-editorial text-2xl sm:text-3xl font-bold text-gray-900 mt-1">My Saved Wishlist</h1>
     </div>
 
     @if($wishlists->isEmpty())
@@ -15,15 +15,15 @@
             <a href="{{ route('catalog.index') }}" class="inline-block btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold">Explore Gown Archive</a>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             @foreach($wishlists as $item)
                 @if($item->dress)
-                <div data-wishlist-dress-id="{{ $item->dress->id }}" class="bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative">
+                <div data-wishlist-dress-id="{{ $item->dress->id }}" class="bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-rose-100 shadow-xs igari-card-hover flex flex-col relative">
                     
-                    <form action="{{ route('catalog.wishlist', $item->dress->id) }}" method="POST" class="absolute top-3 right-3 z-10">
+                    <form action="{{ route('catalog.wishlist', $item->dress->id) }}" method="POST" class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10">
                         @csrf
-                        <button type="submit" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition" title="Remove Wishlist">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button type="submit" class="w-7 h-7 sm:w-8 sm:h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition" title="Remove Wishlist">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
@@ -33,17 +33,17 @@
                         <img src="{{ $item->dress->image_url }}" class="w-full h-full object-cover" alt="Dress">
                     </a>
 
-                    <div class="p-4 flex-1 flex flex-col justify-between space-y-2">
+                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2">
                         <div>
-                            <span class="text-[10px] text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">{{ $item->dress->category->name ?? 'Coquette' }}</span>
-                            <h3 class="font-serif-editorial font-bold text-gray-900 text-base mt-1 truncate">
+                            <span class="text-[9px] sm:text-[10px] text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">{{ $item->dress->category->name ?? 'Coquette' }}</span>
+                            <h3 class="font-serif-editorial font-bold text-gray-900 text-sm sm:text-base mt-1 truncate">
                                 <a href="{{ route('catalog.show', $item->dress->slug) }}">{{ $item->dress->name }}</a>
                             </h3>
                         </div>
 
-                        <div class="pt-2 border-t border-rose-50 flex items-center justify-between">
-                            <span class="font-bold text-rose-700 text-sm">{{ $item->dress->formatted_price }}</span>
-                            <a href="{{ route('catalog.show', $item->dress->slug) }}" class="btn-igari-primary text-[10px] px-3 py-1.5 rounded-full font-bold">
+                        <div class="pt-2 border-t border-rose-50 flex items-center justify-between gap-1">
+                            <span class="font-bold text-rose-700 text-xs sm:text-sm truncate">{{ $item->dress->formatted_price }}</span>
+                            <a href="{{ route('catalog.show', $item->dress->slug) }}" class="btn-igari-primary text-[9px] sm:text-[10px] px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full font-bold whitespace-nowrap">
                                 Reserve
                             </a>
                         </div>
