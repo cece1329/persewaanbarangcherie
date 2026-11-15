@@ -545,16 +545,26 @@ class AdminController extends Controller
         return back()->with('success', 'Pesan ditandai sebagai sudah dibaca.');
     }
 
-    // Review Management
+    // Review Management (Khusus 3 Review Testimoni Halaman Home)
     public function reviews()
     {
-        $reviews = Review::with(['user', 'dress'])->latest()->paginate(15);
+        $reviews = Review::with(['dress'])
+            ->whereNull('user_id')
+            ->latest()
+            ->paginate(15);
 
-        return view('admin.reviews.index', compact('reviews'));
+        $adminReviewsCount = Review::whereNull('user_id')->count();
+
+        return view('admin.reviews.index', compact('reviews', 'adminReviewsCount'));
     }
 
     public function createReview()
     {
+        if (Review::whereNull('user_id')->count() >= 3) {
+            return redirect()->route('admin.reviews.index')
+                ->with('error', 'Maksimal 3 review untuk halaman Home sudah terpenuhi. Silakan edit atau hapus review yang ada.');
+        }
+
         $dresses = Dress::all();
 
         return view('admin.reviews.create', compact('dresses'));
@@ -562,6 +572,11 @@ class AdminController extends Controller
 
     public function storeReview(Request $request)
     {
+        if (Review::whereNull('user_id')->count() >= 3) {
+            return redirect()->route('admin.reviews.index')
+                ->with('error', 'Maksimal 3 review untuk halaman Home sudah terpenuhi.');
+        }
+
         $validated = $request->validate([
             'user_name' => ['required', 'string', 'max:255'],
             'dress_id' => ['required', 'exists:dresses,id'],
@@ -577,29 +592,21 @@ class AdminController extends Controller
             'comment' => $validated['comment'],
         ]);
 
-        // Update dress rating
-        $avgRating = Review::where('dress_id', $validated['dress_id'])->avg('rating');
-        Dress::where('id', $validated['dress_id'])->update(['rating' => round($avgRating, 2)]);
-
-        return redirect()->route('admin.reviews.index')->with('success', 'Review berhasil ditambahkan.');
+        // Catatan: Review admin untuk Home TIDAK mengubah rating gaun dan TIDAK muncul di deskripsi gaun
+        return redirect()->route('admin.reviews.index')->with('success', 'Review Home berhasil ditambahkan.');
     }
 
     public function destroyReview($id)
     {
-        $review = Review::findOrFail($id);
-        $dressId = $review->dress_id;
+        $review = Review::whereNull('user_id')->findOrFail($id);
         $review->delete();
 
-        // Update dress rating
-        $avgRating = Review::where('dress_id', $dressId)->avg('rating');
-        Dress::where('id', $dressId)->update(['rating' => $avgRating ? round($avgRating, 2) : 0]);
-
-        return back()->with('success', 'Review berhasil dihapus.');
+        return back()->with('success', 'Review Home berhasil dihapus.');
     }
 
     public function editReview($id)
     {
-        $review = Review::with('user')->findOrFail($id);
+        $review = Review::whereNull('user_id')->findOrFail($id);
         $dresses = Dress::all();
 
         return view('admin.reviews.edit', compact('review', 'dresses'));
@@ -607,7 +614,7 @@ class AdminController extends Controller
 
     public function updateReview(Request $request, $id)
     {
-        $review = Review::findOrFail($id);
+        $review = Review::whereNull('user_id')->findOrFail($id);
 
         $validated = $request->validate([
             'user_name' => ['required', 'string', 'max:255'],
@@ -617,17 +624,13 @@ class AdminController extends Controller
         ]);
 
         $review->update([
-            'user_id' => null,
             'user_name' => $validated['user_name'],
             'dress_id' => $validated['dress_id'],
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],
         ]);
 
-        // Update dress rating
-        $avgRating = Review::where('dress_id', $validated['dress_id'])->avg('rating');
-        Dress::where('id', $validated['dress_id'])->update(['rating' => round($avgRating, 2)]);
-
-        return redirect()->route('admin.reviews.index')->with('success', 'Review berhasil diupdate.');
+        // Catatan: Review admin untuk Home TIDAK mengubah rating gaun
+        return redirect()->route('admin.reviews.index')->with('success', 'Review Home berhasil diupdate.');
     }
 }

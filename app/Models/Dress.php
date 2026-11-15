@@ -52,7 +52,8 @@ class Dress extends Model
 
     public function reviews(): HasMany
     {
-        return $this->hasMany(Review::class);
+        // Hanya review asli dari user penyewa (tidak termasuk review admin untuk halaman Home)
+        return $this->hasMany(Review::class)->whereNotNull('user_id');
     }
 
     public function wishlists(): HasMany

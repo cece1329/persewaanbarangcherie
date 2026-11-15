@@ -2,14 +2,22 @@
 
 @section('content')
 <div class="py-8 px-4 max-w-7xl mx-auto">
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-            <h1 class="font-serif-editorial text-2xl font-bold text-gray-900">Kelola Reviews</h1>
-            <p class="text-sm text-gray-500 mt-1">Kelola ulasan pelanggan yang ditambahkan oleh admin</p>
+            <h1 class="font-serif-editorial text-2xl font-bold text-gray-900">Kelola Review Home</h1>
+            <p class="text-sm text-gray-500 mt-1">Ulasan khusus untuk ditampilkan di halaman Home (Maksimal 3 ulasan tetap, tidak terhubung ke rating/deskripsi gaun).</p>
         </div>
-        <a href="{{ route('admin.reviews.create') }}" class="btn-igari-primary text-xs px-4 py-2 rounded-full font-bold">
-            + Tambah Review
-        </a>
+        <div>
+            @if(($adminReviewsCount ?? $reviews->count()) < 3)
+                <a href="{{ route('admin.reviews.create') }}" class="btn-igari-primary text-xs px-4 py-2.5 rounded-full font-bold shadow-xs">
+                    + Tambah Review Home ({{ ($adminReviewsCount ?? $reviews->count()) }}/3)
+                </a>
+            @else
+                <span class="inline-block bg-emerald-50 text-emerald-800 text-xs px-4 py-2 rounded-full font-bold border border-emerald-200">
+                    ✓ Kuota Maksimal 3 Review Home Tercapai (3/3)
+                </span>
+            @endif
+        </div>
     </div>
 
     <div class="bg-white rounded-3xl border border-rose-100 shadow-sm overflow-hidden">

@@ -6,8 +6,8 @@
         <a href="{{ route('admin.reviews.index') }}" class="text-xs text-rose-600 hover:text-rose-800 font-semibold mb-4 inline-block">
             &larr; Kembali ke Reviews
         </a>
-        <h1 class="font-serif-editorial text-2xl font-bold text-gray-900 mt-2">Tambah Review Baru</h1>
-        <p class="text-sm text-gray-500 mt-1">Tambah ulasan pelanggan (berdasarkan review via WhatsApp)</p>
+        <h1 class="font-serif-editorial text-2xl font-bold text-gray-900 mt-2">Tambah Review Home Baru</h1>
+        <p class="text-sm text-gray-500 mt-1">Ulasan khusus untuk ditampilkan di halaman Home (Maksimal 3 ulasan tetap, tidak terhubung ke rating/deskripsi gaun).</p>
     </div>
 
     <div class="bg-white rounded-3xl border border-rose-100 shadow-sm p-8">

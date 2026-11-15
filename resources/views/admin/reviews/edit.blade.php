@@ -6,8 +6,8 @@
         <a href="{{ route('admin.reviews.index') }}" class="text-xs text-rose-600 hover:text-rose-800 font-semibold mb-4 inline-block">
             &larr; Kembali ke Reviews
         </a>
-        <h1 class="font-serif-editorial text-2xl font-bold text-gray-900 mt-2">Edit Review</h1>
-        <p class="text-sm text-gray-500 mt-1">Edit ulasan pelanggan</p>
+        <h1 class="font-serif-editorial text-2xl font-bold text-gray-900 mt-2">Edit Review Home</h1>
+        <p class="text-sm text-gray-500 mt-1">Edit ulasan khusus halaman Home (Maksimal 3 ulasan tetap, tidak terhubung ke rating/deskripsi gaun).</p>
     </div>
 
     <div class="bg-white rounded-3xl border border-rose-100 shadow-sm p-8">
