@@ -47,22 +47,22 @@ Aplikasi ini dibangun untuk memberikan pengalaman penyewaan busana yang mulus (*
 
 ```mermaid
 flowchart TD
-    Start([Pengunjung Membuka Web]) --> Choice{Pilih Metode Masuk}
+    Start(["Pengunjung Membuka Web"]) --> Choice{"Pilih Metode Masuk"}
     
-    Choice -- "Opsi 1: Google Sign-In (Rekomendasi)" --> GoogleOAuth[Klik Masuk dengan Google]
-    GoogleOAuth --> GoogleConsent[Pilih Akun Gmail di Popup Resmi Google]
-    GoogleConsent --> Callback[/auth/google/callback]
-    Callback --> CheckUser{Akun Sudah Terdaftar?}
-    CheckUser -- Ya --> LoginGoogle[Login Instan & Buat Sesi]
-    CheckUser -- Belum --> RegisterGoogle[Buat Akun Otomatis dari Profil Google]
-    RegisterGoogle --> AutoVerify[Email Otomatis Terverifikasi & Login]
+    Choice -->|"Opsi 1: Google Sign-In (Rekomendasi)"| GoogleOAuth["Klik Masuk dengan Google"]
+    GoogleOAuth --> GoogleConsent["Pilih Akun Gmail di Popup Resmi Google"]
+    GoogleConsent --> Callback["Google Redirect ke Endpoint Callback"]
+    Callback --> CheckUser{"Akun Sudah Terdaftar?"}
+    CheckUser -->|"Ya"| LoginGoogle["Login Instan & Buat Sesi"]
+    CheckUser -->|"Belum"| RegisterGoogle["Buat Akun Otomatis dari Profil Google"]
+    RegisterGoogle --> AutoVerify["Email Otomatis Terverifikasi & Login"]
     
-    Choice -- "Opsi 2: Email & Password Manual" --> InputForm[Isi Nama, Email & Password]
-    InputForm --> SendNotice[Kirim Notifikasi Verifikasi Email]
-    SendNotice --> InputOTP[Masukkan 6 Digit OTP / Klik Link di Email]
-    InputOTP --> VerifySuccess[Akun Aktif & Masuk Dashboard]
+    Choice -->|"Opsi 2: Email & Password Manual"| InputForm["Isi Nama, Email & Password"]
+    InputForm --> SendNotice["Kirim Notifikasi Verifikasi Email"]
+    SendNotice --> InputOTP["Masukkan 6 Digit OTP atau Klik Link di Email"]
+    InputOTP --> VerifySuccess["Akun Aktif & Masuk Dashboard"]
     
-    LoginGoogle --> Dashboard([Client Portal Dashboard])
+    LoginGoogle --> Dashboard(["Client Portal Dashboard"])
     AutoVerify --> Dashboard
     VerifySuccess --> Dashboard
 ```
@@ -73,33 +73,33 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[Pelanggan Memilih Gaun di Katalog] --> B[Pilih Tanggal Sewa di Kalender Interaktif]
-    B --> C{Cek Ketersediaan Tanggal}
-    C -- Bentrok / Tidak Tersedia --> B
-    C -- Tersedia --> D[Kalkulator Alpine.js Hitung Total Sewa & Deposit Jaminan]
+    A["Pelanggan Memilih Gaun di Katalog"] --> B["Pilih Tanggal Sewa di Kalender Interaktif"]
+    B --> C{"Cek Ketersediaan Tanggal"}
+    C -->|"Bentrok / Tidak Tersedia"| B
+    C -->|"Tersedia"| D["Kalkulator Alpine.js Hitung Total Sewa & Deposit"]
     
-    D --> E[Masuk Halaman Checkout]
-    E --> F[Ambil Foto Jaminan via Kamera WebRTC atau Galeri]
-    F --> G[Pilih Metode Pembayaran: QRIS atau Transfer Bank]
-    G --> H[Klik Proceed to Payment -> Status: Pending Payment]
+    D --> E["Masuk Halaman Checkout"]
+    E --> F["Ambil Foto Jaminan via Kamera WebRTC atau Galeri"]
+    F --> G["Pilih Metode Pembayaran: QRIS atau Transfer Bank"]
+    G --> H["Klik Proceed to Payment (Status: Pending Payment)"]
     
-    H --> I{Batas Waktu Bayar: 1 Jam}
-    I -- Melebihi 1 Jam / Dibatalkan Pelanggan --> J[Status: Cancelled & Stok Kembali Tersedia]
-    I -- Dibayar Tepat Waktu --> K[Unggah Bukti Transfer / Konfirmasi QRIS]
+    H --> I{"Batas Waktu Bayar: 1 Jam"}
+    I -->|"Melebihi 1 Jam / Dibatalkan"| J["Status: Cancelled (Stok Gaun Kembali Tersedia)"]
+    I -->|"Dibayar Tepat Waktu"| K["Unggah Bukti Transfer / Konfirmasi QRIS"]
     
-    K --> L[Admin Atelier Verifikasi Bukti Pembayaran]
-    L --> M[Status: Paid & Gaun Dipersiapkan]
-    M --> N[Status: Shipping / Express Courier / Self Pickup]
-    N --> O[Status: In Use / Gaun Sedang Dipakai Pelanggan]
+    K --> L["Admin Atelier Verifikasi Bukti Pembayaran"]
+    L --> M["Status: Paid (Gaun Dipersiapkan Atelier)"]
+    M --> N["Status: Shipping (Express Courier / Self Pickup)"]
+    N --> O["Status: In Use (Gaun Sedang Dipakai Pelanggan)"]
     
-    O --> P[Masa Sewa Berakhir -> Pelanggan Ajukan Pengembalian Gaun]
-    P --> Q[Status: Returned / Gaun Dikirim Balik ke Atelier]
-    Q --> R[Admin Melakukan Inspeksi Fisik Kondisi Kain & Jahitan]
-    R --> S[Admin Mengembalikan Uang Deposit Jaminan 100%]
-    S --> T[Status: Completed / Reservasi Selesai Sempurna]
+    O --> P["Masa Sewa Berakhir -> Pelanggan Ajukan Pengembalian Gaun"]
+    P --> Q["Status: Returned (Gaun Dikirim Balik ke Atelier)"]
+    Q --> R["Admin Melakukan Inspeksi Fisik Kondisi Kain & Jahitan"]
+    R --> S["Admin Refund Uang Deposit Jaminan 100%"]
+    S --> T["Status: Completed (Reservasi Selesai Sempurna)"]
     
-    T --> U[Pelanggan Memberikan Rating Bintang & Review Gaun]
-    U --> V[Rating Gaun di Halaman Katalog Terupdate Otomatis]
+    T --> U["Pelanggan Memberikan Rating Bintang & Review Gaun"]
+    U --> V["Rating Gaun di Halaman Katalog Terupdate Otomatis"]
 ```
 
 ---
