@@ -94,6 +94,34 @@ class UserDashboardController extends Controller
         return back()->with('success', "Riwayat reservasi #{$code} berhasil dihapus dari akun Anda.");
     }
 
+    public function returnGown(Request $request, $id)
+    {
+        $rental = Rental::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->whereIn('status', ['paid', 'shipping', 'in_use'])
+            ->firstOrFail();
+
+        $request->validate([
+            'return_tracking_number' => ['nullable', 'string', 'max:255'],
+            'return_notes' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $tracking = $request->input('return_tracking_number') ?: 'Atelier Handover / Drop-off';
+
+        $notes = $rental->notes ?? '';
+        if ($request->filled('return_notes')) {
+            $notes = trim($notes . "\n[Catatan Pengembalian: " . $request->input('return_notes') . "]");
+        }
+
+        $rental->update([
+            'status' => 'returned',
+            'return_tracking_number' => $tracking,
+            'notes' => $notes,
+        ]);
+
+        return back()->with('success', 'Konfirmasi pengembalian gaun #' . $rental->rental_code . ' berhasil dikirim. Atelier kami sedang melakukan inspeksi gaun.');
+    }
+
     public function wishlists()
     {
         $user = Auth::user();

@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('/my-rentals', [UserDashboardController::class, 'rentals'])->name('user.rentals');
     Route::post('/rentals/{id}/cancel', [UserDashboardController::class, 'cancelRental'])->name('user.rental.cancel');
+    Route::post('/rentals/{id}/return', [UserDashboardController::class, 'returnGown'])->name('user.rental.return');
     Route::delete('/rentals/{id}', [UserDashboardController::class, 'destroyRental'])->name('user.rental.destroy');
     Route::post('/user/reviews', [UserDashboardController::class, 'storeReview'])->name('user.review.store');
     Route::post('/user/profile', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-10 px-4 max-w-7xl mx-auto space-y-8" x-data="{ reviewModalOpen: false, selectedRental: null }">
+<div class="py-10 px-4 max-w-7xl mx-auto space-y-8" x-data="{ reviewModalOpen: false, selectedRental: null, returnModalOpen: false, returnRentalId: null, returnRentalCode: '' }">
 
     <div class="border-b border-rose-200 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -13,6 +13,8 @@
             <a href="{{ route('user.rentals') }}" class="px-3.5 py-1.5 rounded-full {{ !request('status') ? 'bg-rose-700 text-white' : 'bg-rose-50 text-rose-700 hover:bg-rose-100' }}">All</a>
             <a href="{{ route('user.rentals', ['status' => 'pending_payment']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'pending_payment' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-800 hover:bg-amber-100' }}">Pending</a>
             <a href="{{ route('user.rentals', ['status' => 'paid']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'paid' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-800 hover:bg-rose-100' }}">Reserved</a>
+            <a href="{{ route('user.rentals', ['status' => 'in_use']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'in_use' ? 'bg-pink-600 text-white' : 'bg-pink-50 text-pink-800 hover:bg-pink-100' }}">In Use</a>
+            <a href="{{ route('user.rentals', ['status' => 'returned']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'returned' ? 'bg-indigo-700 text-white' : 'bg-indigo-50 text-indigo-800 hover:bg-indigo-100' }}">Returned</a>
             <a href="{{ route('user.rentals', ['status' => 'completed']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'completed' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100' }}">Completed</a>
             <a href="{{ route('user.rentals', ['status' => 'cancelled']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'cancelled' ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Cancelled</a>
         </div>
@@ -36,6 +38,19 @@
                             <h3 class="font-serif-editorial font-bold text-gray-900 text-base">{{ $rental->dress->name }}</h3>
                             <p class="text-xs text-gray-500">Period: <strong>{{ $rental->start_date->format('d/m/Y') }}</strong> to <strong>{{ $rental->end_date->format('d/m/Y') }}</strong> ({{ $rental->total_days }} Days)</p>
                             <p class="text-xs font-bold text-rose-700">Total Amount: Rp {{ number_format($rental->total_price, 0, ',', '.') }}</p>
+
+                            @if($rental->status === 'returned')
+                                <div class="mt-2 p-2.5 bg-indigo-50 rounded-xl border border-indigo-200 text-xs text-indigo-950 flex items-start gap-2">
+                                    <span>🔍</span>
+                                    <div>
+                                        <strong class="text-indigo-900 font-bold block">Gaun Telah Dikembalikan (Under Inspection)</strong>
+                                        <span class="text-[11px] text-indigo-700 block">Sedang diperiksa tim atelier. Deposit Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }} akan dikembalikan penuh setelah inspeksi selesai.</span>
+                                        @if($rental->return_tracking_number)
+                                            <span class="inline-block text-[10px] bg-white text-indigo-800 font-mono px-2 py-0.5 rounded border border-indigo-200 mt-1">Resi: {{ $rental->return_tracking_number }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -62,6 +77,12 @@
                                         ✕ Batalkan
                                     </button>
                                 </form>
+                            @endif
+
+                            @if(in_array($rental->status, ['paid', 'shipping', 'in_use']))
+                                <button @click="returnRentalId = {{ $rental->id }}; returnRentalCode = '{{ $rental->rental_code }}'; returnModalOpen = true" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs px-3.5 py-1.5 rounded-full font-bold border border-indigo-200 transition flex items-center gap-1">
+                                    <span>🔄</span> Kembalikan Gaun
+                                </button>
                             @endif
 
                             <a href="{{ route('rental.invoice', $rental->rental_code) }}" class="btn-igari-secondary text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1">
@@ -132,6 +153,46 @@
                 <button type="submit" class="w-full btn-igari-primary py-3.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-md">
                     Submit Client Review
                 </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Return Gown Modal -->
+    <div x-show="returnModalOpen" x-transition class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border-2 border-indigo-200 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-rose-100 pb-3">
+                <div>
+                    <h3 class="font-serif-editorial font-bold text-xl text-gray-900">Form Pengembalian Gaun</h3>
+                    <span class="text-[10px] font-mono font-bold text-indigo-700" x-text="'#' + returnRentalCode"></span>
+                </div>
+                <button @click="returnModalOpen = false" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            </div>
+
+            <form :action="'/rentals/' + returnRentalId + '/return'" method="POST" class="space-y-4">
+                @csrf
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Metode / No. Resi Pengembalian</label>
+                    <input type="text" name="return_tracking_number" placeholder="Contoh: JNE / SiCepat / GoSend / Antar Sendiri ke Butik" class="w-full p-3 rounded-xl border border-gray-200 text-xs bg-rose-50/20 outline-none focus:border-indigo-500">
+                    <p class="text-[10px] text-gray-400 mt-1">Tulis nomor resi ekspedisi atau tulis "Antar Sendiri ke Butik" jika dikembalikan langsung.</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Catatan Pengembalian (Opsional)</label>
+                    <textarea name="return_notes" rows="2" placeholder="Catatan kondisi gaun atau informasi kurir..." class="w-full p-3 rounded-xl border border-gray-200 text-xs bg-rose-50/20 outline-none focus:border-indigo-500"></textarea>
+                </div>
+
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-900 flex items-start gap-2">
+                    <span>ℹ️</span>
+                    <span>Setelah kamu konfirmasi pengembalian, status akan berubah menjadi <strong>Returned (Under Inspection)</strong>. Deposit jaminanmu akan dicairkan oleh atelier setelah pengecekan selesai.</span>
+                </div>
+
+                <div class="flex justify-end gap-2.5 pt-2">
+                    <button type="button" @click="returnModalOpen = false" class="btn-igari-secondary text-xs px-4 py-2 rounded-full font-bold">Batal</button>
+                    <button type="submit" class="bg-indigo-700 hover:bg-indigo-800 text-white text-xs px-5 py-2 rounded-full font-bold shadow-md transition">
+                        Konfirmasi Pengembalian
+                    </button>
+                </div>
             </form>
         </div>
     </div>
