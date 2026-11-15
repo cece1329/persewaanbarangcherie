@@ -77,53 +77,203 @@
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl border border-rose-100 shadow-xs space-y-4">
-                <h3 class="font-serif-editorial font-bold text-gray-900 text-lg">
-                    Payment Method
-                </h3>
-
-                <div class="grid grid-cols-2 gap-3 text-xs">
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
-                        <input type="radio" name="payment_method" value="qris" checked class="text-rose-600">
-                        <img src="{{ asset('images/payments/qris.png') }}" alt="QRIS" class="h-6 w-auto max-w-[40px] object-contain">
-                        <div>
-                            <span class="font-bold text-gray-800 block">QRIS</span>
-                            <span class="text-[10px] text-gray-500">Instant Payment</span>
-                        </div>
-                    </label>
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
-                        <input type="radio" name="payment_method" value="bca" class="text-rose-600">
-                        <img src="{{ asset('images/payments/bca.png') }}" alt="Bank BCA" class="h-6 w-auto max-w-[40px] object-contain">
-                        <div>
-                            <span class="font-bold text-gray-800 block">Bank BCA</span>
-                            <span class="text-[10px] text-gray-500">Virtual Account</span>
-                        </div>
-                    </label>
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
-                        <input type="radio" name="payment_method" value="mandiri" class="text-rose-600">
-                        <img src="{{ asset('images/payments/mandiri.png') }}" alt="Bank Mandiri" class="h-6 w-auto max-w-[40px] object-contain">
-                        <div>
-                            <span class="font-bold text-gray-800 block">Bank Mandiri</span>
-                            <span class="text-[10px] text-gray-500">Transfer Bank</span>
-                        </div>
-                    </label>
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
-                        <input type="radio" name="payment_method" value="shopee_pay" class="text-rose-600">
-                        <img src="{{ asset('images/payments/shopeepay.png') }}" alt="ShopeePay" class="h-6 w-auto max-w-[40px] object-contain">
-                        <div>
-                            <span class="font-bold text-gray-800 block">ShopeePay</span>
-                            <span class="text-[10px] text-gray-500">E-Wallet Instant</span>
-                        </div>
-                    </label>
-                    <label class="p-3.5 rounded-2xl border border-rose-200 flex items-center gap-3 cursor-pointer hover:bg-rose-50 transition">
-                        <input type="radio" name="payment_method" value="dana" class="text-rose-600">
-                        <img src="{{ asset('images/payments/dana.png') }}" alt="DANA" class="h-6 w-auto max-w-[40px] object-contain">
-                        <div>
-                            <span class="font-bold text-gray-800 block">DANA</span>
-                            <span class="text-[10px] text-gray-500">E-Wallet Instant</span>
-                        </div>
-                    </label>
+            <!-- Payment Method Section -->
+            <div x-data="{
+                category: 'ewallet',
+                method: 'qris',
+                copied: false,
+                proofPreview: null,
+                bankAccounts: {
+                    bca: { name: 'Bank BCA', number: '8830-1928-4455', holder: 'CHÉRIERENT ATELIER (DUMMY)' },
+                    mandiri: { name: 'Bank Mandiri', number: '1370-0192-8445-5', holder: 'CHÉRIERENT ATELIER (DUMMY)' }
+                },
+                copyAccountNumber() {
+                    const acc = this.bankAccounts[this.method] ? this.bankAccounts[this.method].number : '8830-1928-4455';
+                    navigator.clipboard.writeText(acc.replace(/-/g, ''));
+                    this.copied = true;
+                    setTimeout(() => this.copied = false, 2500);
+                },
+                handleProofUpload(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            this.proofPreview = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                },
+                removeProof() {
+                    this.proofPreview = null;
+                    this.$refs.proofInput.value = '';
+                }
+            }" class="bg-white p-5 sm:p-6 rounded-3xl border border-rose-100 shadow-xs space-y-5">
+                
+                <div class="flex items-center justify-between border-b border-rose-50 pb-3">
+                    <div>
+                        <h3 class="font-serif-editorial font-bold text-gray-900 text-lg">
+                            Metode Pembayaran & Bukti Transfer
+                        </h3>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Pilih jalur pembayaran E-Wallet / QRIS atau Transfer Bank resmi atelier.</p>
+                    </div>
                 </div>
+
+                <!-- Category Tabs: E-Wallet vs Bank Transfer -->
+                <div class="grid grid-cols-2 gap-2 p-1.5 bg-rose-50/70 rounded-2xl border border-rose-100">
+                    <button type="button" 
+                        @click="category = 'ewallet'; method = 'qris'" 
+                        :class="category === 'ewallet' ? 'bg-white text-rose-700 shadow-xs font-bold border border-rose-200' : 'text-gray-600 hover:text-gray-900 font-semibold'"
+                        class="py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+                        <span>📱</span> E-Wallet & QRIS
+                    </button>
+                    <button type="button" 
+                        @click="category = 'bank'; method = 'bca'" 
+                        :class="category === 'bank' ? 'bg-white text-rose-700 shadow-xs font-bold border border-rose-200' : 'text-gray-600 hover:text-gray-900 font-semibold'"
+                        class="py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+                        <span>🏛️</span> Transfer Bank
+                    </button>
+                </div>
+
+                <!-- 1. Pilihan E-Wallet & QRIS -->
+                <div x-show="category === 'ewallet'" x-transition class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                        <!-- QRIS -->
+                        <label class="p-3 rounded-2xl border cursor-pointer transition flex items-center gap-3"
+                            :class="method === 'qris' ? 'bg-rose-50 border-rose-600 font-bold text-rose-950 shadow-xs' : 'border-rose-100 hover:bg-rose-50/40 text-gray-700'">
+                            <input type="radio" name="payment_method" value="qris" x-model="method" class="text-rose-600 focus:ring-rose-500">
+                            <img src="{{ asset('images/payments/qris.png') }}" alt="QRIS" class="h-6 w-auto max-w-[38px] object-contain flex-shrink-0">
+                            <div class="min-w-0">
+                                <span class="block font-bold truncate">QRIS</span>
+                                <span class="text-[10px] text-gray-500 block truncate">Semua E-Wallet</span>
+                            </div>
+                        </label>
+
+                        <!-- ShopeePay -->
+                        <label class="p-3 rounded-2xl border cursor-pointer transition flex items-center gap-3"
+                            :class="method === 'shopee_pay' ? 'bg-rose-50 border-rose-600 font-bold text-rose-950 shadow-xs' : 'border-rose-100 hover:bg-rose-50/40 text-gray-700'">
+                            <input type="radio" name="payment_method" value="shopee_pay" x-model="method" class="text-rose-600 focus:ring-rose-500">
+                            <img src="{{ asset('images/payments/shopeepay.png') }}" alt="ShopeePay" class="h-6 w-auto max-w-[38px] object-contain flex-shrink-0">
+                            <div class="min-w-0">
+                                <span class="block font-bold truncate">ShopeePay</span>
+                                <span class="text-[10px] text-gray-500 block truncate">E-Wallet Instant</span>
+                            </div>
+                        </label>
+
+                        <!-- DANA -->
+                        <label class="p-3 rounded-2xl border cursor-pointer transition flex items-center gap-3"
+                            :class="method === 'dana' ? 'bg-rose-50 border-rose-600 font-bold text-rose-950 shadow-xs' : 'border-rose-100 hover:bg-rose-50/40 text-gray-700'">
+                            <input type="radio" name="payment_method" value="dana" x-model="method" class="text-rose-600 focus:ring-rose-500">
+                            <img src="{{ asset('images/payments/dana.png') }}" alt="DANA" class="h-6 w-auto max-w-[38px] object-contain flex-shrink-0">
+                            <div class="min-w-0">
+                                <span class="block font-bold truncate">DANA</span>
+                                <span class="text-[10px] text-gray-500 block truncate">E-Wallet Instant</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- QRIS Dummy Showcase Card -->
+                    <div class="bg-gradient-to-b from-rose-50/50 to-pink-50/30 p-4 sm:p-5 rounded-2xl border border-rose-200 text-center space-y-3">
+                        <div class="inline-flex items-center gap-2 bg-white px-3 py-1 rounded-full border border-rose-200 shadow-2xs">
+                            <img src="{{ asset('images/payments/qris.png') }}" alt="QRIS" class="h-4 w-auto object-contain">
+                            <span class="text-[10px] font-bold text-rose-800 uppercase tracking-wider">QRIS Standar Pembayaran Nasional</span>
+                        </div>
+                        <p class="text-xs text-gray-600 max-w-sm mx-auto">Scan QR Code di bawah menggunakan ShopeePay, DANA, GoPay, OVO, atau Mobile Banking apa saja:</p>
+                        
+                        <div class="w-44 h-44 bg-white p-2.5 rounded-2xl border-2 border-rose-300 mx-auto shadow-md flex items-center justify-center">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CHERIE_RENT_DUMMY_QRIS_OFFICIAL" class="w-full h-full object-contain" alt="QRIS Dummy Atelier">
+                        </div>
+
+                        <div class="space-y-0.5 text-xs">
+                            <strong class="text-gray-900 block font-bold">CHÉRIERENT ATELIER (DUMMY QRIS)</strong>
+                            <span class="text-[10px] text-gray-500 font-mono block">NMID: ID1020261115890 &bull; DUMMY RESMI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Pilihan Transfer Bank Manual -->
+                <div x-show="category === 'bank'" x-transition class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                        <!-- Bank BCA -->
+                        <label class="p-3.5 rounded-2xl border cursor-pointer transition flex items-center gap-3"
+                            :class="method === 'bca' ? 'bg-rose-50 border-rose-600 font-bold text-rose-950 shadow-xs' : 'border-rose-100 hover:bg-rose-50/40 text-gray-700'">
+                            <input type="radio" name="payment_method" value="bca" x-model="method" class="text-rose-600 focus:ring-rose-500">
+                            <img src="{{ asset('images/payments/bca.png') }}" alt="Bank BCA" class="h-6 w-auto max-w-[42px] object-contain flex-shrink-0">
+                            <div class="min-w-0">
+                                <span class="block font-bold truncate">Bank BCA</span>
+                                <span class="text-[10px] text-gray-500 block truncate">Transfer Rekening Bank</span>
+                            </div>
+                        </label>
+
+                        <!-- Bank Mandiri -->
+                        <label class="p-3.5 rounded-2xl border cursor-pointer transition flex items-center gap-3"
+                            :class="method === 'mandiri' ? 'bg-rose-50 border-rose-600 font-bold text-rose-950 shadow-xs' : 'border-rose-100 hover:bg-rose-50/40 text-gray-700'">
+                            <input type="radio" name="payment_method" value="mandiri" x-model="method" class="text-rose-600 focus:ring-rose-500">
+                            <img src="{{ asset('images/payments/mandiri.png') }}" alt="Bank Mandiri" class="h-6 w-auto max-w-[42px] object-contain flex-shrink-0">
+                            <div class="min-w-0">
+                                <span class="block font-bold truncate">Bank Mandiri</span>
+                                <span class="text-[10px] text-gray-500 block truncate">Transfer Rekening Bank</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Bank Account Details Card -->
+                    <div class="bg-gradient-to-r from-rose-50/60 to-pink-50/40 p-4 sm:p-5 rounded-2xl border border-rose-200 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] uppercase font-bold tracking-wider text-rose-800 bg-white px-2.5 py-1 rounded-full border border-rose-200 shadow-2xs">
+                                Rekening Tujuan Admin (Dummy)
+                            </span>
+                            <span class="text-[10px] text-gray-400 font-semibold" x-text="method === 'bca' ? 'BCA Transfer' : 'Mandiri Transfer'"></span>
+                        </div>
+
+                        <div class="bg-white p-3.5 rounded-xl border border-rose-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                            <div>
+                                <span class="text-[10px] text-gray-400 block font-semibold" x-text="method === 'bca' ? 'Nomor Rekening BCA:' : 'Nomor Rekening Mandiri:'"></span>
+                                <strong class="font-mono text-base sm:text-lg text-rose-700 block tracking-wider" x-text="bankAccounts[method] ? bankAccounts[method].number : '8830-1928-4455'"></strong>
+                                <span class="text-[11px] text-gray-600 block mt-0.5">Atas Nama: <strong class="text-gray-900" x-text="bankAccounts[method] ? bankAccounts[method].holder : 'CHÉRIERENT ATELIER (DUMMY)'"></strong></span>
+                            </div>
+                            <button type="button" @click="copyAccountNumber()" class="btn-igari-secondary text-xs px-3.5 py-2 rounded-xl font-bold flex items-center justify-center gap-1.5 shadow-2xs self-start sm:self-center">
+                                <span x-show="!copied">📋 Salin Rekening</span>
+                                <span x-show="copied" x-cloak class="text-emerald-600 font-bold">✓ Tersalin!</span>
+                            </button>
+                        </div>
+                        <p class="text-[10px] text-gray-500 text-center sm:text-left">
+                            *Gunakan nomor rekening di atas saat melakukan transfer ATM / m-Banking.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bagian Kirim Bukti Transfer / Pembayaran -->
+                <div class="border-t border-rose-100 pt-4 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                            <span>🧾</span> Unggah Bukti Transfer / Pembayaran
+                        </label>
+                        <span class="text-[10px] text-rose-600 font-semibold">Bisa upload sekarang / nanti</span>
+                    </div>
+                    <p class="text-[11px] text-gray-500">Unggah foto struk ATM, screenshot m-banking, atau bukti pembayaran e-wallet agar admin dapat langsung memverifikasi pesananmu.</p>
+
+                    <input type="file" name="payment_proof" accept="image/*" class="hidden" x-ref="proofInput" @change="handleProofUpload($event)">
+
+                    <!-- Preview or Upload Button -->
+                    <div x-show="!proofPreview" class="border-2 border-dashed border-rose-200 rounded-2xl p-4 text-center bg-rose-50/20 hover:bg-rose-50/40 transition cursor-pointer" @click="$refs.proofInput.click()">
+                        <div class="flex items-center justify-center gap-2 text-rose-700 font-bold text-xs">
+                            <span>📁</span> Klik untuk Pilih Bukti Transfer (Gambar/Foto)
+                        </div>
+                        <span class="text-[10px] text-gray-400 block mt-1">Format: JPG, PNG, atau Screenshot (Max 5MB)</span>
+                    </div>
+
+                    <div x-show="proofPreview" x-cloak class="flex items-center gap-3 bg-emerald-50/50 p-3 rounded-2xl border border-emerald-200">
+                        <img :src="proofPreview" class="w-14 h-14 object-cover rounded-xl border border-emerald-300 shadow-2xs" alt="Bukti Transfer">
+                        <div class="flex-grow min-w-0 text-xs">
+                            <span class="font-bold text-emerald-800 block truncate">✓ Bukti Transfer Siap Dikirim</span>
+                            <span class="text-[10px] text-emerald-600 block">Akan dikirim bersama data reservasi</span>
+                        </div>
+                        <button type="button" @click="removeProof()" class="text-xs text-rose-600 hover:text-rose-800 font-bold px-2 py-1">
+                            Ganti
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Identity Guarantee Section -->
@@ -134,9 +284,9 @@
                             <span class="text-lg">🪪</span>
                             <h3 class="font-serif-editorial font-bold text-gray-900 text-lg">Jaminan Identitas Penyewa</h3>
                         </div>
-                        <p class="text-[11px] text-gray-500 mt-0.5">Untuk simulasi keamanan rental. Bebas foto selfie, kartu pelajar, atau gambar apa saja.</p>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Jaminan identitas untuk penyewaan busana atelier. Unggah kartu identitas, kartu pelajar, atau foto diri.</p>
                     </div>
-                    <span class="text-[10px] bg-rose-50 text-rose-700 font-bold px-2.5 py-1 rounded-full border border-rose-200 whitespace-nowrap">Simulasi Tugas</span>
+                    <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full border border-emerald-200 whitespace-nowrap">Keamanan Terverifikasi</span>
                 </div>
 
                 <!-- Hidden inputs -->

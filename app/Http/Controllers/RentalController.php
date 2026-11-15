@@ -79,22 +79,44 @@ class RentalController extends Controller
         $rentalCode = 'CR-'.date('Ymd').'-'.strtoupper(Str::random(4));
 
         $identityPath = null;
-        if ($request->hasFile('identity_photo')) {
-            $storage = new SupabaseStorageService;
-            $identityPath = $storage->upload($request->file('identity_photo'), 'identities');
-        } elseif ($request->filled('identity_photo_data')) {
-            $base64Data = $request->input('identity_photo_data');
-            if (preg_match('/^data:image\/(\w+);base64,/', $base64Data, $type)) {
-                $data = substr($base64Data, strpos($base64Data, ',') + 1);
-                $decoded = base64_decode($data);
-                if ($decoded !== false) {
-                    $ext = strtolower($type[1]);
-                    $tempFile = tempnam(sys_get_temp_dir(), 'id_') . '.' . $ext;
-                    file_put_contents($tempFile, $decoded);
-                    $storage = new SupabaseStorageService;
-                    $identityPath = $storage->upload(new \Illuminate\Http\File($tempFile), 'identities');
-                    @unlink($tempFile);
+        try {
+            if ($request->hasFile('identity_photo')) {
+                $storage = new SupabaseStorageService;
+                $identityPath = $storage->upload($request->file('identity_photo'), 'identities');
+            } elseif ($request->filled('identity_photo_data')) {
+                $base64Data = $request->input('identity_photo_data');
+                if (preg_match('/^data:image\/(\w+);base64,/', $base64Data, $type)) {
+                    $data = substr($base64Data, strpos($base64Data, ',') + 1);
+                    $decoded = base64_decode($data);
+                    if ($decoded !== false) {
+                        $ext = strtolower($type[1]);
+                        if ($ext === 'jpeg') $ext = 'jpg';
+                        $tempFile = tempnam(sys_get_temp_dir(), 'id_') . '.' . $ext;
+                        file_put_contents($tempFile, $decoded);
+                        $storage = new SupabaseStorageService;
+                        $uploadedFile = new \Illuminate\Http\UploadedFile(
+                            $tempFile,
+                            'camera_id_' . time() . '.' . $ext,
+                            'image/' . ($ext === 'jpg' ? 'jpeg' : $ext),
+                            null,
+                            true
+                        );
+                        $identityPath = $storage->upload($uploadedFile, 'identities');
+                        @unlink($tempFile);
+                    }
                 }
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Identity photo upload warning: ' . $e->getMessage());
+        }
+
+        $paymentProofPath = null;
+        if ($request->hasFile('payment_proof')) {
+            try {
+                $storage = new SupabaseStorageService;
+                $paymentProofPath = $storage->upload($request->file('payment_proof'), 'payments');
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Payment proof upload warning: ' . $e->getMessage());
             }
         }
 
@@ -108,8 +130,10 @@ class RentalController extends Controller
             'rental_price' => $rentalPrice,
             'deposit_fee' => $depositFee,
             'total_price' => $totalPrice,
-            'status' => 'pending_payment',
+            'status' => $paymentProofPath ? 'paid' : 'pending_payment',
             'payment_method' => $validated['payment_method'],
+            'payment_proof' => $paymentProofPath,
+            'paid_at' => $paymentProofPath ? now() : null,
             'shipping_method' => $validated['shipping_method'],
             'shipping_address' => $validated['shipping_method'] === 'delivery'
                 ? $validated['shipping_address']
@@ -126,6 +150,11 @@ class RentalController extends Controller
         }
 
         $rental = Rental::create($rentalData);
+
+        if ($paymentProofPath) {
+            return redirect()->route('rental.invoice', $rental->rental_code)
+                ->with('success', 'Reservasi berhasil dan bukti pembayaran telah diterima. Atelier kami sedang menyiapkan gaun pesananmu.');
+        }
 
         return redirect()->route('rental.payment', $rental->rental_code)
             ->with('success', 'Reservation created. Please finalize payment to confirm your booking.');

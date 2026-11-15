@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -29,28 +30,34 @@ class SupabaseStorageService
     /**
      * Upload a file to Supabase Storage and return its public URL.
      *
-     * @param  UploadedFile  $file  The uploaded file instance
+     * @param  UploadedFile|File  $file  The uploaded file instance
      * @param  string  $bucket  The target bucket name (e.g. 'dresses', 'payments')
      * @param  string|null  $folder  Optional subfolder within the bucket
      * @return string The public URL of the uploaded file
      *
      * @throws RuntimeException
      */
-    public function upload(UploadedFile $file, string $bucket, ?string $folder = null): string
+    public function upload(UploadedFile|File $file, string $bucket, ?string $folder = null): string
     {
-        $extension = $file->getClientOriginalExtension();
+        if ($file instanceof UploadedFile) {
+            $extension = $file->getClientOriginalExtension() ?: $file->guessExtension() ?: 'jpg';
+        } else {
+            $extension = $file->guessExtension() ?: $file->getExtension() ?: 'jpg';
+        }
+
         $filename = Str::uuid()->toString().'.'.$extension;
         $path = $folder ? "{$folder}/{$filename}" : $filename;
 
         $endpoint = "{$this->supabaseUrl}/storage/v1/object/{$bucket}/{$path}";
+        $mimeType = $file->getMimeType() ?: 'image/jpeg';
 
         $response = Http::withHeaders([
             'Authorization' => "Bearer {$this->serviceRoleKey}",
-            'Content-Type' => $file->getMimeType(),
+            'Content-Type' => $mimeType,
             'x-upsert' => 'false',
         ])->withBody(
             file_get_contents($file->getRealPath()),
-            $file->getMimeType()
+            $mimeType
         )->post($endpoint);
 
         if ($response->failed()) {

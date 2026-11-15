@@ -67,6 +67,20 @@ class Rental extends Model
         return null;
     }
 
+    public function getPaymentProofUrlAttribute(): ?string
+    {
+        if (empty($this->payment_proof)) {
+            return null;
+        }
+        if (str_starts_with($this->payment_proof, 'http://') || str_starts_with($this->payment_proof, 'https://')) {
+            return $this->payment_proof;
+        }
+        if ($this->payment_proof === 'simulated_instant_payment.png') {
+            return null;
+        }
+        return asset('storage/' . $this->payment_proof);
+    }
+
     public function getStatusLabelAttribute(): string
     {
         return match ($this->status) {

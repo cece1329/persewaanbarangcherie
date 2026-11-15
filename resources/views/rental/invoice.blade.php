@@ -74,9 +74,14 @@
         </div>
 
         <div>
-            <h3 class="font-serif-editorial font-bold text-gray-900 text-xl mb-3">Reserved Garment Summary</h3>
-            <div class="border border-rose-100 rounded-2xl overflow-hidden text-xs">
-                <table class="w-full text-left">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="font-serif-editorial font-bold text-gray-900 text-xl">Reserved Garment Summary</h3>
+                <span class="text-[10px] text-rose-500 font-semibold sm:hidden flex items-center gap-1">
+                    <span>👈👉</span> Geser untuk melihat lengkap
+                </span>
+            </div>
+            <div class="border border-rose-100 rounded-2xl overflow-x-auto text-xs shadow-xs bg-white">
+                <table class="w-full text-left min-w-[560px]">
                     <thead class="bg-rose-50 text-rose-900 font-bold uppercase">
                         <tr>
                             <th class="p-3">Gown & Specification</th>

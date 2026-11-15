@@ -65,6 +65,12 @@
                             <td class="p-4 text-right">
                                 <strong class="text-sm text-rose-700 block">Rp {{ number_format($rental->total_price, 0, ',', '.') }}</strong>
                                 <span class="text-[10px] text-amber-800 font-semibold block">Deposit: Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }}</span>
+                                <span class="text-[10px] text-gray-500 font-mono uppercase block mt-0.5">{{ strtoupper(str_replace('_', ' ', $rental->payment_method)) }}</span>
+                                @if($rental->payment_proof_url)
+                                    <a href="{{ $rental->payment_proof_url }}" target="_blank" class="inline-flex items-center gap-1 text-[10px] text-emerald-800 bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-md font-bold hover:bg-emerald-100 transition mt-1.5 shadow-2xs">
+                                        <span>🧾</span> Bukti Transfer
+                                    </a>
+                                @endif
                             </td>
 
                             <td class="p-4 text-center whitespace-nowrap">
