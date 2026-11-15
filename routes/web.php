@@ -52,6 +52,11 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/demo-login/{role}', [AuthController::class, 'quickDemoLogin'])->name('demo.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Google Sign-In Routes
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::post('/auth/google/quick', [AuthController::class, 'quickGoogleSignIn'])->name('auth.google.quick');
+
 // Email Verification Routes
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
     ->middleware('throttle:6,1')
@@ -62,6 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verify-code', [AuthController::class, 'verifyCode'])
         ->middleware('throttle:10,1')
         ->name('verification.verify-code');
+    Route::post('/email/verify-instant', [AuthController::class, 'verifyInstant'])->name('verification.instant');
     Route::post('/email/verification-notification', [AuthController::class, 'resendVerificationEmail'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
