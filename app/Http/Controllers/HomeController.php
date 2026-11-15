@@ -22,9 +22,11 @@ class HomeController extends Controller
 
         $categories = Category::withCount('dresses')->get();
 
+        // Hanya tampilkan review yang dibuat/dikelola oleh Admin (user_id IS NULL) dan maksimal 3 review
         $recentReviews = Review::with(['dress'])
+            ->whereNull('user_id')
             ->latest()
-            ->take(4)
+            ->take(3)
             ->get();
 
         return view('home', compact('featuredDresses', 'categories', 'recentReviews'));

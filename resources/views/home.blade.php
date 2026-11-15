@@ -618,8 +618,9 @@
     </section>
 
     {{-- ═══════════════════════════════════════ --}}
-    {{-- REVIEWS & TESTIMONIALS --}}
+    {{-- REVIEWS & TESTIMONIALS (KHUSUS REVIEW RESMI DARI ADMIN - MAKS 3) --}}
     {{-- ═══════════════════════════════════════ --}}
+    @if(isset($recentReviews) && $recentReviews->isNotEmpty())
     <section class="py-16 px-4 border-t border-rose-100 relative overflow-hidden"
         style="background: linear-gradient(180deg,#fff5f7 0%,#fff0f3 100%);">
 
@@ -685,6 +686,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     {{-- ═══════════════════════════════════════ --}}
     {{-- CTA BANNER --}}
