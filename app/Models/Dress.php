@@ -70,6 +70,23 @@ class Dress extends Model
         return 'Rp '.number_format((float) $this->deposit_fee, 0, ',', '.');
     }
 
+    public function getRatingAttribute($value): float
+    {
+        if ($this->relationLoaded('reviews')) {
+            if ($this->reviews->isEmpty()) {
+                return 0.0;
+            }
+            return round((float) $this->reviews->avg('rating'), 1);
+        }
+
+        try {
+            $avg = $this->reviews()->avg('rating');
+            return $avg ? round((float) $avg, 1) : 0.0;
+        } catch (\Throwable $e) {
+            return 0.0;
+        }
+    }
+
     public function getImageUrlAttribute(): string
     {
         if ($this->image && str_starts_with($this->image, 'http')) {

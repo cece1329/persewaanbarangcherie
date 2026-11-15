@@ -23,7 +23,11 @@
                 </div>
 
                 <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold text-gray-800 shadow-xs">
-                    Client Rating ★ {{ number_format($dress->rating, 1) }}
+                    @if($dress->reviews->count() > 0)
+                        Client Rating ★ {{ number_format($dress->rating, 1) }}
+                    @else
+                        Client Rating ★ 0.0 (0 reviews)
+                    @endif
                 </div>
             </div>
 
@@ -196,7 +200,11 @@
         <div class="flex items-center justify-between border-b border-rose-50 pb-4">
             <h3 class="font-serif-editorial font-bold text-gray-900 text-2xl">Client Reviews ({{ $dress->reviews->count() }})</h3>
             <div class="flex items-center gap-1 text-amber-500 font-bold text-sm">
-                <span>★ {{ number_format($dress->rating, 1) }} out of 5.0</span>
+                @if($dress->reviews->count() > 0)
+                    <span>★ {{ number_format($dress->rating, 1) }} out of 5.0</span>
+                @else
+                    <span class="text-gray-400 font-medium">★ 0.0 out of 5.0 (Belum ada ulasan)</span>
+                @endif
             </div>
         </div>
 

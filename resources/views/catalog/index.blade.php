@@ -168,7 +168,13 @@
                             <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
                                 <div>
                                     <div class="flex items-center gap-1 text-gray-500 text-xs mb-1">
-                                        <span class="text-amber-500 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
+                                        @if($dress->rating > 0)
+                                            <span class="text-amber-500 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
+                                            <span class="text-[10px] text-gray-400 font-semibold">({{ $dress->reviews->count() }})</span>
+                                        @else
+                                            <span class="text-gray-400 font-medium">★ 0.0</span>
+                                            <span class="text-[10px] text-gray-400 font-semibold">(0)</span>
+                                        @endif
                                     </div>
                                     <h3 class="font-serif-editorial font-bold text-gray-900 text-lg hover:text-rose-600 transition">
                                         <a href="{{ route('catalog.show', $dress->slug) }}">{{ $dress->name }}</a>

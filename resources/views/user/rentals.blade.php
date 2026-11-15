@@ -124,34 +124,50 @@
 
     <!-- Review Modal -->
     <div x-show="reviewModalOpen" x-transition class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-8 max-w-md w-full border-2 border-rose-300 shadow-2xl space-y-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border-2 border-rose-300 shadow-2xl space-y-4" x-data="{ userRating: 5, hoverRating: 0 }">
             <div class="flex justify-between items-center border-b border-rose-100 pb-3">
-                <h3 class="font-serif-editorial font-bold text-xl text-gray-900">Submit Gown Review</h3>
+                <div>
+                    <h3 class="font-serif-editorial font-bold text-xl text-gray-900">Submit Gown Review</h3>
+                    <p class="text-[11px] text-gray-500">Berikan penilaian pengalaman sewa gaun atelier.</p>
+                </div>
                 <button @click="reviewModalOpen = false" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
             </div>
 
             <form action="{{ route('user.review.store') }}" method="POST" class="space-y-4">
                 @csrf
                 <input type="hidden" name="rental_id" :value="selectedRental">
+                <input type="hidden" name="rating" :value="userRating" required>
 
+                <!-- Interactive Star Rating like Admin Review -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Star Rating</label>
-                    <select name="rating" required class="w-full p-3 rounded-xl border border-rose-200 text-xs bg-rose-50/40 font-bold text-amber-600">
-                        <option value="5">5 Stars - Exceptional Craftsmanship & Fit</option>
-                        <option value="4">4 Stars - Excellent Gown</option>
-                        <option value="3">3 Stars - Satisfactory</option>
-                        <option value="2">2 Stars - Below Expectations</option>
-                        <option value="1">1 Star - Poor Experience</option>
-                    </select>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Penilaian Bintang (Star Rating)</label>
+                    <div class="flex items-center gap-2 bg-rose-50/40 p-3.5 rounded-2xl border border-rose-100 justify-between">
+                        <div class="flex items-center gap-1.5">
+                            <template x-for="star in 5" :key="star">
+                                <button type="button" 
+                                    @click="userRating = star"
+                                    @mouseenter="hoverRating = star"
+                                    @mouseleave="hoverRating = 0"
+                                    class="text-3xl sm:text-4xl transition transform hover:scale-110 focus:outline-none cursor-pointer"
+                                    :class="(hoverRating || userRating) >= star ? 'text-amber-400' : 'text-gray-300'">
+                                    ★
+                                </button>
+                            </template>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-sm font-bold text-amber-600 block" x-text="userRating + ' Bintang'"></span>
+                            <span class="text-[10px] text-gray-400 font-semibold" x-text="userRating === 5 ? 'Sangat Sempurna' : (userRating === 4 ? 'Sangat Bagus' : (userRating === 3 ? 'Cukup Baik' : (userRating === 2 ? 'Kurang Memuaskan' : 'Mengecewakan')))"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Your Feedback & Experience</label>
-                    <textarea name="comment" rows="4" required placeholder="Describe your experience regarding fit, fabric feel, and photography experience..." class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none"></textarea>
+                    <textarea name="comment" rows="4" required placeholder="Ceritakan pengalamanmu terkait kerapihan, keindahan bahan, dan kecocokan gaun saat dipakai..." class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none"></textarea>
                 </div>
 
                 <button type="submit" class="w-full btn-igari-primary py-3.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-md">
-                    Submit Client Review
+                    Kirim Ulasan Gaun
                 </button>
             </form>
         </div>

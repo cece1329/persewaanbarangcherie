@@ -43,7 +43,11 @@
                                     <img src="{{ $dress->image_url }}" class="w-12 h-14 object-cover rounded-xl border border-gray-200" alt="Dress">
                                     <div>
                                         <strong class="text-gray-900 text-xs block font-bold">{{ $dress->name }}</strong>
-                                        <span class="text-[10px] text-amber-500 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
+                                        @if($dress->rating > 0)
+                                            <span class="text-[10px] text-amber-500 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
+                                        @else
+                                            <span class="text-[10px] text-gray-400 font-medium">★ 0.0</span>
+                                        @endif
                                         @if($dress->is_featured)
                                             <span class="text-[9px] bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2 py-0.5 rounded-full ml-1 inline-block whitespace-nowrap">Featured</span>
                                         @endif

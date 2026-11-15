@@ -386,8 +386,13 @@
                         <div class="p-5 flex-1 flex flex-col justify-between">
                             <div>
                                 <div class="flex items-center gap-1 text-gray-500 text-xs mb-1.5">
-                                    <span class="text-amber-400 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
-                                    <span>({{ rand(5, 20) }} reviews)</span>
+                                    @if($dress->reviews->count() > 0)
+                                        <span class="text-amber-400 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
+                                        <span class="text-[11px] text-gray-400">({{ $dress->reviews->count() }} reviews)</span>
+                                    @else
+                                        <span class="text-gray-400 font-medium">★ 0.0</span>
+                                        <span class="text-[11px] text-gray-400">(0 reviews)</span>
+                                    @endif
                                 </div>
                                 <h3
                                     class="font-serif-editorial font-bold text-gray-900 text-xl hover:text-rose-600 transition leading-tight">
