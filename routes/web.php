@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('/my-rentals', [UserDashboardController::class, 'rentals'])->name('user.rentals');
     Route::post('/rentals/{id}/cancel', [UserDashboardController::class, 'cancelRental'])->name('user.rental.cancel');
+    Route::delete('/rentals/{id}', [UserDashboardController::class, 'destroyRental'])->name('user.rental.destroy');
     Route::post('/user/reviews', [UserDashboardController::class, 'storeReview'])->name('user.review.store');
     Route::post('/user/profile', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
 });
@@ -73,6 +74,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Manage Rentals
     Route::get('/rentals', [AdminController::class, 'rentals'])->name('rentals.index');
     Route::post('/rentals/{id}/status', [AdminController::class, 'updateRentalStatus'])->name('rentals.update-status');
+    Route::delete('/rentals/{id}', [AdminController::class, 'destroyRental'])->name('rentals.destroy');
 
     // Manage Dresses (CRUD)
     Route::get('/dresses', [AdminController::class, 'dresses'])->name('dresses.index');

@@ -77,6 +77,23 @@ class UserDashboardController extends Controller
         return back()->with('success', 'Reservasi #' . $rental->rental_code . ' berhasil dibatalkan.');
     }
 
+    public function destroyRental($id)
+    {
+        $rental = Rental::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $code = $rental->rental_code;
+
+        if ($rental->review) {
+            $rental->review->delete();
+        }
+
+        $rental->delete();
+
+        return back()->with('success', "Riwayat reservasi #{$code} berhasil dihapus dari akun Anda.");
+    }
+
     public function wishlists()
     {
         $user = Auth::user();

@@ -103,6 +103,13 @@
                                     <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" title="Cetak Struk Resi Thermal (Siap Kirim)" class="bg-amber-500 hover:bg-amber-600 text-white text-[10px] px-2.5 py-1 rounded-md font-bold flex items-center gap-1 shadow-xs transition">
                                         <span>🧾</span> Resi Thermal
                                     </a>
+                                    <form action="{{ route('admin.rentals.destroy', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus permanen histori reservasi #{{ $rental->rental_code }}?')" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" title="Hapus Histori Reservasi" class="bg-red-50 hover:bg-red-100 text-red-700 text-[10px] px-2.5 py-1 rounded-md font-bold flex items-center gap-1 border border-red-200 transition">
+                                            <span>🗑️</span> Hapus
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

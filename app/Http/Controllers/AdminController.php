@@ -95,6 +95,20 @@ class AdminController extends Controller
         return back()->with('success', "Reservation #{$rental->rental_code} status updated to ".$rental->status_label.'.');
     }
 
+    public function destroyRental($id)
+    {
+        $rental = Rental::findOrFail($id);
+        $code = $rental->rental_code;
+
+        if ($rental->review) {
+            $rental->review->delete();
+        }
+
+        $rental->delete();
+
+        return back()->with('success', "Histori reservasi #{$code} berhasil dihapus permanen oleh Admin.");
+    }
+
     public function dresses(Request $request)
     {
         $query = Dress::with('category');

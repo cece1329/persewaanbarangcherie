@@ -81,6 +81,14 @@
                             @elseif($rental->review)
                                 <span class="text-xs text-emerald-700 font-bold bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200">Review Submitted</span>
                             @endif
+
+                            <form action="{{ route('user.rental.destroy', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat reservasi #{{ $rental->rental_code }} ini dari akun Anda?')" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" title="Hapus Riwayat Reservasi" class="bg-gray-50 hover:bg-red-50 text-gray-500 hover:text-red-700 text-xs px-3 py-1.5 rounded-full font-bold border border-gray-200 hover:border-red-200 transition flex items-center gap-1">
+                                    <span>🗑️</span> Hapus
+                                </button>
+                            </form>
                         </div>
                     </div>
 
