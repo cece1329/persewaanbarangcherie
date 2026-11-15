@@ -169,7 +169,6 @@
                                 <div>
                                     <div class="flex items-center gap-1 text-gray-500 text-xs mb-1">
                                         <span class="text-amber-500 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
-                                        <span>({{ rand(4, 25) }})</span>
                                     </div>
                                     <h3 class="font-serif-editorial font-bold text-gray-900 text-lg hover:text-rose-600 transition">
                                         <a href="{{ route('catalog.show', $dress->slug) }}">{{ $dress->name }}</a>
