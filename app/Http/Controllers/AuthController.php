@@ -193,27 +193,25 @@ class AuthController extends Controller
         $clientId = config('services.google.client_id');
         $clientSecret = config('services.google.client_secret');
 
-        // Check if official credentials exist and aren't default placeholders
-        if (! empty($clientId) && ! empty($clientSecret) && ! str_contains($clientId, 'YOUR_')) {
-            $state = Str::random(40);
-            $request->session()->put('google_oauth_state', $state);
-
-            $redirectUri = config('services.google.redirect') ?: url('/auth/google/callback');
-            $query = http_build_query([
-                'client_id' => $clientId,
-                'redirect_uri' => $redirectUri,
-                'response_type' => 'code',
-                'scope' => 'openid profile email',
-                'access_type' => 'online',
-                'state' => $state,
-                'prompt' => 'select_account',
-            ]);
-
-            return redirect('https://accounts.google.com/o/oauth2/v2/auth?'.$query);
+        if (empty($clientId) || empty($clientSecret) || str_contains($clientId, 'YOUR_')) {
+            return redirect()->route('login')->with('error', 'Google Sign-In belum dikonfigurasi. Silakan hubungi administrator.');
         }
 
-        // Quick Simulated Google Account Picker
-        return view('auth.google-picker');
+        $state = Str::random(40);
+        $request->session()->put('google_oauth_state', $state);
+
+        $redirectUri = config('services.google.redirect') ?: url('/auth/google/callback');
+        $query = http_build_query([
+            'client_id'     => $clientId,
+            'redirect_uri'  => $redirectUri,
+            'response_type' => 'code',
+            'scope'         => 'openid profile email',
+            'access_type'   => 'online',
+            'state'         => $state,
+            'prompt'        => 'select_account',
+        ]);
+
+        return redirect('https://accounts.google.com/o/oauth2/v2/auth?'.$query);
     }
 
     public function handleGoogleCallback(Request $request)

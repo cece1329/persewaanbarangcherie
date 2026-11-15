@@ -8,8 +8,8 @@
             <p class="text-xs text-gray-500 mt-1">Access your client portal & reservation archive.</p>
         </div>
 
-        <!-- OPSI 1: LOGIN DENGAN GOOGLE (INSTANT & TERVERIFIKASI) -->
-        <div class="space-y-2 mb-6">
+        <!-- Login dengan Google -->
+        <div class="mb-6">
             <a href="{{ route('auth.google') }}" class="w-full py-3.5 px-4 rounded-2xl border-2 border-gray-200 hover:border-rose-400 bg-white hover:bg-rose-50/30 text-gray-800 font-bold text-xs flex items-center justify-center gap-3 shadow-xs hover:shadow-md transition">
                 <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -19,11 +19,6 @@
                 </svg>
                 <span>Masuk dengan Google</span>
             </a>
-            <div class="text-center">
-                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 font-semibold inline-block">
-                    ✓ Otomatis Aktif & Terverifikasi (Tanpa Spam / OTP)
-                </span>
-            </div>
         </div>
 
         <div class="relative my-6">
