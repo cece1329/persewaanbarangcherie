@@ -9,7 +9,45 @@
         <p class="text-xs text-gray-500">Reservation Reference: <strong class="text-rose-700 font-mono text-sm bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">{{ $rental->rental_code }}</strong></p>
     </div>
 
-    <div class="bg-white p-8 rounded-3xl border-2 border-rose-300 shadow-xl space-y-8">
+    @if($rental->status === 'cancelled')
+        <div class="bg-white p-8 rounded-3xl border-2 border-slate-200 shadow-md text-center space-y-4">
+            <div class="w-14 h-14 mx-auto bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-2xl">
+                ✕
+            </div>
+            <h2 class="font-serif-editorial text-2xl font-bold text-gray-800">Reservasi Telah Dibatalkan</h2>
+            <p class="text-xs text-gray-500 max-w-md mx-auto">
+                Batas waktu pembayaran 1 jam telah berakhir atau reservasi telah dibatalkan. Gaun ini kini tersedia kembali untuk tanggal lainnya.
+            </p>
+            <div class="flex items-center justify-center gap-3 pt-2">
+                <a href="{{ route('catalog.index') }}" class="btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold">
+                    Pilih Gaun di Katalog
+                </a>
+                <a href="{{ route('user.rentals') }}" class="btn-igari-secondary text-xs px-5 py-2.5 rounded-full font-bold">
+                    Riwayat Reservasi
+                </a>
+            </div>
+        </div>
+    @else
+        <!-- Pending Payment Expiry Notice -->
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900 shadow-xs">
+            <div class="flex items-center gap-2.5">
+                <span class="text-xl">⏳</span>
+                <div>
+                    <strong class="block text-amber-950 font-bold">Batas Waktu Pembayaran: 1 Jam</strong>
+                    <span class="text-[11px] text-amber-800">
+                        Selesaikan pembayaran sebelum <strong>{{ $rental->created_at->addHour()->format('H:i') }} WIB</strong> (Sisa waktu: <strong>{{ $rental->remaining_minutes }} Menit</strong>).
+                    </span>
+                </div>
+            </div>
+            <form action="{{ route('user.rental.cancel', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini?')">
+                @csrf
+                <button type="submit" class="bg-white hover:bg-rose-50 text-rose-700 text-xs px-3.5 py-1.5 rounded-full font-bold border border-rose-200 shadow-2xs transition whitespace-nowrap">
+                    ✕ Batalkan Reservasi
+                </button>
+            </form>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl border-2 border-rose-300 shadow-xl space-y-8">
         
         <div class="bg-gradient-to-r from-rose-700 to-pink-700 text-white p-6 rounded-2xl text-center space-y-1 shadow-md">
             <span class="text-xs uppercase tracking-wider font-semibold opacity-90">Total Payable Amount</span>
@@ -96,6 +134,7 @@
         </div>
 
     </div>
+    @endif
 
 </div>
 @endsection

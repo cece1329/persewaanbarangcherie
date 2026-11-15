@@ -14,6 +14,7 @@
             <a href="{{ route('user.rentals', ['status' => 'pending_payment']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'pending_payment' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-800 hover:bg-amber-100' }}">Pending</a>
             <a href="{{ route('user.rentals', ['status' => 'paid']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'paid' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-800 hover:bg-rose-100' }}">Reserved</a>
             <a href="{{ route('user.rentals', ['status' => 'completed']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'completed' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100' }}">Completed</a>
+            <a href="{{ route('user.rentals', ['status' => 'cancelled']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'cancelled' ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Cancelled</a>
         </div>
     </div>
 
@@ -39,17 +40,39 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold border inline-block whitespace-nowrap {{ $rental->status_badge_class }}">
-                            {{ $rental->status_label }}
-                        </span>
+                        <div class="space-y-1">
+                            <span class="px-3.5 py-1.5 rounded-full text-xs font-bold border inline-block whitespace-nowrap {{ $rental->status_badge_class }}">
+                                {{ $rental->status_label }}
+                            </span>
+                            @if($rental->status === 'pending_payment')
+                                <span class="block text-[10px] text-amber-700 font-bold">
+                                    ⏳ Batas: {{ $rental->remaining_minutes }} Menit lagi
+                                </span>
+                            @endif
+                        </div>
 
                         <div class="flex flex-wrap items-center gap-2">
+                            @if($rental->status === 'pending_payment')
+                                <a href="{{ route('rental.payment', $rental->rental_code) }}" class="btn-igari-primary text-xs px-3.5 py-1.5 rounded-full font-bold shadow-xs flex items-center gap-1">
+                                    <span>💳</span> Bayar Sekarang
+                                </a>
+                                <form action="{{ route('user.rental.cancel', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini?')">
+                                    @csrf
+                                    <button type="submit" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs px-3 py-1.5 rounded-full font-bold border border-rose-200 transition">
+                                        ✕ Batalkan
+                                    </button>
+                                </form>
+                            @endif
+
                             <a href="{{ route('rental.invoice', $rental->rental_code) }}" class="btn-igari-secondary text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1">
                                 <span>📄</span> Nota PDF
                             </a>
-                            <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1 transition">
-                                <span>🧾</span> Resi Thermal
-                            </a>
+
+                            @if($rental->status !== 'cancelled')
+                                <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1 transition">
+                                    <span>🧾</span> Resi Thermal
+                                </a>
+                            @endif
 
                             @if($rental->status === 'completed' && !$rental->review)
                                 <button @click="selectedRental = {{ $rental->id }}; reviewModalOpen = true" class="btn-igari-primary text-xs px-4 py-1.5 rounded-full font-bold">

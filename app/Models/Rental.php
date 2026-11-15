@@ -81,6 +81,25 @@ class Rental extends Model
         return asset('storage/' . $this->payment_proof);
     }
 
+    public function getIsPendingPaymentAttribute(): bool
+    {
+        return $this->status === 'pending_payment';
+    }
+
+    public function getIsExpiredAttribute(): bool
+    {
+        return $this->status === 'pending_payment' && $this->created_at && $this->created_at->addHour()->isPast();
+    }
+
+    public function getRemainingMinutesAttribute(): int
+    {
+        if ($this->status !== 'pending_payment' || !$this->created_at) {
+            return 0;
+        }
+        $diff = (int) now()->diffInMinutes($this->created_at->addHour(), false);
+        return max(0, $diff);
+    }
+
     public function getStatusLabelAttribute(): string
     {
         return match ($this->status) {

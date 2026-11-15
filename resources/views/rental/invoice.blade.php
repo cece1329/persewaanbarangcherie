@@ -19,6 +19,41 @@
         </div>
     </div>
 
+    @if($rental->status === 'pending_payment')
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900 shadow-xs">
+            <div class="flex items-center gap-2.5">
+                <span class="text-xl">⏳</span>
+                <div>
+                    <strong class="block text-amber-950 font-bold">Menunggu Pembayaran (Batas Waktu: 1 Jam)</strong>
+                    <span class="text-[11px] text-amber-800">
+                        Selesaikan pembayaran sebelum <strong>{{ $rental->created_at->addHour()->format('H:i') }} WIB</strong> (Sisa waktu: <strong>{{ $rental->remaining_minutes }} Menit</strong>).
+                    </span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('rental.payment', $rental->rental_code) }}" class="btn-igari-primary text-xs px-4 py-1.5 rounded-full font-bold shadow-xs">
+                    Bayar Sekarang
+                </a>
+                <form action="{{ route('user.rental.cancel', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini?')">
+                    @csrf
+                    <button type="submit" class="bg-white hover:bg-rose-50 text-rose-700 text-xs px-3.5 py-1.5 rounded-full font-bold border border-rose-200 shadow-2xs transition">
+                        ✕ Batalkan
+                    </button>
+                </form>
+            </div>
+        </div>
+    @elseif($rental->status === 'cancelled')
+        <div class="bg-slate-100 border border-slate-200 p-4 rounded-3xl flex items-center justify-between text-xs text-slate-700">
+            <div class="flex items-center gap-2">
+                <span class="text-base">✕</span>
+                <span>Reservasi ini berstatus <strong>Dibatalkan</strong> (melewati batas waktu 1 jam atau dibatalkan pelanggan).</span>
+            </div>
+            <a href="{{ route('catalog.index') }}" class="btn-igari-primary text-xs px-4 py-1.5 rounded-full font-bold">
+                Pilih Gaun Lain
+            </a>
+        </div>
+    @endif
+
     <!-- Printable Invoice Voucher Card -->
     <div id="printable-area" class="bg-white p-8 sm:p-10 rounded-3xl border border-rose-200 shadow-xl space-y-8 relative overflow-hidden">
         

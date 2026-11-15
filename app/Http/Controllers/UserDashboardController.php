@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Auth;
 
 class UserDashboardController extends Controller
 {
+    private function autoCancelExpiredRentals($userId): void
+    {
+        Rental::where('user_id', $userId)
+            ->where('status', 'pending_payment')
+            ->where('created_at', '<', now()->subHour())
+            ->update([
+                'status' => 'cancelled',
+            ]);
+    }
+
     public function index()
     {
         $user = Auth::user();
+
+        $this->autoCancelExpiredRentals($user->id);
 
         $activeRentals = Rental::with('dress')
             ->where('user_id', $user->id)
@@ -34,6 +46,9 @@ class UserDashboardController extends Controller
     public function rentals(Request $request)
     {
         $user = Auth::user();
+
+        $this->autoCancelExpiredRentals($user->id);
+
         $status = $request->get('status');
 
         $query = Rental::with(['dress', 'review'])->where('user_id', $user->id);
@@ -45,6 +60,21 @@ class UserDashboardController extends Controller
         $rentals = $query->latest()->paginate(10);
 
         return view('user.rentals', compact('rentals', 'status'));
+    }
+
+    public function cancelRental($id)
+    {
+        $rental = Rental::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->where('status', 'pending_payment')
+            ->firstOrFail();
+
+        $rental->update([
+            'status' => 'cancelled',
+            'notes' => trim(($rental->notes ?? '') . "\n[Dibatalkan oleh Pelanggan pada " . now()->format('d/m/Y H:i') . "]"),
+        ]);
+
+        return back()->with('success', 'Reservasi #' . $rental->rental_code . ' berhasil dibatalkan.');
     }
 
     public function wishlists()

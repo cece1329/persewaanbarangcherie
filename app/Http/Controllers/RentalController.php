@@ -168,12 +168,25 @@ class RentalController extends Controller
             abort(403);
         }
 
+        // Auto-cancel if 1 hour has passed
+        if ($rental->status === 'pending_payment' && $rental->created_at->addHour()->isPast()) {
+            $rental->update([
+                'status' => 'cancelled',
+                'notes' => trim(($rental->notes ?? '') . "\n[Dibatalkan otomatis oleh sistem karena batas waktu 1 jam telah berakhir]"),
+            ]);
+        }
+
         return view('rental.payment', compact('rental'));
     }
 
     public function processPayment(Request $request, $rentalCode)
     {
         $rental = Rental::where('rental_code', $rentalCode)->firstOrFail();
+
+        if ($rental->status === 'cancelled') {
+            return redirect()->route('user.rentals')
+                ->with('error', 'Reservasi ini telah dibatalkan karena batas waktu 1 jam telah berakhir.');
+        }
 
         $proofPath = null;
         if ($request->hasFile('payment_proof')) {
@@ -202,6 +215,14 @@ class RentalController extends Controller
 
         if ($rental->user_id !== Auth::id() && ! Auth::user()->isAdmin()) {
             abort(403);
+        }
+
+        // Auto-cancel if 1 hour has passed
+        if ($rental->status === 'pending_payment' && $rental->created_at->addHour()->isPast()) {
+            $rental->update([
+                'status' => 'cancelled',
+                'notes' => trim(($rental->notes ?? '') . "\n[Dibatalkan otomatis oleh sistem karena batas waktu 1 jam telah berakhir]"),
+            ]);
         }
 
         return view('rental.invoice', compact('rental'));
