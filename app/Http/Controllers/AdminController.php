@@ -80,6 +80,16 @@ class AdminController extends Controller
             'return_tracking_number' => ['nullable', 'string'],
         ]);
 
+        // Validasi: tidak bisa returned jika belum in_use
+        if ($request->status === 'returned' && $rental->status !== 'in_use') {
+            return back()->with('error', "Gaun belum bisa dikembalikan karena status belum 'Sedang Digunakan' (in_use). Silakan ubah status ke 'in_use' terlebih dahulu.");
+        }
+
+        // Validasi: tidak bisa returned jika belum mencapai end_date
+        if ($request->status === 'returned' && now()->lt($rental->end_date)) {
+            return back()->with('error', "Gaun belum bisa dikembalikan karena tanggal pengembalian belum tiba. Tanggal pengembalian: {$rental->end_date->format('d M Y')}.");
+        }
+
         $rental->status = $request->status;
 
         if ($request->filled('return_tracking_number')) {
@@ -121,7 +131,7 @@ class AdminController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
-        $dresses = $query->latest()->paginate(12)->withQueryString();
+        $dresses = $query->latest()->paginate(50)->withQueryString();
         $categories = Category::all();
 
         return view('admin.dresses.index', compact('dresses', 'categories'));

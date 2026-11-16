@@ -29,7 +29,12 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('home', compact('featuredDresses', 'categories', 'recentReviews'));
+        // Get user wishlists for wishlist button state
+        $userWishlists = auth()->check()
+            ? auth()->user()->wishlists()->pluck('dress_id')->toArray()
+            : [];
+
+        return view('home', compact('featuredDresses', 'categories', 'recentReviews', 'userWishlists'));
     }
 
     public function quizRecommendation(Request $request)
