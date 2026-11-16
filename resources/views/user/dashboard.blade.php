@@ -67,7 +67,7 @@
         @endif
     </div>
 
-    <div class="bg-white p-8 rounded-3xl border border-rose-100 shadow-xs space-y-4 max-w-2xl">
+    <div class="bg-white p-8 rounded-3xl border border-rose-100 shadow-xs space-y-4">
         <h3 class="font-serif-editorial font-bold text-gray-900 text-xl">Profil Akun &amp; Alamat Pengiriman</h3>
         
         <form action="{{ route('user.profile.update') }}" method="POST" class="space-y-4">

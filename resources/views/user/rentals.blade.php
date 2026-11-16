@@ -112,10 +112,6 @@
                             </form>
                         </div>
                     </div>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
 
                 </div>
             @endforeach
