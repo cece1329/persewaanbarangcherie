@@ -89,12 +89,6 @@
                                 <span>Nota PDF</span>
                             </a>
 
-                            @if($rental->status !== 'cancelled')
-                                <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1 transition">
-                                    <span>Resi Thermal</span>
-                                </a>
-                            @endif
-
                             @if($rental->status === 'completed' && !$rental->review)
                                 <button @click="selectedRental = {{ $rental->id }}; reviewModalOpen = true" class="btn-igari-primary text-xs px-4 py-1.5 rounded-full font-bold">
                                     Beri Ulasan Gaun
