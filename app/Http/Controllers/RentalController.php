@@ -21,6 +21,20 @@ class RentalController extends Controller
 
         $start = Carbon::parse($startDate);
         $end = Carbon::parse($endDate);
+
+        // Ensure end_date is after start_date
+        if ($end->lt($start)) {
+            $end = $start->copy()->addDays(3);
+            $endDate = $end->format('Y-m-d');
+        }
+
+        // Limit rental to maximum 14 days (2 weeks)
+        $maxEndDate = $start->copy()->addDays(14);
+        if ($end->gt($maxEndDate)) {
+            $end = $maxEndDate;
+            $endDate = $end->format('Y-m-d');
+        }
+
         $totalDays = max(1, $start->diffInDays($end) + 1);
 
         $rentalPrice = $dress->rental_price_per_day * $totalDays;
@@ -58,6 +72,18 @@ class RentalController extends Controller
 
         $start = Carbon::parse($validated['start_date']);
         $end = Carbon::parse($validated['end_date']);
+
+        // Ensure end_date is after start_date
+        if ($end->lt($start)) {
+            return back()->withInput()->with('error', 'Tanggal selesai harus setelah tanggal mulai.');
+        }
+
+        // Limit rental to maximum 14 days (2 weeks)
+        $maxEndDate = $start->copy()->addDays(14);
+        if ($end->gt($maxEndDate)) {
+            return back()->withInput()->with('error', 'Maksimal sewa adalah 14 hari (2 minggu). Silakan pilih tanggal yang lebih pendek.');
+        }
+
         $totalDays = max(1, $start->diffInDays($end) + 1);
 
         $activeRentalsCount = Rental::where('dress_id', $dress->id)
