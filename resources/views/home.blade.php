@@ -180,22 +180,21 @@
                 </div>
 
                 <h1 class="font-serif-editorial text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
-                    Curated Gowns &amp; Haute Couture for Your <span class="text-gradient-rose">Milestone Moments</span>
+                    Koleksi Gaun Pilihan &amp; Haute Couture untuk <span class="text-gradient-rose">Momen Istimewa Anda</span>
                 </h1>
 
                 <p class="text-base text-gray-700 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                    Discover an exclusive archive of <strong>Vintage Coquette, French Lace, Fairytale Tulle, and Botanical
-                        Chiffon</strong> gowns for senior portraits, galas, and private celebrations.
+                    Temukan koleksi eksklusif gaun bergaya <strong>Vintage Coquette, French Lace, Fairytale Tulle, dan Botanical Chiffon</strong> untuk pemotretan, wisuda, pesta dansa, dan perayaan momen berharga Anda.
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                     <a href="{{ route('catalog.index') }}"
                         class="btn-igari-primary px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-center w-full sm:w-auto shadow-lg">
-                        Explore Gown Archive &rarr;
+                        Jelajahi Koleksi Gaun &rarr;
                     </a>
                     <a href="#quiz-section"
                         class="btn-igari-secondary px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-center w-full sm:w-auto">
-                        Style Matcher Quiz
+                        Kuis Pencocok Gaya
                     </a>
                 </div>
 
@@ -203,15 +202,15 @@
                 <div class="grid grid-cols-3 gap-6 pt-6 border-t border-rose-200/60 max-w-lg mx-auto lg:mx-0">
                     <div class="text-center lg:text-left">
                         <p class="font-serif-editorial font-bold text-2xl text-rose-700">100%</p>
-                        <p class="text-xs text-gray-600">Sanitized &amp; Cared</p>
+                        <p class="text-xs text-gray-600">Higienis &amp; Terawat</p>
                     </div>
                     <div class="text-center lg:text-left">
                         <p class="font-serif-editorial font-bold text-2xl text-rose-700">4.9</p>
-                        <p class="text-xs text-gray-600">Client Rating</p>
+                        <p class="text-xs text-gray-600">Rating Pelanggan</p>
                     </div>
                     <div class="text-center lg:text-left">
-                        <p class="font-serif-editorial font-bold text-2xl text-rose-700">Instant</p>
-                        <p class="text-xs text-gray-600">Deposit Return</p>
+                        <p class="font-serif-editorial font-bold text-2xl text-rose-700">Instan</p>
+                        <p class="text-xs text-gray-600">Deposit Kembali 100%</p>
                     </div>
                 </div>
             </div>
@@ -228,7 +227,7 @@
                         <img src="{{ asset('images/web/header.jpg') }}"
                             class="w-full h-full object-cover hover:scale-105 transition duration-700" alt="Featured Gown">
 
-                        <div class="absolute top-4 right-4 igari-pill">Archive Highlight</div>
+                        <div class="absolute top-4 right-4 igari-pill">Pilihan Hari Ini</div>
 
                         <div
                             class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-rose-200 shadow-md">
@@ -242,11 +241,11 @@
                             <p class="text-xs text-gray-500 mb-2">French Satin Silk &amp; Lace Detailing</p>
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-[10px] text-gray-400 block uppercase font-bold">Daily Rate</span>
+                                    <span class="text-[10px] text-gray-400 block uppercase font-bold">Sewa per Hari</span>
                                     <span class="font-bold text-rose-700 text-base">Rp 175.000</span>
                                 </div>
                                 <a href="{{ route('catalog.index') }}"
-                                    class="btn-igari-primary text-xs px-4 py-2 rounded-full">View Details &rarr;</a>
+                                    class="btn-igari-primary text-xs px-4 py-2 rounded-full">Lihat Detail &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -295,11 +294,10 @@
                     <line x1="130" y1="8" x2="200" y2="8" stroke="#f1a7b2" stroke-width="1.5" />
                 </svg>
             </div>
-            <span class="igari-pill">Curated Collections</span>
-            <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 mt-3">Explore By Silhouette &amp;
-                Theme</h2>
-            <p class="text-sm text-gray-500 mt-2 font-light italic">Each style tells a different story — find the gown that
-                speaks to your aesthetic.</p>
+            <span class="igari-pill">Koleksi Pilihan</span>
+            <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 mt-3">Pilih Berdasarkan Siluet &amp;
+                Tema Busana</h2>
+            <p class="text-sm text-gray-500 mt-2 font-light italic">Setiap siluet memiliki keanggunan tersendiri — temukan gaun yang paling menggambarkan dirimu.</p>
         </div>
 
         {{-- Category cards — soft pastel style, lihat partials/category-cards.blade.php --}}
@@ -341,14 +339,14 @@
                             <path d="M9 5.5C11 2 17 1 17 5.5C17 10 11 9 9 5.5Z" fill="#e05269" opacity="0.6" />
                             <circle cx="9" cy="5.5" r="2" fill="#e05269" />
                         </svg>
-                        <span class="text-xs text-rose-600 font-bold uppercase tracking-widest">Selected Edition</span>
+                        <span class="text-xs text-rose-600 font-bold uppercase tracking-widest">Edisi Pilihan</span>
                     </div>
-                    <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900">Featured Atelier Gowns
+                    <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900">Gaun Unggulan Atelier
                     </h2>
                 </div>
                 <a href="{{ route('catalog.index') }}"
                     class="text-xs font-bold text-rose-600 hover:text-rose-800 uppercase tracking-wider flex items-center gap-1 mt-4 md:mt-0 group">
-                    View Full Archive ({{ \App\Models\Dress::count() }})
+                    Lihat Semua Koleksi ({{ \App\Models\Dress::count() }})
                     <span class="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
                 </a>
             </div>
@@ -375,7 +373,8 @@
                             {{-- Wishlist button --}}
                             @auth
                                 <button
-                                    class="absolute bottom-4 right-4 w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center border border-rose-200 hover:bg-rose-50 transition">
+                                    class="absolute bottom-4 right-4 w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center border border-rose-200 hover:bg-rose-50 transition"
+                                    title="Gaun Impian">
                                     <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -389,10 +388,10 @@
                                 <div class="flex items-center gap-1 text-gray-500 text-xs mb-1.5">
                                     @if($dress->reviews->count() > 0)
                                         <span class="text-amber-400 font-bold">★ {{ number_format($dress->rating, 1) }}</span>
-                                        <span class="text-[11px] text-gray-400">({{ $dress->reviews->count() }} reviews)</span>
+                                        <span class="text-[11px] text-gray-400">({{ $dress->reviews->count() }} ulasan)</span>
                                     @else
                                         <span class="text-gray-400 font-medium">★ 0.0</span>
-                                        <span class="text-[11px] text-gray-400">(0 reviews)</span>
+                                        <span class="text-[11px] text-gray-400">(0 ulasan)</span>
                                     @endif
                                 </div>
                                 <h3
@@ -405,13 +404,12 @@
 
                             <div class="pt-4 border-t border-rose-50 mt-4 flex items-center justify-between">
                                 <div>
-                                    <span class="text-[10px] text-gray-400 block uppercase font-bold tracking-wider">Daily
-                                        Rate</span>
+                                    <span class="text-[10px] text-gray-400 block uppercase font-bold tracking-wider">Sewa per Hari</span>
                                     <span class="font-bold text-rose-700 text-lg">{{ $dress->formatted_price }}</span>
                                 </div>
                                 <a href="{{ route('catalog.show', $dress->slug) }}"
                                     class="btn-igari-primary text-xs px-4 py-2 rounded-full font-bold">
-                                    Reserve
+                                    Sewa Sekarang
                                 </a>
                             </div>
                         </div>
@@ -424,7 +422,7 @@
                 <div class="text-center mt-10">
                     <a href="{{ route('catalog.index') }}"
                         class="btn-igari-secondary inline-flex items-center gap-2 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-wider border">
-                        View All {{ \App\Models\Dress::count() }} Gowns in Archive &rarr;
+                        Lihat Semua {{ \App\Models\Dress::count() }} Gaun di Koleksi &rarr;
                     </a>
                 </div>
             @endif
@@ -489,20 +487,19 @@
                             <path d="M7 4.5C8.5 2 13 1 13 4.5C13 8 8.5 7 7 4.5Z" fill="#c8374d" />
                             <circle cx="7" cy="4.5" r="1.5" fill="#8b1a2d" />
                         </svg>
-                        Atelier Style Recommendation
+                        Rekomendasi Gaya Atelier
                     </span>
                     <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900">
-                        Find Your Matching Silhouette
+                        Temukan Siluet Gaun yang Tepat Untukmu
                     </h2>
                     <p class="text-sm text-gray-600 font-light italic">
-                        Select your event type and preferred color aesthetic for a tailored recommendation.
+                        Pilih jenis acara dan palet warna favoritmu untuk mendapatkan rekomendasi gaun yang paling sesuai.
                     </p>
 
                     <div
                         class="pt-6 space-y-5 bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-rose-200 text-left shadow-sm">
                         <div>
-                            <label class="block text-xs font-bold text-rose-900 uppercase tracking-wider mb-3">1. Select
-                                Occasion</label>
+                            <label class="block text-xs font-bold text-rose-900 uppercase tracking-wider mb-3">1. Pilih Jenis Acara</label>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                                 <template x-for="item in vibes" :key="item.value">
                                     <button @click="selectedVibe = item.value"
@@ -515,8 +512,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-rose-900 uppercase tracking-wider mb-3">2. Select
-                                Color Palette</label>
+                            <label class="block text-xs font-bold text-rose-900 uppercase tracking-wider mb-3">2. Pilih Palet Warna</label>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                                 <template x-for="color in colors" :key="color.value">
                                     <button @click="selectedColor = color.value"
@@ -530,7 +526,7 @@
 
                         <button @click="findMatch()"
                             class="w-full btn-igari-primary py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md">
-                            Find My Recommended Gown
+                            Cari Gaun yang Cocok
                         </button>
                     </div>
 
@@ -543,12 +539,11 @@
                                 class="text-[10px] bg-rose-50 text-rose-700 font-bold px-3 py-1 rounded-full border border-rose-200"
                                 x-text="result?.category"></span>
                             <h3 class="font-serif-editorial text-xl font-bold text-gray-900" x-text="result?.name"></h3>
-                            <p class="text-sm font-bold text-rose-700" x-text="result?.price + ' / day'"></p>
-                            <p class="text-xs text-gray-500 italic">This piece aligns perfectly with your event theme and
-                                color preference.</p>
+                            <p class="text-sm font-bold text-rose-700" x-text="result?.price + ' / hari'"></p>
+                            <p class="text-xs text-gray-500 italic">Gaun ini sangat cocok dengan tema acara dan warna pilihanmu.</p>
                             <a :href="result?.url"
                                 class="inline-block btn-igari-primary text-xs px-5 py-2.5 rounded-full font-bold">
-                                Reserve This Gown &rarr;
+                                Sewa Gaun Ini Sekarang &rarr;
                             </a>
                         </div>
                     </div>
@@ -581,9 +576,9 @@
                     <line x1="130" y1="8" x2="200" y2="8" stroke="#f1a7b2" stroke-width="1.5" />
                 </svg>
             </div>
-            <span class="igari-pill">Seamless Process</span>
-            <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 mt-3">How Atelier Rental Works</h2>
-            <p class="text-sm text-gray-500 mt-2 font-light italic">Designed for your convenience from start to finish.</p>
+            <span class="igari-pill">Proses Mudah &amp; Cepat</span>
+            <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-gray-900 mt-3">Cara Sewa Gaun di Atelier</h2>
+            <p class="text-sm text-gray-500 mt-2 font-light italic">Dirancang mudah, nyaman, dan terpercaya dari pemesanan hingga pengembalian.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
@@ -595,10 +590,10 @@
 
             @php
                 $steps = [
-                    ['num' => '01', 'title' => 'Select Gown & Dates', 'desc' => 'Browse our curated archive and choose your desired gown with your preferred rental dates.'],
-                    ['num' => '02', 'title' => 'Reserve & Pay', 'desc' => 'Complete the reservation fee and refundable security deposit via instant bank transfer.'],
-                    ['num' => '03', 'title' => 'Wear & Celebrate', 'desc' => 'Receive your professionally sanitized, garment-cared gown ready for your special occasion.'],
-                    ['num' => '04', 'title' => 'Return & Refund', 'desc' => 'Return the piece upon completion. Security deposit is reimbursed promptly after inspection.'],
+                    ['num' => '01', 'title' => 'Pilih Gaun & Jadwal', 'desc' => 'Pilih gaun favoritmu dari koleksi eksklusif kami dan tentukan tanggal sewa sesuai acaramu.'],
+                    ['num' => '02', 'title' => 'Reservasi & Pembayaran', 'desc' => 'Selesaikan pembayaran sewa dan uang jaminan (deposit) melalui QRIS instan atau transfer bank.'],
+                    ['num' => '03', 'title' => 'Kenakan & Nikmati Acara', 'desc' => 'Gaun tiba tepat waktu dalam kondisi wangi, steril, dan rapi dalam cover bag pelindung.'],
+                    ['num' => '04', 'title' => 'Kembalikan & Deposit Cair', 'desc' => 'Kirim kembali gaun setelah selesai. Uang deposit jaminan langsung ditransfer kembali 100% setelah inspeksi.'],
                 ];
             @endphp
 
@@ -732,18 +727,17 @@
                     <line x1="0" y1="1" x2="40" y2="1" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
                 </svg>
             </div>
-            <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-white">Ready to Find Your Perfect Gown?</h2>
-            <p class="text-sm text-rose-100 font-light">Begin your reservation today and let ChérieRent dress your most
-                beautiful moments.</p>
+            <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-white">Siap Tampil Memukau di Momen Spesialmu?</h2>
+            <p class="text-sm text-rose-100 font-light">Mulai reservasi gaun impianmu hari ini dan biarkan ChérieRent menemani setiap momen bahagiamu.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
                 <a href="{{ route('catalog.index') }}"
                     class="bg-white text-rose-700 font-bold px-8 py-3.5 rounded-full text-xs uppercase tracking-wider hover:bg-rose-50 transition shadow-lg w-full sm:w-auto">
-                    Explore Archive &rarr;
+                    Jelajahi Koleksi Gaun &rarr;
                 </a>
                 @guest
                     <a href="{{ route('register') }}"
                         class="border border-white/50 text-white font-bold px-8 py-3.5 rounded-full text-xs uppercase tracking-wider hover:bg-white/10 transition w-full sm:w-auto">
-                        Create Account
+                        Daftar Akun Baru
                     </a>
                 @endguest
             </div>
@@ -757,15 +751,15 @@
                 selectedColor: 'pink',
                 result: null,
                 vibes: [
-                    { label: 'Prom & Gala', value: 'prom' },
-                    { label: 'Portrait Studio', value: 'photoshoot' },
-                    { label: 'Private Reception', value: 'party' },
+                    { label: 'Pesta Prom & Gala', value: 'prom' },
+                    { label: 'Foto Studio / Prewed', value: 'photoshoot' },
+                    { label: 'Resepsi & Pesta', value: 'party' },
                     { label: 'Vintage Coquette', value: 'vintage' },
                 ],
                 colors: [
                     { label: 'Dusty Rose', value: 'pink' },
                     { label: 'Pearl Ivory', value: 'ivory' },
-                    { label: 'Pastel Botanical', value: 'floral' },
+                    { label: 'Pastel Floral', value: 'floral' },
                     { label: 'Soft Lavender', value: 'lavender' },
                 ],
                 async findMatch() {
@@ -794,24 +788,27 @@
     {{-- CONTACT / HUBUNGI KAMI SECTION --}}
     {{-- ═══════════════════════════════════════ --}}
     <section class="py-20 px-4 sm:px-6 lg:px-8 igari-bg-gradient border-t border-rose-200/60" id="contact">
-        <div class="max-w-3xl mx-auto">
+        <div class="max-w-4xl mx-auto">
 
             {{-- Section Header --}}
             <div class="text-center mb-10">
                 <span
-                    class="inline-block bg-rose-100 text-rose-600 text-xs font-bold px-4 py-1.5 rounded-full border border-rose-200 uppercase tracking-widest mb-3">💌
-                    Hubungi Kami</span>
+                    class="inline-block bg-rose-100 text-rose-700 text-xs font-bold px-4 py-1.5 rounded-full border border-rose-200 uppercase tracking-widest mb-3">
+                    Hubungi Kami
+                </span>
                 <h2 class="font-serif-editorial text-3xl sm:text-4xl font-bold text-rose-900 mb-3">Kirim Pesan ke Atelier
                 </h2>
                 <p class="text-sm text-rose-700/70 max-w-md mx-auto">Ada pertanyaan soal gaun, ukuran, atau ketersediaan?
-                    Tim Concierge kami siap membantu via email <strong>rentcherie@gmail.com</strong></p>
+                    Tim Concierge kami siap membantu via WhatsApp atau email.</p>
             </div>
 
             {{-- Flash Messages --}}
             @if(session('success'))
                 <div
                     class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium px-5 py-4 rounded-2xl flex items-start gap-3">
-                    <span class="text-xl leading-none">✅</span>
+                    <svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
                     <span>{{ session('success') }}</span>
                 </div>
             @endif
@@ -835,13 +832,13 @@
                     <div>
                         <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">Nama Lengkap
                             <span class="text-rose-500">*</span></label>
-                        <input type="text" name="name" value="{{ old('name') }}" required placeholder="e.g. Sophia Cherie"
+                        <input type="text" name="name" value="{{ old('name') }}" required placeholder="Contoh: Sophia Cherie"
                             class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 placeholder-gray-400 transition">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">Email <span
                                 class="text-rose-500">*</span></label>
-                        <input type="email" name="email" value="{{ old('email') }}" required placeholder="your@email.com"
+                        <input type="email" name="email" value="{{ old('email') }}" required placeholder="email@anda.com"
                             class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 placeholder-gray-400 transition">
                     </div>
                 </div>
@@ -871,14 +868,16 @@
                 <div>
                     <label class="block text-xs font-bold text-rose-800 mb-1.5 uppercase tracking-wider">Pesan <span
                             class="text-rose-500">*</span></label>
-                    <textarea name="message" rows="5" required placeholder="Ceritakan keperluan Anda... ✨"
+                    <textarea name="message" rows="5" required placeholder="Ceritakan kebutuhan gaun, ukuran, atau acaramu..."
                         class="w-full text-sm border border-rose-200 rounded-xl px-4 py-3 bg-white/70 focus:ring-2 focus:ring-rose-300 focus:border-rose-400 outline-none text-gray-800 placeholder-gray-400 transition resize-none">{{ old('message') }}</textarea>
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
-                    <p class="text-xs text-rose-600/70">
-                        🔒 Pesan Anda akan langsung masuk ke <strong>rentcherie@gmail.com</strong><br>
-                        Balasan otomatis akan dikirim ke email Anda.
+                    <p class="text-xs text-rose-600/70 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-rose-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <span>Pesan Anda akan langsung masuk ke concierge kami dan dibalas via email/WhatsApp.</span>
                     </p>
                     <button type="submit"
                         class="igari-btn text-sm font-bold px-8 py-3.5 rounded-2xl shadow-lg shadow-rose-300/40 hover:shadow-rose-400/50 transition-all hover:-translate-y-0.5 flex items-center gap-2 whitespace-nowrap">
@@ -891,24 +890,64 @@
                 </div>
             </form>
 
-            {{-- Contact Info --}}
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                <div class="bg-white/60 border border-rose-200/50 rounded-2xl p-4">
-                    <div class="text-xl mb-1">📧</div>
-                    <p class="text-xs font-bold text-rose-800 mb-0.5">Email</p>
+            {{-- Detail Alamat Atelier Lengkap & Kontak --}}
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
+                {{-- Alamat Atelier Studio --}}
+                <div class="md:col-span-3 bg-white/90 border border-rose-200 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-rose-700">Studio Resmi</span>
+                            <h3 class="font-serif-editorial font-bold text-gray-900 text-lg">ChérieRent Atelier Studio</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 leading-relaxed max-w-xl">
+                            Jl. Senopati No. 42, RT.04/RW.02, Selong, Kebayoran Baru, Kota Jakarta Selatan, DKI Jakarta 12110
+                        </p>
+                        <p class="text-[11px] text-rose-700 font-medium">
+                            Patokan: Lantai 2 Atelier Studio (Seberang Senopati Arcade)
+                        </p>
+                    </div>
+                    <div class="flex sm:flex-col items-center sm:items-end gap-2 text-right shrink-0">
+                        <span class="text-[11px] text-gray-500 font-medium">Buka Setiap Hari</span>
+                        <span class="text-xs font-bold text-gray-800 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">
+                            09.00 &ndash; 18.00 WIB
+                        </span>
+                    </div>
+                </div>
+
+                {{-- Card Email --}}
+                <div class="bg-white/80 border border-rose-200/70 rounded-2xl p-5 text-center space-y-1 shadow-2xs">
+                    <div class="w-9 h-9 mx-auto rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 mb-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs font-bold text-rose-900">Email Resmi</p>
                     <a href="mailto:rentcherie@gmail.com"
-                        class="text-xs text-rose-600 hover:text-rose-800 font-medium transition">rentcherie@gmail.com</a>
+                        class="text-xs text-rose-600 hover:text-rose-800 font-medium transition block">rentcherie@gmail.com</a>
                 </div>
-                <div class="bg-white/60 border border-rose-200/50 rounded-2xl p-4">
-                    <div class="text-xl mb-1">💬</div>
-                    <p class="text-xs font-bold text-rose-800 mb-0.5">WhatsApp</p>
-                    <a href="https://wa.me/6289540164390" target="_blank"
-                        class="text-xs text-rose-600 hover:text-rose-800 font-medium transition">0895-4016-43905</a>
+
+                {{-- Card WhatsApp --}}
+                <div class="bg-white/80 border border-rose-200/70 rounded-2xl p-5 text-center space-y-1 shadow-2xs">
+                    <div class="w-9 h-9 mx-auto rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 mb-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs font-bold text-rose-900">WhatsApp Concierge</p>
+                    <a href="https://wa.me/62895401643905" target="_blank"
+                        class="text-xs text-rose-600 hover:text-rose-800 font-medium transition block">+62 895-4016-43905</a>
                 </div>
-                <div class="bg-white/60 border border-rose-200/50 rounded-2xl p-4">
-                    <div class="text-xl mb-1">⏰</div>
-                    <p class="text-xs font-bold text-rose-800 mb-0.5">Jam Operasional</p>
-                    <p class="text-xs text-rose-600 font-medium">Senin–Sabtu, 09.00–18.00</p>
+
+                {{-- Card Layanan --}}
+                <div class="bg-white/80 border border-rose-200/70 rounded-2xl p-5 text-center space-y-1 shadow-2xs">
+                    <div class="w-9 h-9 mx-auto rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 mb-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs font-bold text-rose-900">Fitting &amp; Layanan</p>
+                    <p class="text-xs text-rose-600 font-medium">Senin &ndash; Minggu (09.00 &ndash; 18.00)</p>
                 </div>
             </div>
 

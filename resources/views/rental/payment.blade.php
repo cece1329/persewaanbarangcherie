@@ -4,14 +4,14 @@
 <div class="py-12 px-4 max-w-3xl mx-auto space-y-8">
 
     <div class="text-center space-y-2">
-        <span class="igari-pill">Step 3 of 3</span>
-        <h1 class="font-serif-editorial text-3xl font-bold text-gray-900">Payment Authorization</h1>
-        <p class="text-xs text-gray-500">Reservation Reference: <strong class="text-rose-700 font-mono text-sm bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">{{ $rental->rental_code }}</strong></p>
+        <span class="igari-pill">Langkah 3 dari 3</span>
+        <h1 class="font-serif-editorial text-3xl font-bold text-gray-900">Otorisasi Pembayaran</h1>
+        <p class="text-xs text-gray-500">Kode Reservasi: <strong class="text-rose-700 font-mono text-sm bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">{{ $rental->rental_code }}</strong></p>
     </div>
 
     @if($rental->status === 'cancelled')
         <div class="bg-white p-8 rounded-3xl border-2 border-slate-200 shadow-md text-center space-y-4">
-            <div class="w-14 h-14 mx-auto bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-2xl">
+            <div class="w-14 h-14 mx-auto bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-2xl font-bold">
                 ✕
             </div>
             <h2 class="font-serif-editorial text-2xl font-bold text-gray-800">Reservasi Telah Dibatalkan</h2>
@@ -31,7 +31,7 @@
         <!-- Pending Payment Expiry Notice -->
         <div class="bg-amber-50 border border-amber-200 p-4 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900 shadow-xs">
             <div class="flex items-center gap-2.5">
-                <span class="text-xl">⏳</span>
+                <svg class="w-5 h-5 text-amber-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <div>
                     <strong class="block text-amber-950 font-bold">Batas Waktu Pembayaran: 1 Jam</strong>
                     <span class="text-[11px] text-amber-800">
@@ -50,14 +50,14 @@
         <div class="bg-white p-8 rounded-3xl border-2 border-rose-300 shadow-xl space-y-8">
         
         <div class="bg-gradient-to-r from-rose-700 to-pink-700 text-white p-6 rounded-2xl text-center space-y-1 shadow-md">
-            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">Total Payable Amount</span>
+            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">Total Tagihan Pembayaran</span>
             <p class="font-serif-editorial text-3xl font-bold">Rp {{ number_format($rental->total_price, 0, ',', '.') }}</p>
-            <p class="text-[10px] opacity-80">(Includes rental fee + refundable security deposit Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }})</p>
+            <p class="text-[10px] opacity-80">(Termasuk biaya sewa gaun + deposit jaminan kembali 100% Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }})</p>
         </div>
 
         <div class="space-y-4">
             <h3 class="font-serif-editorial font-bold text-gray-900 text-xl text-center">
-                Payment Instructions ({{ strtoupper(str_replace('_', ' ', $rental->payment_method)) }})
+                Instruksi Pembayaran ({{ strtoupper(str_replace('_', ' ', $rental->payment_method)) }})
             </h3>
 
             @if(in_array($rental->payment_method, ['qris','shopee_pay','dana']))
@@ -101,7 +101,7 @@
                             <span class="text-[11px] text-gray-600 block mt-0.5">Atas Nama: <strong class="text-gray-900">CHÉRIERENT ATELIER (DUMMY)</strong></span>
                         </div>
                         <button type="button" @click="navigator.clipboard.writeText('{{ $rental->payment_method === 'mandiri' ? '1370019284455' : '883019284455' }}'); copied = true; setTimeout(() => copied = false, 2500)" class="btn-igari-secondary text-xs px-3 py-1.5 rounded-xl font-bold flex items-center gap-1 self-start sm:self-center shadow-2xs">
-                            <span x-show="!copied">📋 Salin Rekening</span>
+                            <span x-show="!copied">Salin Rekening</span>
                             <span x-show="copied" x-cloak class="text-emerald-600 font-bold">✓ Tersalin!</span>
                         </button>
                     </div>
@@ -127,7 +127,7 @@
                 </div>
 
                 <button type="submit" class="w-full btn-igari-primary py-3.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2">
-                    <span>🧾 Kirim Bukti Transfer & Konfirmasi Pembayaran</span>
+                    <span>Kirim Bukti Transfer &amp; Konfirmasi Pembayaran</span>
                 </button>
             </form>
 

@@ -33,7 +33,7 @@
             <div class="bg-gradient-to-r from-rose-950 via-slate-900 to-rose-950 px-6 py-5 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="text-rose-300 font-serif-editorial text-lg font-bold">Chérie Atelier</span>
-                    <span class="text-xs text-rose-200/60 font-medium">| Size Guide & Rental Policy</span>
+                    <span class="text-xs text-rose-200/60 font-medium">| Panduan Ukuran &amp; Kebijakan Sewa</span>
                 </div>
                 <button @click="open = false" class="text-rose-200 hover:text-white font-bold text-xl">&times;</button>
             </div>
@@ -45,20 +45,20 @@
                 <div class="space-y-3">
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-rose-600"></span>
-                        <h3 class="font-bold text-sm text-gray-900 uppercase tracking-wider">Tabel Ukuran & Fitting Gaun</h3>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase tracking-wider">Tabel Ukuran &amp; Fitting Gaun</h3>
                     </div>
                     <p class="text-gray-500 leading-relaxed">
-                        Gunakan pita ukur dalam centimeter (cm) untuk mengukur Lingkar Dada (Bust), Lingkar Pinggang (Waist), dan Panjang Gaun (Length) dari bahu ke bawah.
+                        Gunakan pita ukur dalam centimeter (cm) untuk mengukur Lingkar Dada, Lingkar Pinggang, dan Panjang Gaun dari bahu ke bawah.
                     </p>
 
                     <div class="overflow-x-auto rounded-2xl border border-gray-200">
                         <table class="w-full text-left">
                             <thead class="bg-rose-50 text-rose-900 font-bold uppercase text-[10px]">
                                 <tr>
-                                    <th class="p-3">Size</th>
-                                    <th class="p-3">Lingkar Dada (Bust)</th>
-                                    <th class="p-3">Lingkar Pinggang (Waist)</th>
-                                    <th class="p-3">Panjang (Length)</th>
+                                    <th class="p-3">Ukuran</th>
+                                    <th class="p-3">Lingkar Dada</th>
+                                    <th class="p-3">Lingkar Pinggang</th>
+                                    <th class="p-3">Panjang Gaun</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-gray-800 font-medium">
@@ -94,8 +94,8 @@
                                 </tr>
                                 <tr class="hover:bg-rose-50/20 bg-rose-50/10">
                                     <td class="p-3 font-bold text-rose-700">Free Size</td>
-                                    <td class="p-3">80 - 92 cm (Flex)</td>
-                                    <td class="p-3">62 - 78 cm (Elastic)</td>
+                                    <td class="p-3">80 - 92 cm (Fleksibel)</td>
+                                    <td class="p-3">62 - 78 cm (Karet Elastis)</td>
                                     <td class="p-3">125 cm</td>
                                 </tr>
                             </tbody>
@@ -107,7 +107,7 @@
                 <div class="bg-amber-50/60 p-4 rounded-2xl border border-amber-200/80 space-y-2">
                     <div class="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wider">
                         <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        <span>Ketentuan Garansi Deposit (Security Deposit)</span>
+                        <span>Ketentuan Garansi Deposit Jaminan</span>
                     </div>
                     <ul class="space-y-1.5 text-amber-950 text-[11px] list-disc list-inside">
                         <li>Setiap transaksi sewa mencakup **Uang Deposit Keamanan** (mulai dari Rp 80.000 &ndash; Rp 150.000).</li>

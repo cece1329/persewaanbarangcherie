@@ -60,16 +60,20 @@ class RentalController extends Controller
         $end = Carbon::parse($validated['end_date']);
         $totalDays = max(1, $start->diffInDays($end) + 1);
 
-        $overlap = Rental::where('dress_id', $dress->id)
+        $activeRentalsCount = Rental::where('dress_id', $dress->id)
             ->whereIn('status', ['paid', 'shipping', 'in_use'])
             ->where(function ($q) use ($start, $end) {
                 $q->whereBetween('start_date', [$start->format('Y-m-d'), $end->format('Y-m-d')])
-                    ->orWhereBetween('end_date', [$start->format('Y-m-d'), $end->format('Y-m-d')]);
+                    ->orWhereBetween('end_date', [$start->format('Y-m-d'), $end->format('Y-m-d')])
+                    ->orWhere(function ($sub) use ($start, $end) {
+                        $sub->where('start_date', '<=', $start->format('Y-m-d'))
+                            ->where('end_date', '>=', $end->format('Y-m-d'));
+                    });
             })
-            ->exists();
+            ->count();
 
-        if ($overlap) {
-            return back()->with('error', 'This piece is reserved for the selected dates. Please select an alternate schedule.');
+        if ($activeRentalsCount >= max(1, $dress->stock)) {
+            return back()->with('error', 'Gaun ini sudah dipesan penuh untuk rentang tanggal yang dipilih. Silakan pilih tanggal atau gaun lain.');
         }
 
         $rentalPrice = $dress->rental_price_per_day * $totalDays;
@@ -137,7 +141,7 @@ class RentalController extends Controller
             'shipping_method' => $validated['shipping_method'],
             'shipping_address' => $validated['shipping_method'] === 'delivery'
                 ? $validated['shipping_address']
-                : 'Self Pickup at Chérie Atelier',
+                : 'Ambil Langsung di Atelier ChérieRent (Jakarta Selatan)',
             'notes' => $validated['notes'] ?? null,
         ];
 
@@ -157,7 +161,7 @@ class RentalController extends Controller
         }
 
         return redirect()->route('rental.payment', $rental->rental_code)
-            ->with('success', 'Reservation created. Please finalize payment to confirm your booking.');
+            ->with('success', 'Reservasi berhasil dibuat. Silakan selesaikan pembayaran untuk mengonfirmasi pesananmu.');
     }
 
     public function payment($rentalCode)
@@ -206,7 +210,7 @@ class RentalController extends Controller
         ]);
 
         return redirect()->route('rental.invoice', $rental->rental_code)
-            ->with('success', 'Payment confirmed successfully. Your garment is being prepared by our atelier.');
+            ->with('success', 'Pembayaran berhasil dikonfirmasi. Gaun pesananmu sedang disiapkan oleh tim atelier.');
     }
 
     public function invoice($rentalCode)

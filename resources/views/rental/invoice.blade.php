@@ -11,10 +11,12 @@
         
         <div class="flex items-center gap-2.5">
             <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white text-xs px-4 py-2 rounded-full font-bold flex items-center gap-1.5 shadow-xs transition">
-                <span>🧾</span> Cetak Struk Thermal / Resi
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                <span>Cetak Struk Thermal / Resi</span>
             </a>
             <button onclick="window.print()" class="btn-igari-primary text-xs px-5 py-2 rounded-full font-bold flex items-center gap-1.5 shadow-md">
-                <span>🖨️</span> Cetak / Simpan PDF
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <span>Cetak / Simpan PDF</span>
             </button>
         </div>
     </div>
@@ -22,7 +24,7 @@
     @if($rental->status === 'pending_payment')
         <div class="bg-amber-50 border border-amber-200 p-4 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900 shadow-xs">
             <div class="flex items-center gap-2.5">
-                <span class="text-xl">⏳</span>
+                <svg class="w-5 h-5 text-amber-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <div>
                     <strong class="block text-amber-950 font-bold">Menunggu Pembayaran (Batas Waktu: 1 Jam)</strong>
                     <span class="text-[11px] text-amber-800">
@@ -45,7 +47,7 @@
     @elseif($rental->status === 'cancelled')
         <div class="bg-slate-100 border border-slate-200 p-4 rounded-3xl flex items-center justify-between text-xs text-slate-700">
             <div class="flex items-center gap-2">
-                <span class="text-base">✕</span>
+                <span class="text-base font-bold">✕</span>
                 <span>Reservasi ini berstatus <strong>Dibatalkan</strong> (melewati batas waktu 1 jam atau dibatalkan pelanggan).</span>
             </div>
             <a href="{{ route('catalog.index') }}" class="btn-igari-primary text-xs px-4 py-1.5 rounded-full font-bold">
@@ -60,7 +62,7 @@
         <!-- Watermark / Stamp for Paid -->
         @if(in_array($rental->status, ['paid', 'shipping', 'in_use', 'returned', 'completed']))
             <div class="absolute right-8 top-28 pointer-events-none opacity-15 rotate-[-15deg] border-4 border-emerald-600 text-emerald-700 font-serif-editorial font-bold text-3xl px-6 py-2 rounded-2xl tracking-widest uppercase">
-                PAID &bull; VERIFIED
+                LUNAS &bull; TERVERIFIKASI
             </div>
         @endif
 
@@ -69,8 +71,8 @@
                 <img src="{{ asset('images/web/logodomain.png') }}" class="w-12 h-14 object-contain" alt="ChérieRent Logo">
                 <div>
                     <h1 class="font-serif-editorial text-2xl font-bold text-gray-900 tracking-tight">ChérieRent Atelier</h1>
-                    <p class="text-[9px] text-rose-600 uppercase tracking-widest font-bold">Official Reservation Voucher &bull; Haute Couture</p>
-                    <p class="text-[10px] text-gray-400">Jl. Senopati No. 42, Kebayoran Baru, Jakarta Selatan</p>
+                    <p class="text-[9px] text-rose-600 uppercase tracking-widest font-bold">Voucher Reservasi Resmi &bull; Haute Couture Atelier</p>
+                    <p class="text-[10px] text-gray-500">Jl. Senopati No. 42, RT.04/RW.02, Selong, Kebayoran Baru, Jakarta Selatan 12110</p>
                 </div>
             </div>
 
@@ -85,17 +87,17 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-rose-50/30 p-5 rounded-2xl border border-rose-100 text-xs">
             <div>
-                <span class="text-gray-400 uppercase font-bold text-[10px] block">Customer / Reserved By:</span>
+                <span class="text-gray-400 uppercase font-bold text-[10px] block">Penyewa / Pemesan:</span>
                 <strong class="text-gray-900 text-sm block mt-0.5">{{ $rental->user->name }}</strong>
                 <span class="text-gray-600 block">{{ $rental->user->email }}</span>
                 <span class="text-gray-600 block">Telp: {{ $rental->user->phone ?? '-' }}</span>
             </div>
 
             <div>
-                <span class="text-gray-400 uppercase font-bold text-[10px] block">Fulfillment & Destination:</span>
+                <span class="text-gray-400 uppercase font-bold text-[10px] block">Pengiriman &amp; Tujuan:</span>
                 <div class="flex items-center gap-2 mt-0.5">
                     <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
-                        {{ $rental->shipping_method === 'delivery' ? 'Express Courier' : 'Atelier Self Pickup' }}
+                        {{ $rental->shipping_method === 'delivery' ? 'Kurir Ekspedisi' : 'Ambil Sendiri di Atelier' }}
                     </span>
                     <span class="text-gray-500 text-[11px]">| Bayar via: <strong>{{ strtoupper(str_replace('_', ' ', $rental->payment_method)) }}</strong></span>
                 </div>
@@ -110,19 +112,19 @@
 
         <div>
             <div class="flex items-center justify-between mb-3">
-                <h3 class="font-serif-editorial font-bold text-gray-900 text-xl">Reserved Garment Summary</h3>
+                <h3 class="font-serif-editorial font-bold text-gray-900 text-xl">Rincian Gaun yang Dipesan</h3>
                 <span class="text-[10px] text-rose-500 font-semibold sm:hidden flex items-center gap-1">
-                    <span>👈👉</span> Geser untuk melihat lengkap
+                    <span>Geser untuk melihat lengkap &rarr;</span>
                 </span>
             </div>
             <div class="border border-rose-100 rounded-2xl overflow-x-auto text-xs shadow-xs bg-white">
                 <table class="w-full text-left min-w-[560px]">
                     <thead class="bg-rose-50 text-rose-900 font-bold uppercase">
                         <tr>
-                            <th class="p-3">Gown & Specification</th>
-                            <th class="p-3 text-center">Rental Schedule</th>
-                            <th class="p-3 text-right">Duration</th>
-                            <th class="p-3 text-right">Rental Rate</th>
+                            <th class="p-3">Gaun &amp; Spesifikasi</th>
+                            <th class="p-3 text-center">Jadwal Sewa</th>
+                            <th class="p-3 text-right">Durasi</th>
+                            <th class="p-3 text-right">Biaya Sewa</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-rose-50">
@@ -166,7 +168,7 @@
                     <span class="font-bold text-gray-800">Rp {{ number_format($rental->rental_price, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between text-gray-600">
-                    <span>Deposit Jaminan (Refundable):</span>
+                    <span>Deposit Jaminan (Kembali 100%):</span>
                     <span class="font-bold text-amber-800">Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }}</span>
                 </div>
                 <div class="border-t border-rose-200 pt-2 flex justify-between text-base font-bold text-rose-700">
@@ -182,7 +184,7 @@
                 <p>Voucher nota ini sah dan diterbitkan secara digital oleh sistem Chérie Atelier.</p>
             </div>
             <div class="text-center sm:text-right">
-                <p class="font-mono text-gray-600 font-bold">VERIFIED #{{ $rental->rental_code }}</p>
+                <p class="font-mono text-gray-600 font-bold">TERVERIFIKASI #{{ $rental->rental_code }}</p>
                 <p>Dokumen Resmi Pelanggan</p>
             </div>
         </div>

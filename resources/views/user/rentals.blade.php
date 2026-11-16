@@ -5,26 +5,26 @@
 
     <div class="border-b border-rose-200 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-            <span class="igari-pill">Client Record</span>
-            <h1 class="font-serif-editorial text-3xl font-bold text-gray-900 mt-1">My Reservations History</h1>
+            <span class="igari-pill">Catatan Pelanggan</span>
+            <h1 class="font-serif-editorial text-3xl font-bold text-gray-900 mt-1">Riwayat Reservasi Saya</h1>
         </div>
 
         <div class="flex flex-wrap gap-2 text-xs font-semibold">
-            <a href="{{ route('user.rentals') }}" class="px-3.5 py-1.5 rounded-full {{ !request('status') ? 'bg-rose-700 text-white' : 'bg-rose-50 text-rose-700 hover:bg-rose-100' }}">All</a>
-            <a href="{{ route('user.rentals', ['status' => 'pending_payment']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'pending_payment' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-800 hover:bg-amber-100' }}">Pending</a>
-            <a href="{{ route('user.rentals', ['status' => 'paid']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'paid' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-800 hover:bg-rose-100' }}">Reserved</a>
-            <a href="{{ route('user.rentals', ['status' => 'in_use']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'in_use' ? 'bg-pink-600 text-white' : 'bg-pink-50 text-pink-800 hover:bg-pink-100' }}">In Use</a>
-            <a href="{{ route('user.rentals', ['status' => 'returned']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'returned' ? 'bg-indigo-700 text-white' : 'bg-indigo-50 text-indigo-800 hover:bg-indigo-100' }}">Returned</a>
-            <a href="{{ route('user.rentals', ['status' => 'completed']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'completed' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100' }}">Completed</a>
-            <a href="{{ route('user.rentals', ['status' => 'cancelled']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'cancelled' ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Cancelled</a>
+            <a href="{{ route('user.rentals') }}" class="px-3.5 py-1.5 rounded-full {{ !request('status') ? 'bg-rose-700 text-white' : 'bg-rose-50 text-rose-700 hover:bg-rose-100' }}">Semua</a>
+            <a href="{{ route('user.rentals', ['status' => 'pending_payment']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'pending_payment' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-800 hover:bg-amber-100' }}">Menunggu Bayar</a>
+            <a href="{{ route('user.rentals', ['status' => 'paid']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'paid' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-800 hover:bg-rose-100' }}">Dipesan</a>
+            <a href="{{ route('user.rentals', ['status' => 'in_use']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'in_use' ? 'bg-pink-600 text-white' : 'bg-pink-50 text-pink-800 hover:bg-pink-100' }}">Sedang Digunakan</a>
+            <a href="{{ route('user.rentals', ['status' => 'returned']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'returned' ? 'bg-indigo-700 text-white' : 'bg-indigo-50 text-indigo-800 hover:bg-indigo-100' }}">Dikembalikan</a>
+            <a href="{{ route('user.rentals', ['status' => 'completed']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'completed' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100' }}">Selesai</a>
+            <a href="{{ route('user.rentals', ['status' => 'cancelled']) }}" class="px-3.5 py-1.5 rounded-full {{ request('status') == 'cancelled' ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Dibatalkan</a>
         </div>
     </div>
 
     @if($rentals->isEmpty())
         <div class="bg-white p-12 rounded-3xl border border-rose-100 text-center space-y-4">
-            <h3 class="font-serif-editorial font-bold text-xl text-gray-800">No Reservations Found</h3>
-            <p class="text-xs text-gray-500 max-w-sm mx-auto">Explore our collection archive to reserve your first haute couture gown.</p>
-            <a href="{{ route('catalog.index') }}" class="inline-block btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold">Explore Archive</a>
+            <h3 class="font-serif-editorial font-bold text-xl text-gray-800">Belum Ada Reservasi</h3>
+            <p class="text-xs text-gray-500 max-w-sm mx-auto">Jelajahi koleksi gaun kami untuk mulai menyewa gaun impianmu.</p>
+            <a href="{{ route('catalog.index') }}" class="inline-block btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold">Jelajahi Koleksi</a>
         </div>
     @else
         <div class="space-y-4">
@@ -36,14 +36,14 @@
                         <div class="space-y-1">
                             <span class="font-mono text-[10px] font-bold text-gray-400">#{{ $rental->rental_code }}</span>
                             <h3 class="font-serif-editorial font-bold text-gray-900 text-base">{{ $rental->dress->name }}</h3>
-                            <p class="text-xs text-gray-500">Period: <strong>{{ $rental->start_date->format('d/m/Y') }}</strong> to <strong>{{ $rental->end_date->format('d/m/Y') }}</strong> ({{ $rental->total_days }} Days)</p>
-                            <p class="text-xs font-bold text-rose-700">Total Amount: Rp {{ number_format($rental->total_price, 0, ',', '.') }}</p>
+                            <p class="text-xs text-gray-500">Jadwal Sewa: <strong>{{ $rental->start_date->format('d/m/Y') }}</strong> s/d <strong>{{ $rental->end_date->format('d/m/Y') }}</strong> ({{ $rental->total_days }} Hari)</p>
+                            <p class="text-xs font-bold text-rose-700">Total Biaya: Rp {{ number_format($rental->total_price, 0, ',', '.') }}</p>
 
                             @if($rental->status === 'returned')
                                 <div class="mt-2 p-2.5 bg-indigo-50 rounded-xl border border-indigo-200 text-xs text-indigo-950 flex items-start gap-2">
-                                    <span>🔍</span>
+                                    <svg class="w-4 h-4 text-indigo-700 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                     <div>
-                                        <strong class="text-indigo-900 font-bold block">Gaun Telah Dikembalikan (Under Inspection)</strong>
+                                        <strong class="text-indigo-900 font-bold block">Gaun Telah Dikembalikan (Dalam Pemeriksaan)</strong>
                                         <span class="text-[11px] text-indigo-700 block">Sedang diperiksa tim atelier. Deposit Rp {{ number_format($rental->deposit_fee, 0, ',', '.') }} akan dikembalikan penuh setelah inspeksi selesai.</span>
                                         @if($rental->return_tracking_number)
                                             <span class="inline-block text-[10px] bg-white text-indigo-800 font-mono px-2 py-0.5 rounded border border-indigo-200 mt-1">Resi: {{ $rental->return_tracking_number }}</span>
@@ -61,7 +61,7 @@
                             </span>
                             @if($rental->status === 'pending_payment')
                                 <span class="block text-[10px] text-amber-700 font-bold">
-                                    ⏳ Batas: {{ $rental->remaining_minutes }} Menit lagi
+                                    Batas: {{ $rental->remaining_minutes }} Menit lagi
                                 </span>
                             @endif
                         </div>
@@ -69,7 +69,7 @@
                         <div class="flex flex-wrap items-center gap-2">
                             @if($rental->status === 'pending_payment')
                                 <a href="{{ route('rental.payment', $rental->rental_code) }}" class="btn-igari-primary text-xs px-3.5 py-1.5 rounded-full font-bold shadow-xs flex items-center gap-1">
-                                    <span>💳</span> Bayar Sekarang
+                                    <span>Bayar Sekarang</span>
                                 </a>
                                 <form action="{{ route('user.rental.cancel', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini?')">
                                     @csrf
@@ -81,33 +81,37 @@
 
                             @if(in_array($rental->status, ['paid', 'shipping', 'in_use']))
                                 <button @click="returnRentalId = {{ $rental->id }}; returnRentalCode = '{{ $rental->rental_code }}'; returnModalOpen = true" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs px-3.5 py-1.5 rounded-full font-bold border border-indigo-200 transition flex items-center gap-1">
-                                    <span>🔄</span> Kembalikan Gaun
+                                    <span>Kembalikan Gaun</span>
                                 </button>
                             @endif
 
                             <a href="{{ route('rental.invoice', $rental->rental_code) }}" class="btn-igari-secondary text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1">
-                                <span>📄</span> Nota PDF
+                                <span>Nota PDF</span>
                             </a>
 
                             @if($rental->status !== 'cancelled')
                                 <a href="{{ route('rental.print-thermal', $rental->rental_code) }}" target="_blank" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1 transition">
-                                    <span>🧾</span> Resi Thermal
+                                    <span>Resi Thermal</span>
                                 </a>
                             @endif
 
                             @if($rental->status === 'completed' && !$rental->review)
                                 <button @click="selectedRental = {{ $rental->id }}; reviewModalOpen = true" class="btn-igari-primary text-xs px-4 py-1.5 rounded-full font-bold">
-                                    Submit Review
+                                    Beri Ulasan Gaun
                                 </button>
                             @elseif($rental->review)
-                                <span class="text-xs text-emerald-700 font-bold bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200">Review Submitted</span>
+                                <span class="text-xs text-emerald-700 font-bold bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200">Ulasan Terkirim</span>
                             @endif
 
                             <form action="{{ route('user.rental.destroy', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat reservasi #{{ $rental->rental_code }} ini dari akun Anda?')" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" title="Hapus Riwayat Reservasi" class="bg-gray-50 hover:bg-red-50 text-gray-500 hover:text-red-700 text-xs px-3 py-1.5 rounded-full font-bold border border-gray-200 hover:border-red-200 transition flex items-center gap-1">
-                                    <span>🗑️</span> Hapus
+                                    <span>Hapus</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                                 </button>
                             </form>
                         </div>
@@ -127,7 +131,7 @@
         <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border-2 border-rose-300 shadow-2xl space-y-4" x-data="{ userRating: 5, hoverRating: 0 }">
             <div class="flex justify-between items-center border-b border-rose-100 pb-3">
                 <div>
-                    <h3 class="font-serif-editorial font-bold text-xl text-gray-900">Submit Gown Review</h3>
+                    <h3 class="font-serif-editorial font-bold text-xl text-gray-900">Ulasan Pengalaman Gaun</h3>
                     <p class="text-[11px] text-gray-500">Berikan penilaian pengalaman sewa gaun atelier.</p>
                 </div>
                 <button @click="reviewModalOpen = false" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
@@ -138,9 +142,9 @@
                 <input type="hidden" name="rental_id" :value="selectedRental">
                 <input type="hidden" name="rating" :value="userRating" required>
 
-                <!-- Interactive Star Rating like Admin Review -->
+                <!-- Interactive Star Rating -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Penilaian Bintang (Star Rating)</label>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Penilaian Bintang</label>
                     <div class="flex items-center gap-2 bg-rose-50/40 p-3.5 rounded-2xl border border-rose-100 justify-between">
                         <div class="flex items-center gap-1.5">
                             <template x-for="star in 5" :key="star">
@@ -162,7 +166,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Your Feedback & Experience</label>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Pengalaman &amp; Ulasanmu</label>
                     <textarea name="comment" rows="4" required placeholder="Ceritakan pengalamanmu terkait kerapihan, keindahan bahan, dan kecocokan gaun saat dipakai..." class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none"></textarea>
                 </div>
 
@@ -189,8 +193,8 @@
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Metode / No. Resi Pengembalian</label>
-                    <input type="text" name="return_tracking_number" placeholder="Contoh: JNE / SiCepat / GoSend / Antar Sendiri ke Butik" class="w-full p-3 rounded-xl border border-gray-200 text-xs bg-rose-50/20 outline-none focus:border-indigo-500">
-                    <p class="text-[10px] text-gray-400 mt-1">Tulis nomor resi ekspedisi atau tulis "Antar Sendiri ke Butik" jika dikembalikan langsung.</p>
+                    <input type="text" name="return_tracking_number" placeholder="Contoh: JNE / SiCepat / GoSend / Antar Sendiri ke Atelier" class="w-full p-3 rounded-xl border border-gray-200 text-xs bg-rose-50/20 outline-none focus:border-indigo-500">
+                    <p class="text-[10px] text-gray-400 mt-1">Tulis nomor resi ekspedisi atau tulis "Antar Sendiri ke Atelier" jika dikembalikan langsung.</p>
                 </div>
 
                 <div>
@@ -199,8 +203,8 @@
                 </div>
 
                 <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-900 flex items-start gap-2">
-                    <span>ℹ️</span>
-                    <span>Setelah kamu konfirmasi pengembalian, status akan berubah menjadi <strong>Returned (Under Inspection)</strong>. Deposit jaminanmu akan dicairkan oleh atelier setelah pengecekan selesai.</span>
+                    <svg class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>Setelah konfirmasi pengembalian, status akan berubah menjadi <strong>Dikembalikan (Pemeriksaan Fisik)</strong>. Deposit jaminanmu akan dicairkan oleh atelier setelah pemeriksaan selesai.</span>
                 </div>
 
                 <div class="flex justify-end gap-2.5 pt-2">

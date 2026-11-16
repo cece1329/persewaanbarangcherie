@@ -76,7 +76,7 @@ $decoEmoji = [
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-bold" style="color: {{ $s['text'] }};">
                         {{ $category->dresses_count }}
-                        <span class="font-normal" style="opacity: 0.5;">pieces</span>
+                        <span class="font-normal" style="opacity: 0.7;">gaun</span>
                     </span>
                     <span class="w-6 h-6 rounded-full flex items-center justify-center border group-hover:scale-110 transition-transform duration-300"
                           style="background: {{ $s['tagBg'] }}; border-color: {{ $s['border'] }};">

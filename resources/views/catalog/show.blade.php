@@ -24,25 +24,25 @@
 
                 <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold text-gray-800 shadow-xs">
                     @if($dress->reviews->count() > 0)
-                        Client Rating ★ {{ number_format($dress->rating, 1) }}
+                        Penilaian Gaun ★ {{ number_format($dress->rating, 1) }}
                     @else
-                        Client Rating ★ 0.0 (0 reviews)
+                        Penilaian Gaun ★ 0.0 (0 ulasan)
                     @endif
                 </div>
             </div>
 
             <div class="grid grid-cols-3 gap-3 text-center">
                 <div class="bg-white p-3 rounded-2xl border border-rose-100 shadow-xs">
-                    <span class="text-[10px] text-gray-500 uppercase font-bold block">Sanitation</span>
-                    <span class="text-xs text-gray-800 font-semibold">Clean Dry Cared</span>
+                    <span class="text-[10px] text-gray-500 uppercase font-bold block">Higienitas</span>
+                    <span class="text-xs text-gray-800 font-semibold">Dry Clean Steril</span>
                 </div>
                 <div class="bg-white p-3 rounded-2xl border border-rose-100 shadow-xs">
-                    <span class="text-[10px] text-gray-500 uppercase font-bold block">Garment Care</span>
-                    <span class="text-xs text-gray-800 font-semibold">Storage Bag Incl.</span>
+                    <span class="text-[10px] text-gray-500 uppercase font-bold block">Perawatan</span>
+                    <span class="text-xs text-gray-800 font-semibold">Cover Bag Gratis</span>
                 </div>
                 <div class="bg-white p-3 rounded-2xl border border-rose-100 shadow-xs">
-                    <span class="text-[10px] text-gray-500 uppercase font-bold block">Packaging</span>
-                    <span class="text-xs text-gray-800 font-semibold">Sterile Boxed</span>
+                    <span class="text-[10px] text-gray-500 uppercase font-bold block">Kemasan</span>
+                    <span class="text-xs text-gray-800 font-semibold">Box Segel Aman</span>
                 </div>
             </div>
         </div>
@@ -54,8 +54,9 @@
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-2" x-data x-cloak>
                         <span class="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1 rounded-full border border-rose-200">Size {{ $dress->size }}</span>
-                        <button type="button" @click="$dispatch('open-fitting-guide')" class="text-[11px] font-bold text-rose-700 hover:text-rose-900 underline">
-                            📏 Fitting Chart &amp; Policy
+                        <button type="button" @click="$dispatch('open-fitting-guide')" class="text-[11px] font-bold text-rose-700 hover:text-rose-900 underline flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                            <span>Panduan Ukuran &amp; Ketentuan</span>
                         </button>
                     </div>
                     <div class="inline">
@@ -65,7 +66,7 @@
                            var btn = this;
                            var span = btn.querySelector('span');
                            var originalText = span.textContent;
-                           span.textContent = 'Loading...';
+                           span.textContent = 'Memuat...';
                            var dressId = {{ $dress->id }};
                            fetch('/catalog/' + dressId + '/wishlist', {
                                method: 'POST',
@@ -90,7 +91,7 @@
                                    return;
                                }
                                if(d && d.success) {
-                                   span.textContent = d.added ? '♥ Saved to Wishlist' : '♡ Add to Wishlist';
+                                   span.textContent = d.added ? '♥ Tersimpan di Impian' : '♡ Simpan ke Impian';
                                    window.dispatchEvent(new CustomEvent('show-notification', { detail: { message: d.message, type: 'success' } }));
                                    try {
                                        localStorage.setItem('cherie_wishlist_updated', Date.now());
@@ -109,7 +110,7 @@
                            return false;
                            "
                            class="flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 rounded-full border transition hover:bg-rose-100 text-rose-700 bg-rose-50 border-rose-200 no-underline">
-                            <span>{{ $isWishlisted ? '♥ Saved to Wishlist' : '♡ Add to Wishlist' }}</span>
+                            <span>{{ $isWishlisted ? '♥ Tersimpan di Impian' : '♡ Simpan ke Impian' }}</span>
                         </a>
                     </div>
                 </div>
@@ -120,44 +121,44 @@
                 
                 <div class="mt-3 flex items-baseline gap-3">
                     <span class="text-3xl font-bold text-rose-700 font-serif-editorial">{{ $dress->formatted_price }}</span>
-                    <span class="text-xs text-gray-500 font-medium">/ daily rate</span>
+                    <span class="text-xs text-gray-500 font-medium">/ hari</span>
                     <span class="text-xs bg-amber-50 text-amber-800 px-2.5 py-1 rounded-full font-bold ml-auto border border-amber-200">
-                        Refundable Deposit {{ $dress->formatted_deposit }}
+                        Deposit Kembali 100% {{ $dress->formatted_deposit }}
                     </span>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-rose-100 shadow-xs space-y-2">
-                <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Garment Description & Details:</h4>
+                <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Deskripsi &amp; Detail Gaun:</h4>
                 <p class="text-xs text-gray-600 leading-relaxed">{{ $dress->description }}</p>
             </div>
 
             <div class="bg-rose-50/40 p-5 rounded-2xl border border-rose-200 space-y-3">
-                <h4 class="text-xs font-bold text-rose-900 uppercase tracking-wider">Specifications & Fabric:</h4>
+                <h4 class="text-xs font-bold text-rose-900 uppercase tracking-wider">Spesifikasi &amp; Material Gaun:</h4>
                 <div class="grid grid-cols-2 gap-3 text-xs">
-                    <div><span class="text-gray-500">Fabric Composition:</span> <strong class="text-gray-800 block">{{ $dress->fabric ?? '-' }}</strong></div>
-                    <div><span class="text-gray-500">Color Shade:</span> <strong class="text-gray-800 block">{{ $dress->color ?? '-' }}</strong></div>
-                    <div><span class="text-gray-500">Bust Dimensions:</span> <strong class="text-gray-800 block">{{ $dress->chest_size ?? '-' }}</strong></div>
-                    <div><span class="text-gray-500">Waist Dimensions:</span> <strong class="text-gray-800 block">{{ $dress->waist_size ?? '-' }}</strong></div>
-                    <div><span class="text-gray-500">Garment Length:</span> <strong class="text-gray-800 block">{{ $dress->length ?? '-' }}</strong></div>
-                    <div><span class="text-gray-500">Atelier Availability:</span> <strong class="text-emerald-700 block font-bold">{{ $dress->stock }} Unit</strong></div>
+                    <div><span class="text-gray-500">Komposisi Kain:</span> <strong class="text-gray-800 block">{{ $dress->fabric ?? '-' }}</strong></div>
+                    <div><span class="text-gray-500">Nuansa Warna:</span> <strong class="text-gray-800 block">{{ $dress->color ?? '-' }}</strong></div>
+                    <div><span class="text-gray-500">Lingkar Dada (LD):</span> <strong class="text-gray-800 block">{{ $dress->chest_size ?? '-' }}</strong></div>
+                    <div><span class="text-gray-500">Lingkar Pinggang (LP):</span> <strong class="text-gray-800 block">{{ $dress->waist_size ?? '-' }}</strong></div>
+                    <div><span class="text-gray-500">Panjang Gaun:</span> <strong class="text-gray-800 block">{{ $dress->length ?? '-' }}</strong></div>
+                    <div><span class="text-gray-500">Stok di Atelier:</span> <strong class="text-emerald-700 block font-bold">{{ $dress->stock }} Unit</strong></div>
                 </div>
             </div>
 
             <!-- Dynamic Rental Calculator & Form -->
             <div class="bg-white p-6 rounded-3xl border-2 border-rose-300 shadow-lg space-y-4">
                 <h3 class="font-serif-editorial font-bold text-gray-900 text-xl">
-                    Reserve & Schedule Rental
+                    Pesan &amp; Jadwalkan Sewa
                 </h3>
 
                 <form action="{{ route('rental.checkout', $dress->id) }}" method="GET" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Start Date</label>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Tanggal Mulai Sewa</label>
                             <input type="date" name="start_date" x-model="startDate" min="{{ date('Y-m-d') }}" @change="calculateTotal()" required class="w-full p-3 rounded-xl border border-rose-200 text-xs bg-rose-50/40 outline-none text-gray-800 font-bold">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Return Date</label>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Tanggal Pengembalian</label>
                             <input type="date" name="end_date" x-model="endDate" min="{{ date('Y-m-d') }}" @change="calculateTotal()" required class="w-full p-3 rounded-xl border border-rose-200 text-xs bg-rose-50/40 outline-none text-gray-800 font-bold">
                         </div>
                     </div>
@@ -168,25 +169,25 @@
 
                     <div class="bg-rose-50/60 p-4 rounded-2xl space-y-2 text-xs">
                         <div class="flex justify-between text-gray-600">
-                            <span>Duration:</span>
-                            <span class="font-bold text-gray-800" x-text="totalDays + ' Days'"></span>
+                            <span>Durasi Sewa:</span>
+                            <span class="font-bold text-gray-800" x-text="totalDays + ' Hari'"></span>
                         </div>
                         <div class="flex justify-between text-gray-600">
-                            <span>Rental Subtotal (<span x-text="totalDays"></span> x {{ $dress->formatted_price }}):</span>
+                            <span>Subtotal Sewa (<span x-text="totalDays"></span> x {{ $dress->formatted_price }}):</span>
                             <span class="font-bold text-gray-800" x-text="formatRupiah(rentalSubtotal)"></span>
                         </div>
                         <div class="flex justify-between text-gray-600">
-                            <span>Security Deposit (Refundable):</span>
+                            <span>Deposit Jaminan (Kembali 100%):</span>
                             <span class="font-bold text-amber-800" x-text="formatRupiah(depositFee)"></span>
                         </div>
                         <div class="border-t border-rose-200 pt-2 flex justify-between text-sm font-bold text-rose-700">
-                            <span>Estimated Total Amount:</span>
+                            <span>Total Estimasi Biaya:</span>
                             <span x-text="formatRupiah(grandTotal)"></span>
                         </div>
                     </div>
 
                     <button type="submit" :disabled="!available" class="w-full btn-igari-primary py-4 rounded-full font-bold text-xs uppercase tracking-wider shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
-                        Proceed to Reservation
+                        Lanjut ke Formulir Reservasi
                     </button>
                 </form>
             </div>
@@ -198,18 +199,18 @@
     <!-- REVIEWS SECTION -->
     <div class="bg-white p-8 rounded-3xl border border-rose-100 shadow-xs space-y-6">
         <div class="flex items-center justify-between border-b border-rose-50 pb-4">
-            <h3 class="font-serif-editorial font-bold text-gray-900 text-2xl">Client Reviews ({{ $dress->reviews->count() }})</h3>
+            <h3 class="font-serif-editorial font-bold text-gray-900 text-2xl">Ulasan Penyewa ({{ $dress->reviews->count() }})</h3>
             <div class="flex items-center gap-1 text-amber-500 font-bold text-sm">
                 @if($dress->reviews->count() > 0)
-                    <span>★ {{ number_format($dress->rating, 1) }} out of 5.0</span>
+                    <span>★ {{ number_format($dress->rating, 1) }} dari 5.0</span>
                 @else
-                    <span class="text-gray-400 font-medium">★ 0.0 out of 5.0 (Belum ada ulasan)</span>
+                    <span class="text-gray-400 font-medium">★ 0.0 dari 5.0 (Belum ada ulasan)</span>
                 @endif
             </div>
         </div>
 
         @if($dress->reviews->isEmpty())
-            <p class="text-xs text-gray-500 italic">No reviews recorded yet for this piece.</p>
+            <p class="text-xs text-gray-500 italic">Belum ada ulasan untuk gaun ini. Jadilah yang pertama menyewa dan mengulas!</p>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @foreach($dress->reviews as $rev)
@@ -245,7 +246,7 @@ function dressCalculator(dailyPrice, deposit) {
         rentalSubtotal: parseFloat(dailyPrice) * 3,
         grandTotal: (parseFloat(dailyPrice) * 3) + parseFloat(deposit),
         available: true,
-        availabilityMessage: 'This gown is available for your selected dates.',
+        availabilityMessage: 'Gaun ini tersedia untuk periode sewa yang kamu pilih.',
 
         init() {
             this.calculateTotal();
@@ -258,7 +259,7 @@ function dressCalculator(dailyPrice, deposit) {
             
             if (end < start) {
                 this.available = false;
-                this.availabilityMessage = 'Return date cannot precede start date.';
+                this.availabilityMessage = 'Tanggal pengembalian tidak boleh sebelum tanggal mulai sewa.';
                 return;
             }
 

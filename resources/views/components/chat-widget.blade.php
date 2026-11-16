@@ -1,6 +1,6 @@
 <!-- Floating Live Chat & WhatsApp Widget -->
 <div x-data="{ openChat: false, activeTab: 'faq', chatInput: '', messages: [
-    { sender: 'stylist', text: 'Bonjour darling! Welcome to Chérie Atelier Concierge 🎀 How may we assist your gown fitting today?' }
+    { sender: 'stylist', text: 'Halo! Selamat datang di Layanan Concierge Chérie Atelier. Ada yang bisa kami bantu terkait gaun pilihanmu hari ini?' }
 ] }" x-cloak class="fixed bottom-6 right-6 z-50">
 
     <!-- Floating Chat Button -->
@@ -17,7 +17,7 @@
         <svg class="w-6 h-6 text-white transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
         </svg>
-        <span class="text-xs font-bold uppercase tracking-wider pr-1 hidden sm:inline-block">Stylist Chat</span>
+        <span class="text-xs font-bold uppercase tracking-wider pr-1 hidden sm:inline-block">Konsultasi Stylist</span>
     </button>
 
     <!-- Chat Modal Window -->
@@ -40,7 +40,7 @@
                 </div>
                 <div>
                     <h3 class="font-serif-editorial font-bold text-sm text-rose-100">Chérie Atelier Concierge</h3>
-                    <span class="text-[10px] text-rose-200/80 font-medium">Online &bull; Fitting & Size Stylist</span>
+                    <span class="text-[10px] text-rose-200/80 font-medium">Online &bull; Konsultan Gaun &amp; Ukuran</span>
                 </div>
             </div>
             <button @click="openChat = false" class="text-rose-200 hover:text-white font-bold text-lg p-1">&times;</button>
@@ -49,7 +49,7 @@
         <!-- Navigation Tabs inside Chat -->
         <div class="flex border-b border-rose-100 bg-rose-50/50 text-[11px] font-bold uppercase tracking-wider">
             <button @click="activeTab = 'faq'" :class="activeTab === 'faq' ? 'border-b-2 border-rose-600 text-rose-800 bg-white' : 'text-gray-500 hover:text-gray-800'" class="flex-1 py-2.5 text-center transition">
-                Fitting Assistant
+                Asisten Ukuran
             </button>
             <button @click="activeTab = 'wa'" :class="activeTab === 'wa' ? 'border-b-2 border-rose-600 text-rose-800 bg-white' : 'text-gray-500 hover:text-gray-800'" class="flex-1 py-2.5 text-center transition">
                 WhatsApp CS
@@ -71,20 +71,20 @@
             <div class="pt-2 space-y-1.5">
                 <span class="text-[10px] text-gray-400 font-bold uppercase block tracking-wider">Pertanyaan Cepat:</span>
                 
-                <button @click="messages.push({sender:'user', text:'Bagaimana cara memilih ukuran gaun yang pas?'}); setTimeout(() => messages.push({sender:'stylist', text:'Kamu bisa mengecek panduan lingkar dada & pinggang di tombol Panduan Fitting, atau kirimkan ukurannmu ke tim kami!'}), 400)" 
-                        class="w-full text-left p-2 rounded-xl bg-white border border-rose-200 text-rose-900 text-[11px] font-medium hover:bg-rose-50 transition shadow-2xs flex items-center justify-between">
-                    <span>👗 Cara menentukan ukuran gaun?</span>
+                <button @click="messages.push({sender:'user', text:'Bagaimana cara menentukan ukuran gaun yang tepat?'}); setTimeout(() => messages.push({sender:'stylist', text:'Kamu bisa mengecek panduan lingkar dada & pinggang di tombol Panduan Fitting, atau kirimkan ukurannmu ke tim kami!'}), 400)" 
+                        class="w-full text-left p-2.5 rounded-xl bg-white border border-rose-200 text-rose-900 text-[11px] font-medium hover:bg-rose-50 transition shadow-2xs flex items-center justify-between">
+                    <span>Cara menentukan ukuran gaun?</span>
                     <span class="text-rose-400">&rarr;</span>
                 </button>
 
                 <button @click="messages.push({sender:'user', text:'Berapa lama jaminan deposit dikembalikan?'}); setTimeout(() => messages.push({sender:'stylist', text:'100% uang deposit langsung ditransfer balik dalam 24 jam setelah gaun selesai diinspeksi!'}), 400)" 
-                        class="w-full text-left p-2 rounded-xl bg-white border border-rose-200 text-rose-900 text-[11px] font-medium hover:bg-rose-50 transition shadow-2xs flex items-center justify-between">
-                    <span>💰 Jaminan & Refund Deposit?</span>
+                        class="w-full text-left p-2.5 rounded-xl bg-white border border-rose-200 text-rose-900 text-[11px] font-medium hover:bg-rose-50 transition shadow-2xs flex items-center justify-between">
+                    <span>Jaminan &amp; Pengembalian Deposit?</span>
                     <span class="text-rose-400">&rarr;</span>
                 </button>
 
-                <button @click="$dispatch('open-fitting-guide')" class="w-full text-left p-2 rounded-xl bg-rose-100/80 border border-rose-300 text-rose-900 text-[11px] font-bold hover:bg-rose-200 transition flex items-center justify-between">
-                    <span>📏 Buka Tabel Panduan Fitting Lengkap</span>
+                <button @click="$dispatch('open-fitting-guide')" class="w-full text-left p-2.5 rounded-xl bg-rose-100/80 border border-rose-300 text-rose-900 text-[11px] font-bold hover:bg-rose-200 transition flex items-center justify-between">
+                    <span>Buka Panduan Ukuran Gaun Lengkap</span>
                     <span class="text-rose-700">&rarr;</span>
                 </button>
             </div>
@@ -92,8 +92,10 @@
 
         <!-- Tab 2: WhatsApp Direct Link -->
         <div x-show="activeTab === 'wa'" class="flex-1 p-6 flex flex-col items-center justify-center text-center space-y-4 bg-white">
-            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl shadow-inner border border-emerald-200">
-                💬
+            <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200 shadow-xs">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
             </div>
             <div>
                 <h4 class="font-serif-editorial font-bold text-gray-900 text-base">Konsultasi WhatsApp Direct</h4>
@@ -105,6 +107,9 @@
                 <span>Hubungi via WhatsApp (+62 895-4016-43905)</span>
             </a>
         </div>
+
+    </div>
+</div>
 
     </div>
 </div>

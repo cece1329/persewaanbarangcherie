@@ -214,10 +214,10 @@
     <!-- On-screen Action Toolbar -->
     <div class="no-print">
         <button onclick="window.print()" class="btn btn-primary">
-            🖨️ Cetak Struk / Resi Thermal
+            Cetak Struk / Resi Thermal
         </button>
         <a href="{{ route('rental.invoice', $rental->rental_code) }}" class="btn btn-secondary">
-            📄 Lihat Nota PDF (A4)
+            Lihat Nota PDF (A4)
         </a>
         <div style="display: flex; align-items: center; gap: 6px;">
             <span class="toggle-label">Ukuran:</span>
@@ -233,8 +233,8 @@
         <div class="text-center">
             <div class="brand-title">CHÉRIERENT ATELIER</div>
             <div class="brand-subtitle">HAUTE COUTURE & VINTAGE GOWN</div>
-            <div style="font-size: 9.5px; margin-top: 2px;">Jl. Senopati No. 42, Kebayoran Baru, Jakarta</div>
-            <div style="font-size: 9px; color: #555;">WhatsApp: 0812-9988-7766 | IG: @cherierent</div>
+            <div style="font-size: 9.5px; margin-top: 2px;">Jl. Senopati No. 42, RT.04/RW.02, Selong, Kebayoran Baru, Jakarta Selatan 12110</div>
+            <div style="font-size: 9px; color: #555;">WhatsApp: +62 895-4016-43905 | IG: @cherierent</div>
         </div>
 
         <div class="dashed-line"></div>
@@ -260,7 +260,7 @@
         </div>
         <div class="row-kv">
             <span class="k">Metode Kirim:</span>
-            <span class="v font-bold uppercase">{{ $rental->shipping_method === 'delivery' ? 'Express Courier' : 'Atelier Self Pickup' }}</span>
+            <span class="v font-bold uppercase">{{ $rental->shipping_method === 'delivery' ? 'Kurir Ekspedisi' : 'Ambil Sendiri di Atelier' }}</span>
         </div>
         <div class="row-kv">
             <span class="k">Pembayaran:</span>
@@ -275,7 +275,7 @@
 
         <!-- Shipping Label Section (Untuk Tempelan Paket Kurir) -->
         <div class="section-box">
-            <div class="section-title">📍 TUJUAN PENGIRIMAN (PENERIMA):</div>
+            <div class="section-title">TUJUAN PENGIRIMAN (PENERIMA):</div>
             <div style="font-size: 12px; font-weight: bold; margin-bottom: 2px;">
                 {{ $rental->user->name }}
             </div>
@@ -295,7 +295,7 @@
         <div class="dashed-line"></div>
 
         <!-- Item Detail -->
-        <div class="section-title">👗 GAUN YANG DISEWA:</div>
+        <div class="section-title">GAUN YANG DISEWA:</div>
         <div style="margin: 4px 0;">
             <div class="font-bold" style="font-size: 12px;">{{ $rental->dress->name }}</div>
             <div style="font-size: 10.5px; color: #333;">

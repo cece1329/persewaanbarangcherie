@@ -72,9 +72,9 @@ class CatalogController extends Controller
     {
         if (! Auth::check()) {
             if (request()->header('X-Requested-With') === 'XMLHttpRequest') {
-                return response()->json(['success' => false, 'redirect' => route('login'), 'message' => 'Please sign in to add pieces to your wishlist.']);
+                return response()->json(['success' => false, 'redirect' => route('login'), 'message' => 'Silakan masuk terlebih dahulu untuk menyimpan gaun ke daftar impian.']);
             }
-            return redirect()->route('login')->with('info', 'Please sign in to add pieces to your wishlist.');
+            return redirect()->route('login')->with('info', 'Silakan masuk terlebih dahulu untuk menyimpan gaun ke daftar impian.');
         }
 
         $userId = Auth::id();
@@ -82,11 +82,11 @@ class CatalogController extends Controller
 
         if ($wishlist) {
             $wishlist->delete();
-            $message = 'Removed from your wishlist.';
+            $message = 'Dihapus dari gaun impian.';
             $added = false;
         } else {
             Wishlist::create(['user_id' => $userId, 'dress_id' => $id]);
-            $message = 'Saved to your wishlist.';
+            $message = 'Berhasil disimpan ke gaun impian.';
             $added = true;
         }
 
@@ -103,10 +103,12 @@ class CatalogController extends Controller
         $endDate = $request->input('end_date');
 
         if (! $startDate || ! $endDate) {
-            return response()->json(['available' => false, 'message' => 'Please select rental start and end dates.']);
+            return response()->json(['available' => false, 'message' => 'Silakan pilih tanggal mulai dan selesai sewa.']);
         }
 
-        $overlap = Rental::where('dress_id', $id)
+        $dress = Dress::findOrFail($id);
+
+        $activeRentalsCount = Rental::where('dress_id', $id)
             ->whereIn('status', ['paid', 'shipping', 'in_use'])
             ->where(function ($q) use ($startDate, $endDate) {
                 $q->whereBetween('start_date', [$startDate, $endDate])
@@ -116,13 +118,15 @@ class CatalogController extends Controller
                             ->where('end_date', '>=', $endDate);
                     });
             })
-            ->exists();
+            ->count();
+
+        $isAvailable = $activeRentalsCount < max(1, $dress->stock);
 
         return response()->json([
-            'available' => ! $overlap,
-            'message' => $overlap
-                ? 'This gown is reserved for the selected dates. Please choose another date range.'
-                : 'This piece is available for your selected rental period.',
+            'available' => $isAvailable,
+            'message' => ! $isAvailable
+                ? 'Gaun ini sudah dipesan penuh untuk rentang tanggal tersebut. Silakan pilih tanggal sewa lainnya.'
+                : 'Gaun tersedia untuk periode sewa yang kamu pilih.',
         ]);
     }
 }

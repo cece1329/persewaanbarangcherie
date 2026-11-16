@@ -34,10 +34,9 @@
     <!-- Top Announcement Bar -->
     <div
         class="bg-gradient-to-r from-rose-600 via-pink-500 to-rose-700 text-white text-xs font-medium py-2.5 px-4 text-center tracking-wide">
-        <span class="opacity-90">Complimentary deposit return &amp; garment care bag included with every
-            reservation.</span>
+        <span class="opacity-90">Jaminan pengembalian deposit aman &amp; tas pelindung gaun gratis untuk setiap reservasi.</span>
         <a href="{{ route('catalog.index') }}"
-            class="underline ml-2 hover:text-pink-100 transition font-semibold">Explore Archive &rarr;</a>
+            class="underline ml-2 hover:text-pink-100 transition font-semibold">Jelajahi Koleksi &rarr;</a>
     </div>
 
     <!-- Main Navigation Header -->
@@ -58,14 +57,14 @@
 
             <nav class="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-gray-700">
                 <a href="{{ route('home') }}"
-                    class="hover:text-rose-600 transition {{ request()->routeIs('home') ? 'text-rose-600 font-bold' : '' }}">Home</a>
+                    class="hover:text-rose-600 transition {{ request()->routeIs('home') ? 'text-rose-600 font-bold' : '' }}">Beranda</a>
                 <a href="{{ route('catalog.index') }}"
-                    class="hover:text-rose-600 transition {{ request()->routeIs('catalog.*') ? 'text-rose-600 font-bold' : '' }}">Gown
-                    Archive</a>
+                    class="hover:text-rose-600 transition {{ request()->routeIs('catalog.*') ? 'text-rose-600 font-bold' : '' }}">Koleksi
+                    Gaun</a>
                 <a href="{{ route('home') }}#how-it-works"
-                    class="hover:text-rose-600 transition">Atelier Guide</a>
+                    class="hover:text-rose-600 transition">Panduan Sewa</a>
                 <a href="{{ route('home') }}#quiz-section"
-                    class="hover:text-rose-600 transition">Style Matcher</a>
+                    class="hover:text-rose-600 transition">Kuis Gaya</a>
             </nav>
 
             <!-- Right Buttons / Auth -->
@@ -73,7 +72,7 @@
                 @auth
                     <!-- Wishlist Icon -->
                     <a href="{{ route('user.wishlists') }}" class="p-2 text-rose-600 hover:text-rose-800 transition"
-                        title="Wishlist">
+                        title="Gaun Impian">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -102,21 +101,21 @@
                             @if(Auth::user()->isAdmin())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="flex items-center gap-2 px-4 py-2 text-rose-700 font-bold bg-rose-50 hover:bg-rose-100 transition">
-                                    <span>Atelier Dashboard</span>
+                                    <span>Dashboard Admin</span>
                                 </a>
                             @endif
 
                             <a href="{{ route('dashboard') }}"
                                 class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition">
-                                <span>Client Portal</span>
+                                <span>Portal Pelanggan</span>
                             </a>
                             <a href="{{ route('user.rentals') }}"
                                 class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition">
-                                <span>Reservations History</span>
+                                <span>Riwayat Reservasi</span>
                             </a>
                             <a href="{{ route('user.wishlists') }}"
                                 class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition">
-                                <span>Saved Wishlist</span>
+                                <span>Gaun Impian (Wishlist)</span>
                             </a>
 
                             <div class="border-t border-rose-50 my-1"></div>
@@ -125,16 +124,16 @@
                                 @csrf
                                 <button type="submit"
                                     class="w-full text-left px-4 py-2 text-rose-700 hover:bg-rose-50 font-medium transition">
-                                    Sign Out
+                                    Keluar
                                 </button>
                             </form>
                         </div>
                     </div>
                 @else
                     <a href="{{ route('login') }}"
-                        class="text-xs font-semibold text-rose-600 hover:text-rose-700 px-3 py-2">Sign In</a>
+                        class="text-xs font-semibold text-rose-600 hover:text-rose-700 px-3 py-2">Masuk</a>
                     <a href="{{ route('register') }}"
-                        class="btn-igari-primary text-xs px-5 py-2.5 rounded-full uppercase tracking-wider">Register</a>
+                        class="btn-igari-primary text-xs px-5 py-2.5 rounded-full uppercase tracking-wider">Daftar</a>
                 @endauth
             </div>
 
@@ -150,36 +149,36 @@
         <div x-show="mobileMenuOpen" x-transition
             class="md:hidden bg-white border-b border-rose-100 px-4 py-4 space-y-3">
             <a href="{{ route('home') }}" @click="mobileMenuOpen = false"
-                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('home') ? 'text-rose-600 font-bold' : '' }}">Home</a>
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('home') ? 'text-rose-600 font-bold' : '' }}">Beranda</a>
             <a href="{{ route('catalog.index') }}" @click="mobileMenuOpen = false"
-                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('catalog.*') ? 'text-rose-600 font-bold' : '' }}">Gown
-                Archive</a>
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider {{ request()->routeIs('catalog.*') ? 'text-rose-600 font-bold' : '' }}">Koleksi
+                Gaun</a>
             <a href="{{ route('home') }}#how-it-works" @click="mobileMenuOpen = false"
-                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Atelier Guide</a>
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Panduan Sewa</a>
             <a href="{{ route('home') }}#quiz-section" @click="mobileMenuOpen = false"
-                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Style Matcher</a>
+                class="block text-gray-700 hover:text-rose-600 font-medium text-xs uppercase tracking-wider">Kuis Gaya</a>
 
             @auth
                 <div class="pt-3 border-t border-rose-100">
                     <p class="font-bold text-gray-900 text-xs">{{ Auth::user()->name }}</p>
-                    <a href="{{ route('dashboard') }}" class="block text-xs text-rose-600 mt-2">Client Portal</a>
-                    <a href="{{ route('user.rentals') }}" class="block text-xs text-rose-600 mt-1">Reservations</a>
-                    <a href="{{ route('user.wishlists') }}" class="block text-xs text-rose-600 mt-1">Saved Wishlist</a>
+                    <a href="{{ route('dashboard') }}" class="block text-xs text-rose-600 mt-2">Portal Pelanggan</a>
+                    <a href="{{ route('user.rentals') }}" class="block text-xs text-rose-600 mt-1">Riwayat Reservasi</a>
+                    <a href="{{ route('user.wishlists') }}" class="block text-xs text-rose-600 mt-1">Gaun Impian (Wishlist)</a>
                     @if(Auth::user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="block text-xs text-purple-700 font-bold mt-1">Atelier
-                            Dashboard</a>
+                        <a href="{{ route('admin.dashboard') }}" class="block text-xs text-purple-700 font-bold mt-1">Dashboard
+                            Admin</a>
                     @endif
                     <form action="{{ route('logout') }}" method="POST" class="mt-3">
                         @csrf
-                        <button type="submit" class="text-xs text-rose-600 font-bold">Sign Out</button>
+                        <button type="submit" class="text-xs text-rose-600 font-bold">Keluar</button>
                     </form>
                 </div>
             @else
                 <div class="pt-3 border-t border-rose-100 flex gap-2">
                     <a href="{{ route('login') }}"
-                        class="btn-igari-secondary text-xs px-4 py-2 rounded-full w-1/2 text-center">Sign In</a>
+                        class="btn-igari-secondary text-xs px-4 py-2 rounded-full w-1/2 text-center">Masuk</a>
                     <a href="{{ route('register') }}"
-                        class="btn-igari-primary text-xs px-4 py-2 rounded-full w-1/2 text-center">Register</a>
+                        class="btn-igari-primary text-xs px-4 py-2 rounded-full w-1/2 text-center">Daftar</a>
                 </div>
             @endauth
         </div>
@@ -252,14 +251,13 @@
                     <span class="font-serif-editorial text-2xl font-bold text-gray-900 tracking-tight">ChérieRent</span>
                 </div>
                 <p class="text-xs text-gray-600 leading-relaxed">
-                    A luxury garment archive offering fine vintage, coquette, and haute couture gown rentals for
-                    portraits, galas, and milestone celebrations.
+                    Atelier persewaan gaun mewah, vintage coquette, dan haute couture pilihan untuk pemotretan, wisuda, gala dinner, dan perayaan momen berharga Anda.
                 </p>
             </div>
 
             <!-- Collections -->
             <div>
-                <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Collections</h4>
+                <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Koleksi Gaun</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="{{ route('catalog.index', ['category' => 'victorian']) }}"
                             class="hover:text-rose-600 transition">Victorian Couture</a></li>
@@ -274,37 +272,50 @@
                     <li><a href="{{ route('catalog.index', ['category' => 'modern']) }}"
                             class="hover:text-rose-600 transition">Modern Chic</a></li>
                     <li><a href="{{ route('catalog.index', ['category' => 'elegant']) }}"
-                            class="hover:text-rose-600 transition">Elegant Evening</a></li>
+                            class="hover:text-rose-600 transition">Gaun Pesta Elegan</a></li>
                 </ul>
             </div>
 
             <!-- Atelier Services -->
             <div>
-                <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Atelier Services</h4>
+                <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Layanan Atelier</h4>
                 <ul class="space-y-2 text-xs" x-data>
-                    <li><a href="{{ route('home') }}#how-it-works" class="hover:text-rose-600 transition">Reservation
-                            Process</a></li>
+                    <li><a href="{{ route('home') }}#how-it-works" class="hover:text-rose-600 transition">Alur &amp; Prosedur Reservasi</a></li>
                     <li><button @click="$dispatch('open-fitting-guide')"
-                            class="hover:text-rose-600 transition text-left">Security Deposit Policy</button></li>
+                            class="hover:text-rose-600 transition text-left">Garansi Uang Deposit (100% Kembali)</button></li>
                     <li><button @click="$dispatch('open-fitting-guide')"
-                            class="hover:text-rose-600 transition text-left">Size Guide & Fitting Chart</button></li>
+                            class="hover:text-rose-600 transition text-left">Panduan Ukuran &amp; Fitting Chart</button></li>
                     <li><button @click="$dispatch('open-fitting-guide')"
-                            class="hover:text-rose-600 transition text-left">Garment Care & Dry Cleaning</button></li>
+                            class="hover:text-rose-600 transition text-left">Perawatan &amp; Dry Cleaning Higienis</button></li>
                 </ul>
             </div>
 
             <!-- Contact & Store -->
             <div>
-                <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Chérie Atelier</h4>
-                <p class="text-xs text-gray-600 mb-1">Jl. Flower Ribbon No. 12, Jakarta Selatan</p>
-                <p class="text-xs text-gray-600 mb-1">Concierge: +62 895-4016-43905</p>
-                <p class="text-xs text-gray-600">Hours: 09:00 &ndash; 18:00 WIB</p>
+                <h4 class="font-serif-editorial font-bold text-gray-900 mb-4 text-lg">Lokasi Atelier</h4>
+                <p class="text-xs text-gray-800 font-semibold mb-1">ChérieRent Atelier Studio</p>
+                <p class="text-xs text-gray-600 mb-1 leading-relaxed">
+                    Jl. Senopati No. 42, RT.04/RW.02, Selong, Kebayoran Baru, Kota Jakarta Selatan, DKI Jakarta 12110
+                </p>
+                <p class="text-[11px] text-rose-700 font-medium mb-1.5">
+                    (Lantai 2 Atelier Studio, Seberang Senopati Arcade)
+                </p>
+                <p class="text-xs text-gray-600 mb-1">
+                    <span class="font-semibold text-gray-700">WhatsApp / Telepon:</span>
+                    <a href="https://wa.me/62895401643905" target="_blank" class="text-rose-700 font-bold hover:underline">+62 895-4016-43905</a>
+                </p>
+                <p class="text-xs text-gray-600 mb-1">
+                    <span class="font-semibold text-gray-700">Jam Operasional:</span> Senin &ndash; Minggu: 09.00 &ndash; 18.00 WIB
+                </p>
+                <p class="text-xs text-gray-600">
+                    <span class="font-semibold text-gray-700">Email:</span> rentcherie@gmail.com
+                </p>
             </div>
         </div>
 
         <div
             class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-rose-200/80 mt-12 pt-6 text-center text-xs text-gray-500">
-            &copy; {{ date('Y') }} ChérieRent Atelier. All rights reserved.
+            &copy; {{ date('Y') }} ChérieRent Atelier. Hak cipta dilindungi undang-undang.
         </div>
     </footer>
 

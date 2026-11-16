@@ -4,15 +4,15 @@
 <div class="py-6 sm:py-10 px-3 sm:px-4 max-w-7xl mx-auto space-y-6 sm:space-y-8">
 
     <div class="border-b border-rose-200 pb-4">
-        <span class="igari-pill">Saved Pieces</span>
-        <h1 class="font-serif-editorial text-2xl sm:text-3xl font-bold text-gray-900 mt-1">My Saved Wishlist</h1>
+        <span class="igari-pill">Koleksi Favorit</span>
+        <h1 class="font-serif-editorial text-2xl sm:text-3xl font-bold text-gray-900 mt-1">Gaun Impian Saya</h1>
     </div>
 
     @if($wishlists->isEmpty())
         <div class="bg-white p-12 rounded-3xl border border-rose-100 text-center space-y-4">
-            <h3 class="font-serif-editorial font-bold text-xl text-gray-800">Your Wishlist is Empty</h3>
-            <p class="text-xs text-gray-500 max-w-sm mx-auto">Explore our gown archive and save your favorite silhouettes for future reservations.</p>
-            <a href="{{ route('catalog.index') }}" class="inline-block btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold">Explore Gown Archive</a>
+            <h3 class="font-serif-editorial font-bold text-xl text-gray-800">Daftar Gaun Impian Masih Kosong</h3>
+            <p class="text-xs text-gray-500 max-w-sm mx-auto">Jelajahi koleksi gaun atelier dan simpan gaun favoritmu untuk rencana sewa mendatang.</p>
+            <a href="{{ route('catalog.index') }}" class="inline-block btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold">Jelajahi Koleksi Gaun</a>
         </div>
     @else
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
@@ -22,7 +22,7 @@
                     
                     <form action="{{ route('catalog.wishlist', $item->dress->id) }}" method="POST" class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10">
                         @csrf
-                        <button type="submit" class="w-7 h-7 sm:w-8 sm:h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition" title="Remove Wishlist">
+                        <button type="submit" class="w-7 h-7 sm:w-8 sm:h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-rose-600 shadow-xs hover:scale-110 transition" title="Hapus dari Gaun Impian">
                             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
@@ -44,7 +44,7 @@
                         <div class="pt-2 border-t border-rose-50 flex items-center justify-between gap-1">
                             <span class="font-bold text-rose-700 text-xs sm:text-sm truncate">{{ $item->dress->formatted_price }}</span>
                             <a href="{{ route('catalog.show', $item->dress->slug) }}" class="btn-igari-primary text-[9px] sm:text-[10px] px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full font-bold whitespace-nowrap">
-                                Reserve
+                                Sewa Gaun
                             </a>
                         </div>
                     </div>

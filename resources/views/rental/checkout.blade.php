@@ -30,17 +30,17 @@
 
                 <div class="grid grid-cols-2 gap-3 text-xs bg-white p-4 rounded-2xl border border-rose-100">
                     <div>
-                        <span class="text-gray-400 block uppercase font-bold text-[10px]">Start Date:</span>
+                        <span class="text-gray-400 block uppercase font-bold text-[10px]">Tanggal Mulai Sewa:</span>
                         <input type="date" name="start_date" value="{{ $startDate }}" readonly class="font-bold text-gray-800 bg-transparent outline-none mt-1">
                     </div>
                     <div>
-                        <span class="text-gray-400 block uppercase font-bold text-[10px]">Return Date:</span>
+                        <span class="text-gray-400 block uppercase font-bold text-[10px]">Tanggal Pengembalian:</span>
                         <input type="date" name="end_date" value="{{ $endDate }}" readonly class="font-bold text-gray-800 bg-transparent outline-none mt-1">
                     </div>
                 </div>
 
                 <div class="p-3 bg-white/80 rounded-xl border border-rose-100 flex items-start gap-2.5 text-[11px] text-gray-600">
-                    <span class="text-rose-500 font-bold text-sm">🚚</span>
+                    <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <div>
                         <strong class="text-rose-900 font-semibold block">Estimasi Jadwal Pengiriman Atelier:</strong>
                         Gaun akan disiapkan dan dikirim H-2 / H-1 sebelum tanggal mulai sewa ({{ \Carbon\Carbon::parse($startDate)->format('d M Y') }}) agar tiba tepat waktu sebelum acaramu dimulai.
@@ -50,30 +50,46 @@
 
             <div x-data="{ method: 'delivery' }" class="bg-white p-6 rounded-3xl border border-rose-100 shadow-xs space-y-4">
                 <h3 class="font-serif-editorial font-bold text-gray-900 text-lg">
-                    Fulfillment Method
+                    Metode Pengambilan &amp; Pengiriman
                 </h3>
 
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label class="p-4 rounded-2xl border cursor-pointer transition flex items-center gap-3" :class="method === 'delivery' ? 'bg-rose-50 border-rose-600 font-bold text-rose-900' : 'border-rose-200 text-gray-600'">
                         <input type="radio" name="shipping_method" value="delivery" x-model="method" class="text-rose-600">
                         <div>
-                            <span class="block text-xs">Direct Express Delivery</span>
-                            <span class="text-[10px] text-gray-400 font-normal">Courier Delivery to Your Address</span>
+                            <span class="block text-xs">Pengiriman Kurir Ekspedisi</span>
+                            <span class="text-[10px] text-gray-400 font-normal">Dikirim langsung ke alamat rumah Anda</span>
                         </div>
                     </label>
 
                     <label class="p-4 rounded-2xl border cursor-pointer transition flex items-center gap-3" :class="method === 'pickup' ? 'bg-rose-50 border-rose-600 font-bold text-rose-900' : 'border-rose-200 text-gray-600'">
                         <input type="radio" name="shipping_method" value="pickup" x-model="method" class="text-rose-600">
                         <div>
-                            <span class="block text-xs">Atelier Self Pickup</span>
-                            <span class="text-[10px] text-gray-400 font-normal">Chérie Atelier Jakarta Boutique</span>
+                            <span class="block text-xs">Ambil Sendiri di Atelier</span>
+                            <span class="text-[10px] text-gray-400 font-normal">ChérieRent Atelier Jakarta Selatan</span>
                         </div>
                     </label>
                 </div>
 
                 <div x-show="method === 'delivery'" x-transition class="space-y-2">
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Delivery Address</label>
-                    <textarea name="shipping_address" rows="3" required placeholder="Street Name, Building/Suite, City, Postal Code" class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none focus:border-rose-500">{{ old('shipping_address', $user->address) }}</textarea>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Alamat Pengiriman Lengkap</label>
+                    <textarea name="shipping_address" rows="3" required placeholder="Nama Jalan, Nomor Rumah, RT/RW, Kelurahan/Kecamatan, Kota, Kode Pos" class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none focus:border-rose-500">{{ old('shipping_address', $user->address) }}</textarea>
+                </div>
+
+                <div x-show="method === 'pickup'" x-transition class="p-4 bg-rose-50/60 rounded-2xl border border-rose-200 text-xs space-y-1.5">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-rose-600"></span>
+                        <strong class="text-rose-900 font-bold">Lokasi Pengambilan Gaun:</strong>
+                    </div>
+                    <p class="text-gray-800 font-semibold">ChérieRent Atelier Studio</p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Jl. Senopati No. 42, RT.04/RW.02, Selong, Kebayoran Baru, Jakarta Selatan 12110<br>
+                        <span class="text-rose-700 font-medium">(Lantai 2 Atelier Studio, Seberang Senopati Arcade)</span>
+                    </p>
+                    <div class="pt-1 text-[11px] text-gray-500 flex flex-wrap gap-4">
+                        <span>Jam Buka: <strong>09.00 - 18.00 WIB (Setiap Hari)</strong></span>
+                        <span>Concierge: <strong>+62 895-4016-43905</strong></span>
+                    </div>
                 </div>
             </div>
 
@@ -124,13 +140,13 @@
                         @click="category = 'ewallet'; method = 'qris'" 
                         :class="category === 'ewallet' ? 'bg-white text-rose-700 shadow-xs font-bold border border-rose-200' : 'text-gray-600 hover:text-gray-900 font-semibold'"
                         class="py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
-                        <span>📱</span> E-Wallet & QRIS
+                        <span>E-Wallet &amp; QRIS</span>
                     </button>
                     <button type="button" 
                         @click="category = 'bank'; method = 'bca'" 
                         :class="category === 'bank' ? 'bg-white text-rose-700 shadow-xs font-bold border border-rose-200' : 'text-gray-600 hover:text-gray-900 font-semibold'"
                         class="py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
-                        <span>🏛️</span> Transfer Bank
+                        <span>Transfer Bank</span>
                     </button>
                 </div>
 
@@ -232,7 +248,7 @@
                                 <span class="text-[11px] text-gray-600 block mt-0.5">Atas Nama: <strong class="text-gray-900" x-text="bankAccounts[method] ? bankAccounts[method].holder : 'CHÉRIERENT ATELIER (DUMMY)'"></strong></span>
                             </div>
                             <button type="button" @click="copyAccountNumber()" class="btn-igari-secondary text-xs px-3.5 py-2 rounded-xl font-bold flex items-center justify-center gap-1.5 shadow-2xs self-start sm:self-center">
-                                <span x-show="!copied">📋 Salin Rekening</span>
+                                <span x-show="!copied">Salin Rekening</span>
                                 <span x-show="copied" x-cloak class="text-emerald-600 font-bold">✓ Tersalin!</span>
                             </button>
                         </div>
@@ -246,7 +262,8 @@
                 <div class="border-t border-rose-100 pt-4 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <label class="block text-xs font-bold text-gray-800 flex items-center gap-1.5">
-                            <span>🧾</span> Unggah Bukti Transfer / Pembayaran
+                            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            <span>Unggah Bukti Transfer / Pembayaran</span>
                         </label>
                         <span class="text-[10px] text-rose-600 font-semibold">Bisa upload sekarang / nanti</span>
                     </div>
@@ -257,9 +274,10 @@
                     <!-- Preview or Upload Button -->
                     <div x-show="!proofPreview" class="border-2 border-dashed border-rose-200 rounded-2xl p-4 text-center bg-rose-50/20 hover:bg-rose-50/40 transition cursor-pointer" @click="$refs.proofInput.click()">
                         <div class="flex items-center justify-center gap-2 text-rose-700 font-bold text-xs">
-                            <span>📁</span> Klik untuk Pilih Bukti Transfer (Gambar/Foto)
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                            <span>Klik untuk Pilih Bukti Transfer (Foto/Screenshot)</span>
                         </div>
-                        <span class="text-[10px] text-gray-400 block mt-1">Format: JPG, PNG, atau Screenshot (Max 5MB)</span>
+                        <span class="text-[10px] text-gray-400 block mt-1">Format: JPG, PNG, atau Screenshot (Maksimal 5MB)</span>
                     </div>
 
                     <div x-show="proofPreview" x-cloak class="flex items-center gap-3 bg-emerald-50/50 p-3 rounded-2xl border border-emerald-200">
@@ -281,7 +299,7 @@
                 <div class="flex items-center justify-between border-b border-rose-50 pb-3">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-lg">🪪</span>
+                            <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
                             <h3 class="font-serif-editorial font-bold text-gray-900 text-lg">Jaminan Identitas Penyewa</h3>
                         </div>
                         <p class="text-[11px] text-gray-500 mt-0.5">Jaminan identitas untuk penyewaan busana atelier. Unggah kartu identitas, kartu pelajar, atau foto diri.</p>
@@ -296,18 +314,20 @@
                 <!-- 1. Belum ada foto & kamera tidak aktif -->
                 <div x-show="!photoPreview && !cameraActive" class="space-y-3">
                     <div class="border-2 border-dashed border-rose-200 rounded-2xl p-6 text-center bg-rose-50/20">
-                        <div class="w-12 h-12 mx-auto bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-xl mb-2">
-                            📷
+                        <div class="w-12 h-12 mx-auto bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mb-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
                         <p class="text-xs font-bold text-gray-800">Unggah Foto / Buka Kamera</p>
                         <p class="text-[11px] text-gray-500 max-w-xs mx-auto mt-0.5">Pilih salah satu metode di bawah ini untuk melengkapi jaminan sewa.</p>
                         
                         <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 mt-4">
                             <button type="button" @click="startCamera()" class="w-full sm:w-auto btn-igari-primary text-xs px-4 py-2.5 rounded-full font-bold flex items-center justify-center gap-1.5 shadow-xs">
-                                <span>📸</span> Buka Kamera
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span>Buka Kamera</span>
                             </button>
                             <button type="button" @click="$refs.fileInput.click()" class="w-full sm:w-auto btn-igari-secondary text-xs px-4 py-2.5 rounded-full font-bold flex items-center justify-center gap-1.5">
-                                <span>🖼️</span> Pilih dari Galeri
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                <span>Pilih dari Galeri</span>
                             </button>
                         </div>
                     </div>
@@ -328,7 +348,7 @@
 
                     <div class="flex items-center justify-center gap-3">
                         <button type="button" @click="takeSnapshot()" class="btn-igari-primary text-xs px-6 py-2.5 rounded-full font-bold flex items-center gap-1.5 shadow-md">
-                            <span>⚪</span> Jepret Foto
+                            Ambil Foto
                         </button>
                         <button type="button" @click="stopCamera()" class="btn-igari-secondary text-xs px-4 py-2.5 rounded-full font-bold">
                             Batal
@@ -355,15 +375,15 @@
 
             <div class="bg-white p-6 rounded-3xl border border-rose-100 shadow-xs space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Special Handling Instructions (Optional)</label>
-                    <input type="text" name="notes" placeholder="Any specific notes for garment fitting or delivery timing..." class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none">
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Catatan Khusus Sewa (Opsional)</label>
+                    <input type="text" name="notes" placeholder="Catatan ukuran, patokan alamat kurir, atau instruksi khusus..." class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none">
                 </div>
 
                 <div class="pt-3 border-t border-rose-50">
                     <label class="flex items-start gap-3 cursor-pointer">
                         <input type="checkbox" name="agree_terms" required class="mt-0.5 rounded text-rose-600 focus:ring-rose-400">
                         <span class="text-xs text-gray-600 leading-relaxed">
-                            I accept the Atelier Rental Terms & Conditions (Maintaining garment condition, returning within agreed dates, and avoiding self-washing).
+                            Saya menyetujui Syarat &amp; Ketentuan Sewa Atelier (menjaga kondisi gaun, mengembalikan sesuai jadwal, dan tidak mencuci sendiri gaun).
                         </span>
                     </label>
                 </div>
@@ -374,42 +394,42 @@
         <div class="space-y-6">
             <div class="bg-white p-6 rounded-3xl border-2 border-rose-300 shadow-lg space-y-4 sticky top-28">
                 <h3 class="font-serif-editorial font-bold text-gray-900 text-xl border-b border-rose-100 pb-3">
-                    Summary Statement
+                    Ringkasan Pembayaran
                 </h3>
 
                 <div class="space-y-3 text-xs text-gray-600">
                     <div class="flex justify-between">
-                        <span>Garment Piece:</span>
+                        <span>Gaun Pilihan:</span>
                         <span class="font-semibold text-gray-800">{{ $dress->name }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Rental Duration:</span>
-                        <span class="font-bold text-gray-800">{{ $totalDays }} Days</span>
+                        <span>Durasi Sewa:</span>
+                        <span class="font-bold text-gray-800">{{ $totalDays }} Hari</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Rental Rate:</span>
+                        <span>Biaya Sewa:</span>
                         <span class="font-bold text-gray-800">Rp {{ number_format($rentalPrice, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Security Deposit:</span>
+                        <span>Deposit Jaminan:</span>
                         <span class="font-bold text-amber-800">Rp {{ number_format($depositFee, 0, ',', '.') }}</span>
                     </div>
 
                     <div class="border-t border-rose-200 pt-3 flex justify-between text-base font-bold text-rose-700">
-                        <span>Total Payable:</span>
+                        <span>Total Pembayaran:</span>
                         <span>Rp {{ number_format($totalPrice, 0, ',', '.') }}</span>
                     </div>
                 </div>
 
                 <div class="p-3.5 bg-rose-50 rounded-2xl text-[11px] text-rose-900 leading-relaxed border border-rose-200" x-data>
-                    <strong>Deposit Note:</strong> Uang deposit sebesar Rp {{ number_format($depositFee, 0, ',', '.') }} akan dikembalikan 100% setelah gaun diinspeksi. 
+                    <strong>Catatan Deposit:</strong> Uang deposit sebesar Rp {{ number_format($depositFee, 0, ',', '.') }} akan dikembalikan 100% setelah gaun diinspeksi. 
                     <button type="button" @click="$dispatch('open-fitting-guide')" class="font-bold underline text-rose-700 hover:text-rose-900 block mt-1">
-                        📏 Lihat Panduan Fitting &amp; Syarat Ketentuan Lengkap &rarr;
+                        Lihat Panduan Ukuran &amp; Ketentuan Lengkap &rarr;
                     </button>
                 </div>
 
                 <button type="submit" class="w-full btn-igari-primary py-4 rounded-full font-bold text-xs uppercase tracking-wider shadow-md text-center">
-                    Proceed to Payment &rarr;
+                    Lanjut ke Pembayaran &rarr;
                 </button>
             </div>
         </div>

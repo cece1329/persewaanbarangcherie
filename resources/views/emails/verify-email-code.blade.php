@@ -52,8 +52,8 @@
                 Jika kamu tidak merasa mendaftar di ChérieRent Atelier, abaikan email ini.
             </p>
             <p style="font-size: 10px; color: #a1a1aa; margin: 0;">
-                ChérieRent Atelier • Jl. Flower Ribbon No. 12, Jakarta Selatan<br>
-                Concierge: +62 895-4016-43905 • support@cherierent.com
+                ChérieRent Atelier • Jl. Senopati No. 42, Kebayoran Baru, Jakarta Selatan 12110<br>
+                Concierge: +62 895-4016-43905 • rentcherie@gmail.com
             </p>
         </div>
 
