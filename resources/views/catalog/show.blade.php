@@ -256,7 +256,7 @@ function dressCalculator(dailyPrice, deposit) {
             if(!this.startDate || !this.endDate) return;
             const start = new Date(this.startDate);
             const end = new Date(this.endDate);
-            
+
             if (end < start) {
                 this.available = false;
                 this.availabilityMessage = 'Tanggal pengembalian tidak boleh sebelum tanggal mulai sewa.';
@@ -266,6 +266,13 @@ function dressCalculator(dailyPrice, deposit) {
             const diffTime = Math.abs(end - start);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
             this.totalDays = Math.max(1, diffDays);
+
+            // Enforce 14-day maximum limit
+            if (this.totalDays > 14) {
+                this.available = false;
+                this.availabilityMessage = 'Maksimal sewa adalah 14 hari (2 minggu). Silakan pilih tanggal yang lebih pendek.';
+                return;
+            }
 
             this.rentalSubtotal = this.dailyPrice * this.totalDays;
             this.grandTotal = this.rentalSubtotal + this.depositFee;
