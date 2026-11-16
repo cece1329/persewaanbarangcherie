@@ -29,7 +29,7 @@ class RentalController extends Controller
         }
 
         // Limit rental to maximum 14 days (2 weeks)
-        $maxEndDate = $start->copy()->addDays(14);
+        $maxEndDate = $start->copy()->addDays(13);
         if ($end->gt($maxEndDate)) {
             $end = $maxEndDate;
             $endDate = $end->format('Y-m-d');
@@ -79,7 +79,7 @@ class RentalController extends Controller
         }
 
         // Limit rental to maximum 14 days (2 weeks)
-        $maxEndDate = $start->copy()->addDays(14);
+        $maxEndDate = $start->copy()->addDays(13);
         if ($end->gt($maxEndDate)) {
             return back()->withInput()->with('error', 'Maksimal sewa adalah 14 hari (2 minggu). Silakan pilih tanggal yang lebih pendek.');
         }
