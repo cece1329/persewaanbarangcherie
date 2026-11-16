@@ -39,6 +39,26 @@
                             <p class="text-xs text-gray-500">Jadwal Sewa: <strong>{{ $rental->start_date->format('d/m/Y') }}</strong> s/d <strong>{{ $rental->end_date->format('d/m/Y') }}</strong> ({{ $rental->total_days }} Hari)</p>
                             <p class="text-xs font-bold text-rose-700">Total Biaya: Rp {{ number_format($rental->total_price, 0, ',', '.') }}</p>
 
+                            @if($rental->status === 'shipping')
+                                <div class="mt-2 p-2.5 bg-blue-50 rounded-xl border border-blue-200 text-xs text-blue-950 flex items-start gap-2">
+                                    <svg class="w-4 h-4 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+                                    <div>
+                                        <strong class="text-blue-900 font-bold block">Gaun Sedang Dikirim (In Transit)</strong>
+                                        <span class="text-[11px] text-blue-700 block">Gaun sedang dalam perjalanan menuju lokasi Anda. Pantau status pengiriman untuk informasi lebih lanjut.</span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($rental->status === 'in_use')
+                                <div class="mt-2 p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-950 flex items-start gap-2">
+                                    <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <div>
+                                        <strong class="text-emerald-900 font-bold block">Gaun Sudah Sampai (Sedang Digunakan)</strong>
+                                        <span class="text-[11px] text-emerald-700 block">Gaun sudah Anda terima. Nikmati momen spesialmu! Jangan lupa kembalikan sebelum {{ $rental->end_date->format('d/m/Y') }}.</span>
+                                    </div>
+                                </div>
+                            @endif
+
                             @if($rental->status === 'returned')
                                 <div class="mt-2 p-2.5 bg-indigo-50 rounded-xl border border-indigo-200 text-xs text-indigo-950 flex items-start gap-2">
                                     <svg class="w-4 h-4 text-indigo-700 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -79,7 +99,7 @@
                                 </form>
                             @endif
 
-                            @if(in_array($rental->status, ['paid', 'shipping', 'in_use']))
+                            @if($rental->status === 'in_use')
                                 <button @click="returnRentalId = {{ $rental->id }}; returnRentalCode = '{{ $rental->rental_code }}'; returnModalOpen = true" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs px-3.5 py-1.5 rounded-full font-bold border border-indigo-200 transition flex items-center gap-1">
                                     <span>Kembalikan Gaun</span>
                                 </button>
