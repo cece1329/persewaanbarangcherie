@@ -44,7 +44,7 @@
         </p>
 
         <a href="{{ $verificationUrl }}" style="display: inline-block; background-color: #e05269; color: #ffffff; font-size: 13px; font-weight: bold; text-decoration: none; padding: 13px 32px; border-radius: 9999px; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(224, 82, 105, 0.25);">
-            Verifikasi Akun Saya &rarr;
+            Verifikasi Akun Saya
         </a>
 
         <div style="border-top: 1px solid #ffe4ec; margin-top: 32px; padding-top: 20px; text-align: center;">

@@ -38,18 +38,18 @@
         </div>
 
         <div class="body">
-            <p>Halo, <strong>{{ $contactMessage->name }}</strong> 🌸</p>
+            <p>Halo, <strong>{{ $contactMessage->name }}</strong></p>
 
             <p>Tim <strong>Atelier Concierge ChérieRent</strong> telah membalas pesan Anda mengenai <strong>"{{ $contactMessage->subject }}"</strong>.</p>
 
-            <div class="label">💌 Balasan dari Admin</div>
+            <div class="label">Balasan dari Admin</div>
             <div class="reply-box">
                 <p>{{ $contactMessage->admin_reply }}</p>
             </div>
 
             <div class="divider"></div>
 
-            <div class="label">📝 Pesan Asal Anda</div>
+            <div class="label">Pesan Asal Anda</div>
             <div class="original-msg">
                 <p>{{ $contactMessage->message }}</p>
             </div>
@@ -57,16 +57,16 @@
             <p>Jika masih ada pertanyaan lain, jangan ragu untuk menghubungi kami kembali atau langsung chat via WhatsApp:</p>
 
             <div style="text-align:center;">
-                <a href="https://wa.me/6289540164390" class="btn">💬 Chat WhatsApp</a>
+                <a href="https://wa.me/6289540164390" class="btn">Chat WhatsApp</a>
             </div>
 
             <div class="divider"></div>
 
-            <p style="font-size:13px; color:#9d174d;">Untuk membalas email ini, kirimkan pesan Anda ke <a href="mailto:rentcherie@gmail.com" style="color:#be185d;">rentcherie@gmail.com</a> 🌷</p>
+            <p style="font-size:13px; color:#9d174d;">Untuk membalas email ini, kirimkan pesan Anda ke <a href="mailto:rentcherie@gmail.com" style="color:#be185d;">rentcherie@gmail.com</a></p>
         </div>
 
         <div class="footer">
-            <p><strong>ChérieRent</strong> — Dress Like a Dream ✨</p>
+            <p><strong>ChérieRent</strong> — Dress Like a Dream</p>
             <p><a href="mailto:rentcherie@gmail.com">rentcherie@gmail.com</a> · <a href="https://wa.me/6289540164390">WhatsApp</a></p>
             <p style="margin-top:8px; color:#c4b5c0;">Dikirim: {{ $contactMessage->replied_at?->format('d M Y, H:i') }} WIB</p>
         </div>

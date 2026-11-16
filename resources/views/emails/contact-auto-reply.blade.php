@@ -35,7 +35,7 @@
         </div>
 
         <div class="body">
-            <p>Halo, <strong>{{ $contactMessage->name }}</strong> 🌸</p>
+            <p>Halo, <strong>{{ $contactMessage->name }}</strong></p>
 
             <p>Terima kasih sudah menghubungi <strong>Atelier ChérieRent</strong>! Kami sudah menerima pesan Anda dengan baik.</p>
 
@@ -50,16 +50,16 @@
             <p>Jika Anda memerlukan bantuan segera, Anda juga bisa menghubungi kami melalui WhatsApp:</p>
 
             <div style="text-align:center;">
-                <a href="https://wa.me/6289540164390" class="btn">💬 Chat WhatsApp</a>
+                <a href="https://wa.me/6289540164390" class="btn">Chat WhatsApp</a>
             </div>
 
             <div class="divider"></div>
 
-            <p style="font-size:13px; color:#9d174d;">Email ini dikirim secara otomatis. Mohon jangan membalas email ini langsung — untuk konfirmasi balasan, tunggu email berikutnya dari kami. 🌷</p>
+            <p style="font-size:13px; color:#9d174d;">Email ini dikirim secara otomatis. Mohon jangan membalas email ini langsung — untuk konfirmasi balasan, tunggu email berikutnya dari kami.</p>
         </div>
 
         <div class="footer">
-            <p><strong>ChérieRent</strong> — Dress Like a Dream ✨</p>
+            <p><strong>ChérieRent</strong> — Dress Like a Dream</p>
             <p><a href="mailto:rentcherie@gmail.com">rentcherie@gmail.com</a> · <a href="https://wa.me/6289540164390">WhatsApp</a></p>
         </div>
     </div>
