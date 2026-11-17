@@ -314,7 +314,46 @@ erDiagram
 
 ---
 
-## 💻 8. Panduan Menjalankan di Lokal (Local Setup)
+## � 9. Galeri Tampilan Aplikasi (Screenshots)
+
+Berikut adalah tampilan antarmuka ChérieRent Atelier dari berbagai sisi:
+
+### 🏠 Halaman Beranda (Home Page)
+![Home Page](public/screenshots/home.png)
+
+### 👗 Halaman Katalog Gaun (Catalog)
+![Catalog Page](public/screenshots/catalog.png)
+
+### 📋 Detail Gaun & Kalkulator Sewa
+![Dress Detail](public/screenshots/dress-detail.png)
+
+### 💳 Halaman Checkout & Pembayaran
+![Checkout Page](public/screenshots/checkout.png)
+
+### 🔐 Halaman Login & Registrasi
+![Login Page](public/screenshots/login.png)
+
+### 👤 Dashboard Pelanggan
+![User Dashboard](public/screenshots/user-dashboard.png)
+
+### 📦 Riwayat Reservasi Pelanggan
+![User Rentals](public/screenshots/user-rentals.png)
+
+### 💝 Halaman Wishlist (Gaun Impian)
+![User Wishlist](public/screenshots/wishlist.png)
+
+### 👩‍💼 Dashboard Admin
+![Admin Dashboard](public/screenshots/admin-dashboard.png)
+
+### 📊 Manajemen Gaun di Admin
+![Admin Dresses](public/screenshots/admin-dresses.png)
+
+### 📋 Manajemen Reservasi di Admin
+![Admin Rentals](public/screenshots/admin-rentals.png)
+
+---
+
+## �💻 10. Panduan Menjalankan di Lokal (Local Setup)
 
 ```bash
 # 1. Kloning repositori
