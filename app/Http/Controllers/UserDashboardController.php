@@ -74,6 +74,9 @@ class UserDashboardController extends Controller
             'notes' => trim(($rental->notes ?? '') . "\n[Dibatalkan oleh Pelanggan pada " . now()->format('d/m/Y H:i') . "]"),
         ]);
 
+        // Kembalikan stok saat rental dibatalkan oleh user
+        $rental->dress->increment('stock');
+
         return back()->with('success', 'Reservasi #' . $rental->rental_code . ' berhasil dibatalkan.');
     }
 

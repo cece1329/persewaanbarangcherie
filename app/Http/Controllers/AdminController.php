@@ -100,6 +100,11 @@ class AdminController extends Controller
             $rental->paid_at = now();
         }
 
+        // Kembalikan stok saat rental selesai atau dibatalkan
+        if (in_array($request->status, ['completed', 'cancelled']) && !in_array($rental->status, ['completed', 'cancelled'])) {
+            $rental->dress->increment('stock');
+        }
+
         $rental->save();
 
         return back()->with('success', "Reservation #{$rental->rental_code} status updated to ".$rental->status_label.'.');

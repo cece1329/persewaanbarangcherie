@@ -181,6 +181,11 @@ class RentalController extends Controller
 
         $rental = Rental::create($rentalData);
 
+        // Kurangi stok gaun saat rental dibuat
+        if ($dress->stock > 0) {
+            $dress->decrement('stock');
+        }
+
         if ($paymentProofPath) {
             return redirect()->route('rental.invoice', $rental->rental_code)
                 ->with('success', 'Reservasi berhasil dan bukti pembayaran telah diterima. Atelier kami sedang menyiapkan gaun pesananmu.');
@@ -204,6 +209,8 @@ class RentalController extends Controller
                 'status' => 'cancelled',
                 'notes' => trim(($rental->notes ?? '') . "\n[Dibatalkan otomatis oleh sistem karena batas waktu 1 jam telah berakhir]"),
             ]);
+            // Kembalikan stok saat auto-cancel
+            $rental->dress->increment('stock');
         }
 
         return view('rental.payment', compact('rental'));
