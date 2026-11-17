@@ -73,7 +73,7 @@
 
                 <div x-show="method === 'delivery'" x-transition class="space-y-2">
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Alamat Pengiriman Lengkap</label>
-                    <textarea name="shipping_address" rows="3" required placeholder="Nama Jalan, Nomor Rumah, RT/RW, Kelurahan/Kecamatan, Kota, Kode Pos" class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none focus:border-rose-500">{{ old('shipping_address', $user->address) }}</textarea>
+                    <textarea name="shipping_address" rows="3" :required="method === 'delivery'" placeholder="Nama Jalan, Nomor Rumah, RT/RW, Kelurahan/Kecamatan, Kota, Kode Pos" class="w-full p-3 rounded-2xl border border-rose-200 text-xs bg-rose-50/20 outline-none focus:border-rose-500">{{ old('shipping_address', $user->address) }}</textarea>
                 </div>
 
                 <div x-show="method === 'pickup'" x-transition class="p-4 bg-rose-50/60 rounded-2xl border border-rose-200 text-xs space-y-1.5">
@@ -428,7 +428,7 @@
                     </button>
                 </div>
 
-                <button type="submit" class="w-full btn-igari-primary py-4 rounded-full font-bold text-xs uppercase tracking-wider shadow-md text-center">
+                <button type="submit" class="w-full btn-igari-primary py-4 rounded-full font-bold text-xs uppercase tracking-wider shadow-md text-center hover:scale-105 active:scale-95 transition">
                     Lanjut ke Pembayaran &rarr;
                 </button>
             </div>
