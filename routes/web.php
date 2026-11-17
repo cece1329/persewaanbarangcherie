@@ -88,7 +88,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/dresses', [AdminController::class, 'storeDress'])->name('dresses.store');
     Route::get('/dresses/{id}/edit', [AdminController::class, 'editDress'])->name('dresses.edit');
     Route::put('/dresses/{id}', [AdminController::class, 'updateDress'])->name('dresses.update');
-    Route::delete('/dresses/{id}', [AdminController::class, 'destroy'])->name('dresses.destroy');
+    Route::delete('/dresses/{id}', [AdminController::class, 'destroyDress'])->name('dresses.destroy');
 
     // Manage Categories
     Route::get('/categories', [AdminController::class, 'categories'])->name('categories.index');

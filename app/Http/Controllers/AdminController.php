@@ -261,6 +261,16 @@ class AdminController extends Controller
     public function destroyDress($id)
     {
         $dress = Dress::findOrFail($id);
+
+        // Cek apakah ada rental aktif untuk gaun ini
+        $activeRentals = Rental::where('dress_id', $id)
+            ->whereIn('status', ['pending_payment', 'paid', 'shipping', 'in_use'])
+            ->count();
+
+        if ($activeRentals > 0) {
+            return back()->with('error', "Gaun ini tidak bisa dihapus karena masih ada {$activeRentals} reservasi aktif. Silakan selesaikan atau batalkan reservasi terlebih dahulu.");
+        }
+
         $dress->delete();
 
         return back()->with('success', 'Gown removed from collection.');
